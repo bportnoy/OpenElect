@@ -1,6 +1,6 @@
-var db = require('../config.js');
-var User = require('./user.js');
-var Election = require('./election.js');
+var db = require('../config');
+var User = require('./user');
+var Election = require('./election');
 
 var User_election = db.Model.extend({
   tableName: 'users_elections',
@@ -12,6 +12,6 @@ var User_election = db.Model.extend({
   election: function(){
     return this.belongsTo(Election);
   }
-})
+});
 
 module.exports = User_election;

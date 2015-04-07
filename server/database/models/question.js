@@ -1,5 +1,5 @@
-var db = require('../config.js');
-var Poll = require('./poll.js');
+var db = require('../config');
+var Poll = require('./poll');
 
 var Question = db.Model.extend({
   tableName: 'questions',
@@ -8,6 +8,6 @@ var Question = db.Model.extend({
   poll: function(){
     return this.belongsTo(Poll);
   }
-})
+});
 
 module.exports = Question;

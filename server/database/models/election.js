@@ -1,9 +1,8 @@
-var db = require('../config.js');
-var User = require('./user.js');
-var User_election = require('./user_election.js');
-var Ballot = require('./ballot.js');
-var Poll = require('./poll.js');
-var Result = require('./result.js');
+var db = require('../config');
+var User = require('./user');
+var Ballot = require('./ballot');
+var Poll = require('./poll');
+var Result = require('./result');
 
 var Election = db.Model.extend({
   tableName: 'elections',
@@ -11,9 +10,6 @@ var Election = db.Model.extend({
 
   user: function(){
     return this.hasMany(User);
-  },
-  user_election: function(){
-    return this.hasOne(User_election);
   },
   ballot: function(){
     return this.hasMany(Ballot);
@@ -24,6 +20,6 @@ var Election = db.Model.extend({
   result: function(){
     return this.hasOne(Result);
   }
-})
+});
 
 module.exports = Election;

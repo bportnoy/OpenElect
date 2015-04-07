@@ -1,7 +1,7 @@
-var db = require('../config.js');
-var Question = require('./question.js');
-var Election = require('./election.js');
-var Group = require('./group.js');
+var db = require('../config');
+var Question = require('./question');
+var Election = require('./election');
+var Group = require('./group');
 
 var Poll = db.Model.extend({
   tableName: 'polls',
@@ -16,6 +16,6 @@ var Poll = db.Model.extend({
   group: function(){
     return this.hasOne(Group);
   }
-})
+});
 
 module.exports = Poll;
