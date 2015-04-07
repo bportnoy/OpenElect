@@ -3,19 +3,16 @@ var fs = require('fs');
 var knex = require('knex')({
   client: 'postgres',
   connection: {
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
+    host: "localhost",
+    user: "skillfulcactus-dev",
+    password: "skdev",
+    database: "skillfulcactus",
     charset: 'utf8',
-    port: process.env.DB_PORT
-    // ssl: {
-    //   ca: fs.readFileSync(path.join(__dirname, '../certs/mysql') + '/cacert.pem'),
-    //   cert: fs.readFileSync(path.join(__dirname, '../certs/mysql') + '/client-cert.pem'),
-    //   key: fs.readFileSync(path.join(__dirname, '../certs/mysql') + '/client-key.pem')
-    // }
+    port: "5432"
   }, debug: false
 });
+
+console.log("Environt variable", process.env);
 
 var db = require('bookshelf')(knex);
 
@@ -28,6 +25,7 @@ db.knex.schema.hasTable('users').then(function(exists) {
       users.string('first_name');
       users.string('last_name');
       users.integer('admin_level');
+      users.timestamps();
     }).then(function (table) {
       console.log('Created Table', table);
     });
@@ -40,6 +38,7 @@ db.knex.schema.hasTable('users_groups').then(function(exists) {
       users_groups.increments('id').primary();
       users_groups.integer('user_id').references('id').inTable('users');
       users_groups.string('group_id').references('id').inTable('groups');
+      users_groups.timestamps();
     }).then(function (table) {
       console.log('Created Table', table);
     });
@@ -54,6 +53,7 @@ db.knex.schema.hasTable('groups').then(function(exists) {
       groups.integer('parent_id');
       groups.json('children');
       groups.string('name');
+      groups.timestamps();
     }).then(function (table) {
       console.log('Created Table', table);
     });
@@ -67,6 +67,7 @@ db.knex.schema.hasTable('polls').then(function(exists) {
       polls.integer('election_id').references('id').inTable('elections');
       polls.integer('group_id').references('id').inTable('groups');
       polls.string('name');
+      polls.timestamps();
     }).then(function (table) {
       console.log('Created Table', table);
     });
@@ -80,8 +81,9 @@ db.knex.schema.hasTable('questions').then(function(exists) {
       questions.integer('poll_id').references('id').inTable('polls');
       questions.string('name');
       questions.text('description');
-      questions.text('options');
+      questions.json('options');
       questions.json('count_strategy');
+      questions.timestamps();
     }).then(function (table) {
       console.log('Created Table', table);
     });
@@ -94,12 +96,14 @@ db.knex.schema.hasTable('elections').then(function(exists) {
       elections.increments('id').primary();
       elections.integer('owner_id').references('id').inTable('users');
       elections.string('name');
-      elections.time('start');
-      elections.time('end');
+      elections.text('description');
+      elections.datetime('start');
+      elections.datetime('end');
       elections.boolean('timed');
       elections.boolean('accepting_votes');
       elections.boolean('locked');
-      elections.json('privacy_strategy');
+      elections.string('privacy_strategy');
+      elections.timestamps();
     }).then(function (table) {
       console.log('Created Table', table);
     });
@@ -127,6 +131,7 @@ db.knex.schema.hasTable('users_elections').then(function(exists) {
       users_elections.integer('user_id').references('id').inTable('users');
       users_elections.integer('election_id').references('id').inTable('elections');
       users_elections.boolean('participated');
+      users_elections.timestamps();
     }).then(function (table) {
       console.log('Created Table', table);
     });
@@ -138,7 +143,8 @@ db.knex.schema.hasTable('results').then(function(exists) {
     db.knex.schema.createTable('results', function (results) {
       results.increments('id').primary();
       results.integer('election_id').references('id').inTable('elections');
-      results.text('results');
+      results.json('results');
+      results.timestamps();
     }).then(function (table) {
       console.log('Created Table', table);
     });
