@@ -105,7 +105,7 @@ db.knex.schema.hasTable('elections').then(function(exists) {
       elections.string('privacy_strategy');
       elections.string('url_handle');
       elections.boolean('randomize_answer_order');
-      elections.boolean('two_factor_auth');
+      elections.string('two_factor_auth');
       elections.timestamps();
     }).then(function (table) {
       console.log('Created Table', table);
