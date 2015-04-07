@@ -2,7 +2,6 @@ var db = require('../config');
 var User = require('./user');
 var Ballot = require('./ballot');
 var Poll = require('./poll');
-var Result = require('./result');
 
 var Election = db.Model.extend({
   tableName: 'elections',
@@ -16,9 +15,6 @@ var Election = db.Model.extend({
   },
   poll: function(){
     return this.hasMany(Poll);
-  },
-  result: function(){
-    return this.hasOne(Result);
   }
 });
 

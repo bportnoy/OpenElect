@@ -107,6 +107,7 @@ db.knex.schema.hasTable('elections').then(function(exists) {
       elections.boolean('randomize_answer_order');
       elections.boolean('two_factor_auth');
       elections.boolean('force_two_factor_auth');
+      elections.json('results');
       elections.timestamps();
     }).then(function (table) {
       console.log('Created Table', table);
@@ -136,19 +137,6 @@ db.knex.schema.hasTable('users_elections').then(function(exists) {
       users_elections.integer('election_id').references('id').inTable('elections');
       users_elections.boolean('participated');
       users_elections.timestamps();
-    }).then(function (table) {
-      console.log('Created Table', table);
-    });
-  }
-});
-
-db.knex.schema.hasTable('results').then(function(exists) {
-  if (!exists) {
-    db.knex.schema.createTable('results', function (results) {
-      results.increments('id').primary();
-      results.integer('election_id').references('id').inTable('elections');
-      results.json('results');
-      results.timestamps();
     }).then(function (table) {
       console.log('Created Table', table);
     });
