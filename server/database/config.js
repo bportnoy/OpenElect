@@ -3,12 +3,12 @@ var fs = require('fs');
 var knex = require('knex')({
   client: 'postgres',
   connection: {
-    host: "localhost",
-    user: "skillfulcactus-dev",
-    password: "skdev",
-    database: "skillfulcactus",
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
     charset: 'utf8',
-    port: "5432"
+    port: process.env.DB_PORT
   }, debug: false
 });
 
