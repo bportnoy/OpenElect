@@ -72,3 +72,92 @@
   color: #000;
   padding: 0.5em 0;
 }
+
+.chad {
+  display: inline-block;
+  margin: .2em;
+}
+
+.name {
+  display: inline-block;
+  margin: .2em;
+  font-size: 1.5em;
+
+}
+
+.suboption {
+  display: block;
+}
+
+.party {
+  margin: .35em;
+}
+
+.poll-title {
+  text-align: center;
+}
+
+.question-container {
+  margin-bottom: 1em;
+}
+
+.question {
+  background-color: lightgrey;
+  padding: 1em .5em .5em 1em;
+  position: relative;
+}
+
+.options-container {
+  margin: 0 0 0 1em;
+}
+
+.candidate-info {
+  margin: 0 0 .5em 0;
+}
+
+.pull-right {
+  pull-right:
+}
+
+.vote-status {
+  position: absolute;
+  right: 1em;
+  height: 100%;
+  vertical-align: middle;
+  top: 0;
+  padding: .65em 0;
+  display: inline-block;
+}
+
+@mixin center($axis: "both"){
+    position:relative;
+    @if $axis == "y"{
+        top:50%;
+        -webkit-transform: translateY(-50%);
+        -moz-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        -o-transform: translateY(-50%);
+        transform: translateY(-50%);
+    }
+    @if $axis == "x"{
+        left:50%;
+        -webkit-transform: translateX(-50%);
+        -moz-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+        -o-transform: translateX(-50%);
+        transform: translateX(-50%);
+    }
+    @if $axis == "both"{
+        top:50%;
+        left:50%;
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+    }   
+}
+
+.submit-ballot {
+  @include center(x);
+}
