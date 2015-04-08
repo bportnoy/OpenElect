@@ -8,6 +8,7 @@ var Route = Router.Route;
 
 var Index = require('./components/index.jsx');
 var App = require('./components/layouts/app.jsx');
+<<<<<<< HEAD
 var Vote = require('./components/modules/vote/VotingBooth.jsx');
 var Submitting = require('./components/modules/vote/Submitting.jsx');
 var Submitted = require('./components/modules/vote/Submitted.jsx');
@@ -17,6 +18,11 @@ var routes = (
     <Route name='vote' path='/vote/:electionId' handler={Vote}/>
     <Route name='submitting' handler={Submitting} />
     <Route name='submitted' handler={Submitted} />
+=======
+
+var routes = (
+  <Route name='app' path='/' handler={App}>
+>>>>>>> Add app container view, basic header & footer.
     <DefaultRoute name='index' handler={Index}/>
   </Route>
 );
