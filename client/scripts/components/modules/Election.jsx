@@ -2,9 +2,20 @@
 
 var Poll = require('./Poll.jsx');
 var React = require('react');
+var BallotActions = require('../../actions/BallotActions');
 
 
 var Election = React.createClass({
+
+  contextTypes: {
+    router: React.PropTypes.func
+  },
+
+  submitBallot: function(){
+    this.context.router.transitionTo('submitting');
+    // BallotActions.submitBallot(this.props.id, this.props.userId);
+  },
+
   render: function() {
     var allPolls = this.props.polls;
     var polls = [];
@@ -16,6 +27,7 @@ var Election = React.createClass({
     return (
       <section id='election'>
         <div className='poll-list'>{polls}</div>
+        <button className='submit-ballot' onClick={this.submitBallot}>Submit Ballot</button>
       </section>
     );
   }
