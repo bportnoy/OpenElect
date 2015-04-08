@@ -7,10 +7,11 @@ var DefaultRoute = Router.DefaultRoute;
 var Route = Router.Route;
 
 var Index = require('./components/index.jsx');
+var App = require('./components/layouts/app.jsx');
 
 var routes = (
-  <Route name='index' path='/' handler={Index}>
-    <DefaultRoute handler={Index} />
+  <Route name='app' path='/' handler={App}>
+    <DefaultRoute name='index' handler={Index}/>
   </Route>
 );
 
