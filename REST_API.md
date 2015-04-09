@@ -21,30 +21,30 @@ ___
             question: 'Who should be the next president?',
             instructions: 'Vote for only one.',
             options: [
-                {name: 'Hillary Clinton', party: 'Democratic', statement:'I must be president.'},
-                {name: 'Anyone But Hillary Clinton', party: 'Republican', statement: 'Her again?'}
+                {name: 'Barack Obama', party: 'Democratic', statement:'The change we need.'},
+                {name: 'John McCain', party: 'Republican', statement: 'I'm a maverick.'}
             ]
           },
           {
-            question: 'What should I have for dinner?',
-            instructions: 'Eat all the things.',
+            question: 'Who should represent California's 8th Congressional District?',
+            instructions: 'Vote for only one.',
             options: [
-                {name: 'Pizza', party: 'Oven', statement: 'Cheesy goodness.'},
-                {name: 'Jelly Beans', party: 'Candy Jar', statement: 'So many different feels.'},
-                {name: 'Ice Cream', party: 'Freezer', statement: 'You know I\'m your favorite.'}
+                {name: 'Nancy Pelosi', party: 'Democratic', statement: 'I have been doing this forever.'},
+                {name: 'Cindy Sheehan', party: 'Independent', statement: 'It's worth a shot.'},
+                {name: 'Dana Walsh', party: 'Republican', statement: 'I don't have a chance.'}
             ]
           }
         ]
       },
       {
-        pollName: 'HR25',
+        pollName: 'Municipal',
         questions: [
           {
-            question: 'Who is the most confident?',
+            question: 'Who should represent the Board of Supervisors for District 11?',
             instructions: 'Vote for only one.',
             options: [
-              {name: 'Tony', party: 'Meditative', statement: 'Obviously I am the most confident.'},
-              {name: 'Allen', party: 'Arkansan', statement: 'I will teach you confident.'}
+              {name: 'John Avalos', party: 'Democratic', statement: 'I won.'},
+              {name: 'Asha Safai', party: 'Democratic', statement: 'I came close!'}
             ]
           }
         ]
