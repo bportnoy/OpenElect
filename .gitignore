@@ -7,6 +7,7 @@ client/bower_components
 server/config/secrets.js
 .DS_Store
 .yo-rc.json
+test/scripts/bundle.js
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
