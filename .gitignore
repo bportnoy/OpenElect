@@ -14,3 +14,5 @@ test/scripts/bundle.js
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+# ignore vagrant files
+.vagrant/
