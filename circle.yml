@@ -2,10 +2,6 @@ dependencies:
   pre:
     - bower install
 
-test:
-  override:
-    - grunt test
-
 deployment:
   # production:
     # branch: production
@@ -15,5 +11,4 @@ deployment:
   staging:
     branch: master
     commands:
-      - sudo chmod +x deploy-staging.sh
       - ./deploy-staging.sh
