@@ -1,17 +1,7 @@
-/**
- * Database Configuration
- */
-
 'use strict';
-var settings = require('./env/default');
-<<<<<<< HEAD
-=======
-// var Sequelize = require('sequelize');
-var fs = require('fs');
->>>>>>> Complete deployment script.
+
 var path = require('path');
 var fs = require('fs');
-
 var knex = require('knex')({
   client: 'postgres',
   connection: {
@@ -24,7 +14,7 @@ var knex = require('knex')({
   }, debug: false
 });
 
-// console.log("Environt variable", process.env);
+console.log("Environt variable", process.env);
 
 var db = require('bookshelf')(knex);
 
@@ -74,7 +64,7 @@ db.knex.schema.hasTable('groups').then(function(exists) {
 
 db.knex.schema.hasTable('polls').then(function(exists) {
   if (!exists) {
-    db.knex.schema.createTable('polls', function (polls) {
+    db.knex.schema.createTable('organizations', function (polls) {
       polls.increments('id').primary();
       polls.integer('election_id').references('id').inTable('elections');
       polls.integer('group_id').references('id').inTable('groups');
@@ -155,7 +145,6 @@ db.knex.schema.hasTable('users_elections').then(function(exists) {
   }
 });
 
-<<<<<<< HEAD
 db.knex.schema.hasTable('sessions').then(function(exists) {
   if (!exists) {
     db.knex.schema.createTable('sessions', function (session) {
@@ -170,12 +159,8 @@ db.knex.schema.hasTable('sessions').then(function(exists) {
 });
 
 // To do - 2fa
-=======
-// Connect to database
-// var sequelize = new Sequelize(settings.database.url, settings.database.options);
-
-// db.sequelize = sequelize;
-// db.Sequelize = Sequelize;
->>>>>>> Complete deployment script.
 
 module.exports = db;
+
+
+

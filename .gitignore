@@ -8,10 +8,9 @@ server/config/secrets.js
 .DS_Store
 .yo-rc.json
 test/scripts/bundle.js
+.vagrant
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
-
-.vagrant
