@@ -1,4 +1,4 @@
-var db = require('../config');
+var db = require('../../config/database');
 var Question = require('./question');
 var Election = require('./election');
 var Group = require('./group');

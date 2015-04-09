@@ -1,4 +1,4 @@
-var db = require('../config');
+var db = require('../../config/database');
 var Poll = require('./poll');
 
 var Question = db.Model.extend({
