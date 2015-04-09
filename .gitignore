@@ -9,7 +9,7 @@ server/config/secrets.js
 .yo-rc.json
 test/scripts/bundle.js
 .vagrant
-
+test/scripts/bundle.js
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
