@@ -15,4 +15,5 @@ deployment:
   staging:
     branch: master
     commands:
+      - sudo chmod +x deploy-staging.sh
       - ./deploy-staging.sh
