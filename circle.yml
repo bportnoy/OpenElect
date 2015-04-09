@@ -1,0 +1,18 @@
+dependencies:
+  pre:
+    - bower install
+
+test:
+  override:
+    - grunt test
+
+deployment:
+  # production:
+    # branch: production
+    # commands:
+    #   - ./deploy_prod.sh
+
+  staging:
+    branch: master
+    commands:
+      - ./deploy-staging.sh
