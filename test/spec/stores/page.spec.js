@@ -7,7 +7,7 @@
 
 var pageStore = require('../../../client/scripts/stores/page');
 
-describe('Page Store', function() {
+xdescribe('Page Store', function() {
 
   var ReactTestUtils;
   var reactRender;

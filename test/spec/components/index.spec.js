@@ -8,7 +8,7 @@
 var React = require('react');
 var IndexComponent = React.createFactory(require('../../../client/scripts/components/index.jsx'));
 
-describe('Index Component', function() {
+xdescribe('Index Component', function() {
 
   var ReactTestUtils;
   var reactRender;

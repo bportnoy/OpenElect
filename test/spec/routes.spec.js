@@ -5,9 +5,9 @@
 
 'use strict';
 
-// var routes = require('../../client/scripts/routes');
+var routes = require('../../client/scripts/routes.jsx');
 
-xdescribe('Routes for router', function() {
+describe('Routes for router', function() {
 
   it('provides the "Router" instance', function() {
     // Expect it to exist
