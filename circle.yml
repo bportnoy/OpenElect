@@ -10,5 +10,6 @@ deployment:
 
   staging:
     branch: master
+    owner: SkillfulCactus
     commands:
       - ./deploy-staging.sh
