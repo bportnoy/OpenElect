@@ -7,7 +7,7 @@
 
 var pageActions = require('../../../client/scripts/actions/page');
 
-describe('Page Actions', function() {
+xdescribe('Page Actions', function() {
 
   var ReactTestUtils;
   var reactRender;

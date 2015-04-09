@@ -7,7 +7,7 @@
 
 var DefaultStore = require('../../../client/scripts/stores/default');
 
-describe('Default Store', function() {
+xdescribe('Default Store', function() {
 
   var ReactTestUtils;
   var reactRender;

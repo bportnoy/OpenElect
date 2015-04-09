@@ -7,7 +7,7 @@
 
 var routerActions = require('../../../client/scripts/actions/routes');
 
-describe('Router Actions', function() {
+xdescribe('Router Actions', function() {
 
   var ReactTestUtils;
   var reactRender;
