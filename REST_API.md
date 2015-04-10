@@ -51,6 +51,34 @@ ___
       }
     ];
 
+  #### Election Results Object
+    {
+      "results": {
+        "election_id": 21231,
+        "questions": [
+          {
+            "question": {
+              "id": 583421,
+            },
+            "totals": [
+              {
+                "id": 1,
+                "votes": 100
+              },
+              {
+                "id": 2,
+                "votes": 100
+              },
+              {
+                "id": 3,
+                "votes": 200
+              },
+            ]
+          }
+        ]
+      }
+    }
+
 ## Create Election
 ##### Definition
     POST https://www.skillfulcactus.com/api/v1/elections/create
