@@ -8,15 +8,17 @@ var settings = require('../config/env/default');
 
 // endpoint controllers
 var elections = require('./api/elections');
+var polls = require('./api/polls');
+var questions = require('./api/questions');
 var ballots = require('./api/ballots');
 
 var api = { // an object to contain all response handlers
   elections: elections,
-  poll: null, // todo: create controllers
-  ballots: ballots, // todo: create controllers
-  question: null, // todo: create controllers
-  user: null, // todo: create controllers
-  group: null // todo: create controllers
+  polls: polls,
+  questions: questions,
+  ballots: ballots,
+  users: null, // todo: create controllers
+  groups: null // todo: create controllers
 };
 
 

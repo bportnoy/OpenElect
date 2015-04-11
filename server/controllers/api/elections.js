@@ -1,7 +1,22 @@
+/**
+ * Elections API Controller
+ */
+
+'use strict'
+
+// Utilities
+var _ = require('lodash');
+var Promise = require('bluebird');
+
+// DB models
 var Election = require('../../database/models/election');
+var Poll = require('../../database/models/poll');
+
+Promise.promisifyAll(_);
 
 var elections = {
 
+  // create a new election entry ( POST /elections/create )
   create: function(req, res) {
     if ( req.body.election ) {
       var data = req.body.election;
@@ -36,21 +51,35 @@ var elections = {
       res.end('Bad request');
     }
   },
-  getById: function(id, req, res) {
+
+  // election request method for administration ( GET /elections/update/:id )
+  adminGetById: function(id, req, res) {
+    // todo: implement admin get methods
+  },
+
+  // election update method for administration ( POST /elections/update/:id )
+  updateById: function(id, req, res) {
+    // todo: write this
+  },
+
+  // election request method for voters ( GET /elections/vote/:id )
+  voterGetById: function(id, req, res) {
     var election = new Election({id: id});
-    election.fetch()
-      .then(function(model){
-        if ( model ) {
-          res.json({name: model.get('name')}); // todo: replace this with an actual object
+    election.fetch({ withRelated: ['poll'] })
+      .then(function(election){
+        if ( election ) {
+          election.related('poll').load(['question'])
+            .then(function(){
+              res.send(election.toJSON());
+            });
         } else {
           res.status(404);
           res.end('Election object not found');
         }
       });
   },
-  updateById: function(id, req, res) {
-    // todo: write this
-  }
+
+
 
 }
 
