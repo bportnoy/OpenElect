@@ -54,7 +54,16 @@ var elections = {
 
   // election request method for administration ( GET /elections/update/:id )
   adminGetById: function(id, req, res) {
-    // todo: implement admin get methods
+    var election = new Election({id: id});
+    election.fetch()
+      .then(function(election){
+        if ( election ) {
+          res.send(election.toJSON());
+        } else {
+          res.staus = 404;
+          res.send();
+        }
+      })
   },
 
   // election update method for administration ( POST /elections/update/:id )
@@ -65,18 +74,31 @@ var elections = {
   // election request method for voters ( GET /elections/vote/:id )
   voterGetById: function(id, req, res) {
     var election = new Election({id: id});
-    election.fetch({ withRelated: ['poll'] })
-      .then(function(election){
-        if ( election ) {
-          election.related('poll').load(['question'])
-            .then(function(){
-              res.send(election.toJSON());
-            });
-        } else {
-          res.status(404);
-          res.end('Election object not found');
-        }
-      });
+    election.fetch({ 
+      withRelated: ['poll'],
+      columns: [
+        'id',
+        'name',
+        'description',
+        'start',
+        'end',
+        'accepting_votes',
+        'url_handle',
+        'randomize_answer_order',
+        'results'
+      ]
+    })
+    .then(function(election){
+      if ( election ) {
+        election.related('poll').load(['question'])
+          .then(function(){
+            res.send(election.toJSON());
+          });
+      } else {
+        res.status(404);
+        res.end('Election object not found');
+      }
+    });
   },
 
 
