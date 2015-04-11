@@ -4,19 +4,19 @@
 
 'use strict';
 
-var api = require('../controllers/api');
 var express = require('express');
-var router = express.Router();
 var bodyParser = require('body-parser');
+var _ = require('lodash');
 
+// controllers live here
+var api = require('../controllers/api');
+
+// create our router for the API
+var router = express.Router();
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
 var routes = function(app) {
-
-  router.get('/', function(req, res){
-    res.json({ message: 'welcome to the api, enjoy your stay.' });
-  });
 
   /**
    *  routes for elections
@@ -62,6 +62,13 @@ var routes = function(app) {
     .post(function(req, res) {
       // todo - add controller
     });
+
+  // API Root - simply list the endpoints available
+  router.get('/', function(req, res){
+    res.json({ message: 'welcome to the api, enjoy your stay.' });
+  });
+
+  console.log(router.stack);
 
   app.use('/api/v1', router);
 };
