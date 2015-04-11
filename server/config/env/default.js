@@ -33,7 +33,7 @@ var defaults = {
   },
   database: {
     // URL to connect to database
-    url: process.env.DBURL || 'postgres://skillfulcactus-dev:skdev@localhost:5432/skillfulcactus',
+    url: process.env.DBURL || 'postgres://openelect:openelect@localhost:5432/openelect',
     // Sequelize database options
     options: {
       // Database Type

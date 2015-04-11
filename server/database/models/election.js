@@ -2,7 +2,6 @@ var db = require('../../config/database');
 var User = require('./user');
 var Ballot = require('./ballot');
 var Poll = require('./poll');
-var Promise = require("bluebird");
 
 // Get all ballot from DB
 var ballotArray, selection;

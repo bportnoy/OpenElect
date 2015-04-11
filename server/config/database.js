@@ -89,7 +89,7 @@ db.knex.schema.hasTable('questions').then(function(exists) {
       questions.string('name');
       questions.text('description');
       questions.json('options');
-      questions.json('count_strategy');
+      questions.text('count_strategy');
       questions.timestamps();
     }).then(function (table) {
       console.log('Created Table', table);
