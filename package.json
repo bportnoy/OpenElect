@@ -5,7 +5,7 @@
   "scripts": {
     "clean": "rimraf node_modules client/bower_components .tmp dist",
     "start": "NODE_ENV=production node server.js",
-    "test": "./node_modules/mocha/bin/mocha ./test/spec/backend/serverSpec.js"
+    "test": "./node_modules/mocha/bin/mocha ./test/spec/server/serverSpec.js"
   },
   "dependencies": {
     "async": "~0.7.0",
