@@ -13,6 +13,7 @@ var _userId = null;
 var _electionId = null;
 var _successfulSubmit = false;
 var _receipt = null;
+var _ballotCreatedAt = null;
 
 function add (id) {
   _questions[id] = {question_id: id, selection: null};
@@ -29,6 +30,7 @@ function changeSelection (id, selection) {
 }
 
 function sendBallot(){
+
   var ballotToSend = {
     election_id: _electionId,
     user_id: _userId,
@@ -41,15 +43,23 @@ function sendBallot(){
     ballotToSend.response.selections.push(question);
   });
 
-  // axios.post('/api/v1/ballots/create', {
-  //   ballot: ballotToSend
-  // }).then(function(response){
-  //   _successfulSubmit = true;
-  //   _receipt = response.receipt;
-  // });
-  console.log(ballotToSend);
-  _receipt = 'asd;flkje';
-  _successfulSubmit = true;
+  console.log('bts:'+ ballotToSend);
+
+  axios.post('/api/v1/ballots/create', {
+    ballot: ballotToSend
+  }).then(function(response){
+    if (response.data.election_id !== _electionId)
+      {console.error('Error: Election ID received does not match election ID sent.');}
+    else {
+      _receipt = response.data.receipt;
+      _ballotCreatedAt = response.data.created_at;
+      _successfulSubmit = true;
+    }
+  })
+    .catch(function(response){
+      console.error(response.statusText);
+      //TODO: additional error handling.
+    });
 }
 
 var BallotStore = assign({}, EventEmitter.prototype, {
@@ -74,7 +84,7 @@ var BallotStore = assign({}, EventEmitter.prototype, {
   },
 
   getReceipt: function () {
-    return _receipt;
+    return {receipt: _receipt, createdAt: _ballotCreatedAt};
   },
 
   emitChange: function () {
