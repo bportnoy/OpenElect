@@ -9,7 +9,7 @@ var ballotArray, selection;
 var ballotSum = {};
 
 // Helper function: Iterate each ballot and update to ballotSum
-var countBallot = function(ballotJsonArray){
+function countBallots (ballotJsonArray){
   for(var i = 0; i < ballotJsonArray.length; i++){
     var ballot = ballotJsonArray[i];
     for(var j = 0; j < ballot["choices"]["selections"].length; j++){
@@ -42,9 +42,9 @@ var Election = db.Model.extend({
     var that = this;
     return Ballot.where({election_id: that.get('id')}).fetchAll().then(function(ballot){
       ballotArray = ballot.toJSON();
-      countBallot(ballotArray);
+      countBallots(ballotArray);
       // console.log('Ballot summary: ', ballotSum);
-      
+
       // save reulst back to elections table
       return that.save({results: ballotSum});
     });
