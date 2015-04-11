@@ -1,33 +1,30 @@
 FORMAT: 1A
-HOST: http://polls.apiblueprint.org/
+HOST: http://openelect.org/api/v1/
 
-# openelect
+# OpenElect
 
-Polls is a simple API allowing consumers to view polls and vote in them.
+A platform for secure, verifiable elections built in node.js.
 
-# Polls API Root [/]
+# OpenElect API Root [/]
 
 This resource does not have any attributes. Instead it offers the initial
 API affordances in the form of the links in the JSON body.
-
-It is recommend to follow the “url” link values,
-[Link](https://tools.ietf.org/html/rfc5988) or Location headers where
-applicable to retrieve resources. Instead of constructing your own URLs,
-to keep your client decoupled from implementation details.
 
 ## Retrieve the Entry Point [GET]
 
 + Response 200 (application/json)
 
         {
-            "questions_url": "/questions"
+            "elections_url": "/api/v1/elections",
+            "create_election": "/api/v1/elections/create"
+            "update_electoin": "/api/v1/elections/{id}"
         }
 
-## Group Question
+## Group Elections
 
-Resources related to questions in the API.
+Resources related to Elections in the API.
 
-## Question [/questions/{question_id}]
+## Election [/id/{election_id}]
 
 A Question object has the following attributes:
 
@@ -37,9 +34,9 @@ A Question object has the following attributes:
 + choices - An array of Choice objects.
 
 + Parameters
-    + question_id (required, number, `1`) ... ID of the Question in form of an integer
+    + election_id (required, number, `1`) ... ID of the Election in form of an integer
 
-### View a Questions Detail [GET]
+### Retrieve an Election Detail [GET]
 
 + Response 200 (application/json)
 
