@@ -15,7 +15,7 @@ var Footer = React.createClass({
   render: function() {
     return (
       <div className='footer'>
-        <p>I am the footer!</p>
+        <p>©2015 SkillfulCactus</p>
       </div>
     );
   },
