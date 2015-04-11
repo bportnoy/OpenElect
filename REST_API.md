@@ -298,7 +298,7 @@ ___
     {
       ballot_id: 98342654,
       receipt: '9017c7e20b1a0abc3505ea1a8972c06055168140',
-      electoin_id: 28934237,
+      election_id: 28934237,
       created_at: 'Date Created'
     }
 
