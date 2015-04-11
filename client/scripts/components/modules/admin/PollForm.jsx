@@ -3,7 +3,7 @@
 var React = require('react');
 var ReactPropTypes = React.PropTypes;
 var axios = require('axios');
-var Question = require('../modules/Question.jsx');
+var Question = require('./Question.jsx');
 
 var PollForm = React.createClass({
 

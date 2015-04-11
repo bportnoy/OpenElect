@@ -3,7 +3,7 @@
 var React = require('react');
 var ReactPropTypes = React.PropTypes;
 var axios = require('axios');
-var Answer = require('../modules/Answer.jsx');
+var Answer = require('./Answer.jsx');
 
 var Question = React.createClass({
 

@@ -30,6 +30,7 @@ var IndexComponent = React.createClass({
     return(
       <div>
         <h1>Welcome to OpenElect</h1>
+        <h2><Link to='electionCreate'>Create an Election</Link></h2>
         <h2>Vote in an Election:</h2><input type='text' 
                                                 placeholder='Enter election ID'
                                                 valueLink={this.linkState('voteText')}/>

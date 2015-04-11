@@ -16,6 +16,10 @@ var ElectionAdmin = React.createClass({
         this.context.router.transitionTo('polls');
     },
 
+    addPoll: function(){
+        this.context.router.transitionTo('pollCreate');
+    },
+
     render: function() {
         return (
             <div className="election-item">
@@ -35,7 +39,10 @@ var ElectionAdmin = React.createClass({
                     <div className="electionIsAcceptingVotes"><h4>Accepting Votes:</h4> { this.props.accepting_votes }</div>
                 </div>
 
-                <button type="button" className="btn view-polls" ref="view-polls" onClick={this.viewElectionPolls}>VIEW ELECTION POLLS</button>
+                <button type="button"
+                         className="btn add-poll"
+                         ref="add-poll"
+                         onClick={this.addPoll}>ADD POLL</button>
             </div>
         );
     }
