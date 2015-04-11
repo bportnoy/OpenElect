@@ -15,7 +15,7 @@ var Header = React.createClass({
   render: function() {
     return (
       <div className='header'>
-        <p>I am the header!</p>
+        <h1>OpenElect</h1>
       </div>
     );
   },
