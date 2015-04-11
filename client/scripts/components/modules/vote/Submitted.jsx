@@ -10,13 +10,13 @@ var Submitting = React.createClass({
   },
 
   getInitialState: function () {
-    return {receipt: BallotStore.getReceipt()};
+    return BallotStore.getReceipt();
   },
   
   render: function() {
     return (
       <div>
-        <p>You voted!</p>
+        <p>Your ballot was recorded at: {this.state.createdAt}</p>
         <p>Your receipt is: {this.state.receipt}</p>
       </div>
     );

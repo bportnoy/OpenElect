@@ -294,15 +294,12 @@ ___
       -d election_id=8952374 \
       -d user_id=20394820
 ##### Example Response
-###### Returns 201 status and JSON Object
+###### Returns 201 status, response object
     {
-      ballot: {
-        id: 98342654,
-        election_id: 28934237,
-        user_id: 05467235,
-        url: '/ballot/98342654'
-        created_at: 'Date Created'
-      }
+      ballot_id: 98342654,
+      receipt: '9017c7e20b1a0abc3505ea1a8972c06055168140',
+      electoin_id: 28934237,
+      created_at: 'Date Created'
     }
 
 

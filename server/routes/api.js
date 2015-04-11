@@ -61,6 +61,7 @@ var routes = function(app) {
   router.route('/ballots/create') // create a ballot (user submits vote) - post only
     .post(function(req, res) {
       // todo - add controller
+      api.ballots.create(req,res);
     });
 
   // API Root - simply list the endpoints available
