@@ -20,7 +20,8 @@ var knex = require('knex')({
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     charset: 'utf8',
-    port: process.env.DB_PORT
+    port: process.env.DB_PORT,
+    timezone: 'UTC'
   }, debug: false
 });
 

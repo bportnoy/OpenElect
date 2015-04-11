@@ -7,8 +7,13 @@
 var api = require('../controllers/api');
 var express = require('express');
 var router = express.Router();
+var bodyParser = require('body-parser');
+
+router.use(bodyParser.urlencoded({ extended: false }));
+router.use(bodyParser.json());
 
 var routes = function(app) {
+
   router.get('/', function(req, res){
     res.json({ message: 'welcome to the api, enjoy your stay.' });
   });
@@ -24,10 +29,10 @@ var routes = function(app) {
 
   router.route('/elections/id/:id') // retrieve or update a specific election by id
     .get(function(req, res) {
-      api.elections.getById(id, req, res);
+      api.elections.getById(req.params.id, req, res);
     })
     .post(function(req, res) {
-      api.elections.updateById(id, req, res);
+      api.elections.updateById(req.params.id, req, res);
     });
 
 

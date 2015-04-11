@@ -11,7 +11,49 @@ ___
 ___
 
 # Elections
-## Election object
+
+## Create Election
+##### Definition
+    POST https://www.skillfulcactus.com/api/v1/elections/create
+##### Example Request
+    curl https://www.skillfulcactus.com/api/v1/elections/create \
+      -u { USER_TOKEN }: \
+      -d owner_id="" \
+      -d name="" \
+      -d description=""
+##### Example Request JSON
+    {
+      election: {
+        name: 'Election Name',
+        description: 'Federal elections for United States Presidency and Congress',
+        start_date: 1446976800,
+        end_date: 1447052399,
+        is_timed: true,
+        privacy_strategy: 'secret',
+        randomize_questions: true,
+        allow_2_auth: true,
+        force_2_auth: false,
+      }
+    }
+
+##### Example Response
+###### Returns 201 and JSON Object
+    {
+      election: {
+        id: 90152848,
+        url: '/elections/90152848',
+        name: 'Election Name',
+        created_at: 'Date Created'
+      }
+    }
+
+## Retrieve Election ( Voter)
+##### Definition
+    GET https://www.skilfullcactus.com/api/v1/elections/{ ELECTION_ID }
+##### Example Request
+    curl https://www.skilfullcactus.com/api/v1/elections/{ ELECTION_ID } \
+      -u { USER_TOKEN }:
+
 ##### Example Response
     [
       {
@@ -51,7 +93,31 @@ ___
       }
     ];
 
-  #### Election Results Object
+## Update Election
+##### Definition
+    POST https://openelect.org/api/v1/elections/id/{ ELECTION_ID }
+##### Example Request
+    curl https://openelect.org/api/v1/elections/id/{ ELECTION_ID } \
+      -u { USER_TOKEN }: \
+      -d owner_id="" \
+      -d name="" \
+      -d description="" \
+      -d start="" \
+      -d end="" \
+      -d timed="" \
+      -d accepting_votes="" \
+      -d locked="" \
+      -d privacy_strategy="" \
+      -d url_handle="" \
+      -d randomize_answer_order="" \
+      -d two_factor_auth="" \
+      -d force_two_factor_auth=""
+
+
+## Get Election Results
+##### Definition
+    GET https://openelect.org/api/v1/elections/results/{election_id}
+##### Example Response
     {
       "results": {
         "election_id": 21231,
@@ -79,60 +145,6 @@ ___
       }
     }
 
-## Create Election
-##### Definition
-    POST https://www.skillfulcactus.com/api/v1/elections/create
-##### Example Request
-    curl https://www.skillfulcactus.com/api/v1/elections/create \
-      -u { USER_TOKEN }: \
-      -d owner_id="" \
-      -d name="" \
-      -d description=""
-##### Example Response
-###### Returns 201 and JSON Object
-    {
-      election: {
-        id: 90152848,
-        url: '/elections/90152848',
-        name: 'Election Name',
-        created_at: 'Date Created'
-      }
-    }
-
-## Retrieve Election
-##### Definition
-    GET https://www.skilfullcactus.com/api/v1/elections/{ ELECTION_ID }
-##### Example Request
-    curl https://www.skilfullcactus.com/api/v1/elections/{ ELECTION_ID } \
-      -u { USER_TOKEN }:
-
-## Update Election
-##### Definition
-    POST https://www.skilfullcactus.com/api/v1/elections/{ ELECTION_ID }
-##### Example Request
-    curl https://www.skilfullcactus.com/api/v1/elections/{ ELECTION_ID } \
-      -u { USER_TOKEN }: \
-      -d owner_id="" \
-      -d name="" \
-      -d description="" \
-      -d start="" \
-      -d end="" \
-      -d timed="" \
-      -d accepting_votes="" \
-      -d locked="" \
-      -d privacy_strategy="" \
-      -d url_handle="" \
-      -d randomize_answer_order="" \
-      -d two_factor_auth="" \
-      -d force_two_factor_auth=""
-
-## Delete Election
-##### Definition
-    DELETE https://www.skilfullcactus.com/api/v1/elections/{ ELECTION_ID }
-##### Example Request
-    curl https://www.skilfullcactus.com/api/v1/elections/{ ELECTION_ID } \
-      -u { USER_TOKEN }: \
-      -X DELETE
 
 ## List Elections
 ##### Definition
@@ -256,15 +268,18 @@ ___
 ## Ballot object
 ###### Example Response
     {
-      election_id=3902340,
-      user_id=438572936,
-      response: {
-        items: [
+      ballot: {
+        election_id: 3902340,
+        user_id: 438572936,
+      }
+      questions: {
+        selected: [
           {
-            selection: 01311
+            question_id: 123412
+            selection: 1
           },
           {
-            selection: 01312
+            selection: 2
           }
         ]
       }
@@ -290,69 +305,6 @@ ___
       }
     }
 
-## Retrieve Ballot
-##### Definition
-    GET https://www.skillfulcactus.com/api/v1/ballots/{ BALLOT_ID }
-##### Example Request
-    curl https://www.skillfulcactus.com/api/v1/ballots/{ BALLOT_ID } \
-      -u { USER_TOKEN }:
-##### Example Response
-    {
-      election_id: 3902340,
-      user_id: 438572936,
-      response: {
-        items: [
-          {
-            selection: 01311
-          },
-          {
-            selection: 01312
-          }
-        ]
-      }
-    }
-
-## Update Ballot
-##### Definition
-    POST https://www.skillfulcactus.com/api/v1/ballots/{ BALLOT_ID }
-##### Example Request
-###### Returns 201 status and JSON Object
-    curl https://www.skillfulcactus.com/api/v1/ballots/{ BALLOT_ID } \
-      -u { USER_TOKEN }: \
-      -d election_id=8952374 \
-      -d user_id=20394820 \
-      -d choices[1]='01315'
-##### Example Response
-###### Returns 201 status and JSON Object
-    {
-      election_id: 3902340,
-      user_id: 438572936,
-      response: {
-        items: [
-          {
-            selection: 01311
-          },
-          {
-            selection: 01315
-          }
-        ]
-      }
-    }
-
-## Delete Ballot
-##### Definition
-    DELETE https://www.skillfulcactus.com/api/v1/ballots/{ BALLOT_ID }
-##### Example Request
-    curl https://www.skillfulcactus.com/api/v1/ballots/{ BALLOT_ID } \
-      -u { USER_TOKEN }: \
-      -X DELETE
-
-## List Ballots
-##### Definition
-    GET https://www.skillfulcactus.com/api/v1/ballots
-##### Example Request
-    curl https://www.skillfulcactus.com/api/v1/ballots?limit=10 \
-      -u { USER_TOKEN }:
 
 ___
 
