@@ -4,11 +4,6 @@
 
 'use strict';
 var settings = require('./env/default');
-<<<<<<< HEAD
-=======
-// var Sequelize = require('sequelize');
-var fs = require('fs');
->>>>>>> Complete deployment script.
 var path = require('path');
 var fs = require('fs');
 
@@ -20,8 +15,7 @@ var knex = require('knex')({
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     charset: 'utf8',
-    port: process.env.DB_PORT,
-    timezone: 'UTC'
+    port: process.env.DB_PORT
   }, debug: false
 });
 
@@ -156,7 +150,6 @@ db.knex.schema.hasTable('users_elections').then(function(exists) {
   }
 });
 
-<<<<<<< HEAD
 db.knex.schema.hasTable('sessions').then(function(exists) {
   if (!exists) {
     db.knex.schema.createTable('sessions', function (session) {
@@ -171,12 +164,5 @@ db.knex.schema.hasTable('sessions').then(function(exists) {
 });
 
 // To do - 2fa
-=======
-// Connect to database
-// var sequelize = new Sequelize(settings.database.url, settings.database.options);
-
-// db.sequelize = sequelize;
-// db.Sequelize = Sequelize;
->>>>>>> Complete deployment script.
 
 module.exports = db;
