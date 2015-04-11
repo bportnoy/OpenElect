@@ -161,7 +161,8 @@ ___
     {
       poll: {
         name: 'Poll Name',
-        description: 'Poll Description'
+        description: 'Poll Description',
+        election_id: 1
       },
       questions: [
         {
@@ -308,6 +309,27 @@ ___
 # Questions
 ## Question object
 ##### Example Response
+
+{
+ question: {
+   id: 1,
+   title: 'Who should be the next representative from the 2nd district'
+ }
+ options: [
+   {
+     name: 'Wally Herger',
+     description: 'Incumbent',
+     party: ‘Republican', // optional
+     id: 1
+   },
+   {
+     name: 'Ryan Carey',
+     description: 'Software Engineer',
+     party: ‘Pirate’,
+     id: 2
+   }
+ ]
+}
 
 ## Create Question
 ##### Definition

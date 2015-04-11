@@ -5,11 +5,12 @@
   "scripts": {
     "clean": "rimraf node_modules client/bower_components .tmp dist",
     "start": "NODE_ENV=production node server.js",
-    "test": "./node_modules/mocha/bin/mocha ./test/spec/server/serverSpec.js"
+    "test": "grunt test"
   },
   "dependencies": {
     "async": "~0.7.0",
     "axios": "^0.5.3",
+    "bluebird": "^2.9.24",
     "body-parser": "~1.0.2",
     "bookshelf": "^0.7.9",
     "chai": "^2.1.2",
@@ -86,11 +87,6 @@
     "jit-grunt": "~0.9.0",
     "connect-livereload": "~0.5.2",
     "grunt-express-server": "~0.4.5"
-  },
-  "scripts": {
-    "clean": "rimraf node_modules client/bower_components .tmp dist",
-    "start": "NODE_ENV=production node server.js",
-    "test": "grunt test"
   },
   "engines": {
     "node": ">=0.10.0"
