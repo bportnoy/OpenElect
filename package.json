@@ -26,7 +26,7 @@
     "form-serialize": "~0.4.0",
     "grunt": "^0.4.5",
     "grunt-autoprefixer": "^3.0.0",
-    "keymirror": "~0.1.0",
+    "keymirror": "^0.1.1",
     "knex": "^0.7.6",
     "lodash": "~2.4.1",
     "lusca": "~1.0.0",
@@ -41,7 +41,8 @@
     "serve-favicon": "2.0.1",
     "superagent": "~0.21.0",
     "supertest": "^0.15.0",
-    "supertest-as-promised": "^2.0.0"
+    "supertest-as-promised": "^2.0.0",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
     "rimraf": "~2.2.8",
