@@ -16,6 +16,19 @@ Promise.promisifyAll(_);
 
 var elections = {
 
+  _checkForElection: function(id, req, res) {
+    var election = new Election({id: id});
+    return election.fetch()
+      .then(function(election) {
+        if ( election ) {
+          return election;
+        } else {
+          res.status(404);
+          req.send('Election object not found');
+        }
+      })
+  },
+
   // create a new election entry ( POST /elections/create )
   create: function(req, res) {
     if ( req.body.election ) {
@@ -68,11 +81,48 @@ var elections = {
 
   // election update method for administration ( POST /elections/update/:id )
   updateById: function(id, req, res) {
-    // todo: write this
+    var data = req.body;
+    var election = new Election({id: id});
+    election.fetch()
+      .then(function(election){
+        if ( election ) {
+          _(data).forEach(function(value, property){
+            // check to make sure we aren't allowing admins to change important stuff
+            if (  property !== 'id' 
+                  && property !== 'created_ad' 
+                  && property !== 'updated_at' 
+                  && property !== 'results' // !!!! todo: more robust checking for rewrite fraud via API
+                ) { 
+                    election.set(property, value); 
+                }
+          })
+          election.save().then(function(election){
+            res.send(election.toJSON());
+          });
+        } else {
+          res.status(404);
+          res.end('Election object not found');
+        }
+      })
+  },
+
+  voterGetById: function(id, req, res) {
+    var election = new Election({ id: id });
+    election.fetch({
+      withRelated: ['poll']
+    })
+    .then(function(election){
+      if ( election ) {
+        election.related('poll').load(['question'])
+          .then(function(poll) {
+            res.send(poll);
+          })
+      }
+    })
   },
 
   // election request method for voters ( GET /elections/vote/:id )
-  voterGetById: function(id, req, res) {
+  __voterGetById: function(id, req, res) { // potentially useful in future iterations, not currently in use
     var election = new Election({id: id});
     election.fetch({ 
       withRelated: ['poll'],
@@ -101,6 +151,30 @@ var elections = {
     });
   },
 
+  // begin vote tabulation - admin only ( POST /elections/results/:id )
+  tabulate: function(id, req, res) {
+    var election = new Election({id: id});
+    election.fetch()
+      .then(function(election) {
+        if ( election ) {
+          election.tabulate()
+            .then(function(election){
+              res.json(election.get('results'));
+            })
+        } else {
+          res.status(404);
+          res.end('Election object not found');
+        }
+      })
+  },
+
+  // view vote results - accessible to all users ( GET /elections/results:id )
+  getResultsById: function(id, req, res) {
+    this._checkForElection(id, req, res)
+      .then(function(election){
+        res.json(election);
+      });
+  }
 
 
 }
