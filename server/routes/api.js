@@ -23,6 +23,12 @@ var routes = function(app) {
    *  ===================================
    */
 
+  // list elections
+  router.route('/elections')
+    .get(function(req, res){
+      api.elections.list(req,res);
+    });
+
   // create an election
   router.route('/elections/create') 
     .post(function(req, res) {
