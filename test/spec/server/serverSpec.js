@@ -11,7 +11,7 @@ var express = require("express");
 var request = require("supertest-as-promised");
 var app = require('../../../server.js');
 
-describe('Node server', function(){
+xdescribe('Node server', function(){
 
   describe('Basic http routing', function(){
     it('should receive 200 status code on GET request', function(done){

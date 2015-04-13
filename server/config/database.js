@@ -103,17 +103,17 @@ db.knex.schema.hasTable('elections').then(function(exists) {
       elections.increments('id').primary();
       elections.integer('owner_id').references('id').inTable('users');
       elections.string('name');
-      elections.text('description');
+      elections.text('description').defaultTo('No description');
       elections.datetime('start');
       elections.datetime('end');
-      elections.boolean('timed');
-      elections.boolean('accepting_votes');
-      elections.boolean('locked');
-      elections.string('privacy_strategy');
+      elections.boolean('timed').defaultTo(false);
+      elections.boolean('accepting_votes').defaultTo(false);
+      elections.boolean('locked').defaultTo(false);
+      elections.string('privacy_strategy').defaultTo('secret');
       elections.string('url_handle');
-      elections.boolean('randomize_answer_order');
-      elections.boolean('two_factor_auth');
-      elections.boolean('force_two_factor_auth');
+      elections.boolean('randomize_answer_order').defaultTo(true);
+      elections.boolean('two_factor_auth').defaultTo(false);
+      elections.boolean('force_two_factor_auth').defaultTo(false);
       elections.json('results');
       elections.timestamps();
     }).then(function (table) {
