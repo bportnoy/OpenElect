@@ -14,6 +14,7 @@ var _electionId = null;
 var _successfulSubmit = false;
 var _receipt = null;
 var _ballotCreatedAt = null;
+var _sent = false;
 
 function add (id) {
   _questions[id] = {question_id: id, selection: null};
@@ -22,7 +23,7 @@ function add (id) {
 function setUserElection(userId, electionId){
   _userId = userId;
   _electionId = electionId;
-  console.log('uid: ' + _userId + ' eid: ' + _electionId);
+  _sent = false;
 }
 
 function changeSelection (id, selection) {
@@ -43,23 +44,24 @@ function sendBallot(){
     ballotToSend.response.selections.push(question);
   });
 
-  console.log('bts:'+ ballotToSend);
-
-  axios.post('/api/v1/ballots/create', {
-    ballot: ballotToSend
-  }).then(function(response){
-    if (response.data.election_id !== _electionId)
-      {console.error('Error: Election ID received does not match election ID sent.');}
-    else {
-      _receipt = response.data.receipt;
-      _ballotCreatedAt = response.data.created_at;
-      _successfulSubmit = true;
+  if (!_sent){
+    _sent = true;//for some reason, this is submitting twice. hacky fix!
+    axios.post('/api/v1/ballots/create', {
+      ballot: ballotToSend
+    }).then(function(response){
+      if (response.data.election_id !== _electionId)
+        {console.error('Error: Election ID received does not match election ID sent.');}
+      else {
+        _receipt = response.data.receipt;
+        _ballotCreatedAt = response.data.created_at;
+        _successfulSubmit = true;
+      }
+    })
+      .catch(function(response){
+        console.error(response);
+        //TODO: additional error handling.
+      });
     }
-  })
-    .catch(function(response){
-      console.error(response.statusText);
-      //TODO: additional error handling.
-    });
 }
 
 var BallotStore = assign({}, EventEmitter.prototype, {

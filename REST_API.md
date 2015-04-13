@@ -187,6 +187,7 @@ ___
       -u { USER_TOKEN }: \
       -d name="" \
       -d description="" \
+      -d election_id=""\
 ##### Example Response
 ###### Returns 201 status and JSON Object
     {

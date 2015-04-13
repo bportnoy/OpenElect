@@ -77,7 +77,6 @@ var routes = function(app) {
 
   /**
    *  routes for questions
-   *  ===================================
    */
 
   // create a poll - post only
@@ -98,7 +97,6 @@ var routes = function(app) {
 
   /**
    *  routes for ballots
-   *  ===================================
    */
 
   // create a ballot (user submits vote)

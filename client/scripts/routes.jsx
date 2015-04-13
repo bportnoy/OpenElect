@@ -18,11 +18,11 @@ var PollCreate = require('./components/modules/admin/PollForm.jsx');
 var routes = (
   <Route name='app' path='/' handler={App}>
     <Route name='vote' path='/vote/:electionId' handler={Vote}/>
-    <Route name='submitting' path='/vote/submitting' handler={Submitting} />
-    <Route name='submitted' path='/vote/submitted' handler={Submitted} />
-    <Route name='electionAdmin' path='/dashboard/election' handler={Election} />
+    <Route name='submitting' path='/submitting' handler={Submitting} />
+    <Route name='submitted' path='/submitted' handler={Submitted} />
     <Route name='electionCreate' path='/dashboard/election/create' handler={ElectionCreate} />
-    <Route name='pollCreate' path='/dashboard/poll/create' handler={PollCreate} />
+    <Route name='electionAdmin' path='/dashboard/election/view/:id' handler={Election} />
+    <Route name='pollCreate' path='/dashboard/poll/create/:electionId' handler={PollCreate} />
     <DefaultRoute name='index' handler={Index}/>
   </Route>
 );
@@ -32,12 +32,3 @@ exports.run = function(){
     React.render(<Handler/>, document.getElementById('app-view'));
   });
 };
-
-//Example of React Router nested views.
-// var routes = (
-//   <Route name="index" path="/" handler={Index}>
-//     <Route name="inbox" handler={Inbox}/>
-//     <Route name="calendar" handler={Calendar}/>
-//     <DefaultRoute handler={Dashboard}/>
-//   </Route>
-// );

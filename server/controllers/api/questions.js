@@ -11,7 +11,7 @@ var questions = {
 	create: function ( req, res ) {
 		if ( req.body.question ) {
       var data = req.body.question;
-      var options = req.body.options;
+      var options = req.body.question.options;
       console.log(data);
       var question = new Question({
         poll_id: data.poll_id,

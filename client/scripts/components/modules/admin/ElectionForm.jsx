@@ -25,34 +25,32 @@ var ElectionForm = React.createClass({
         router: React.PropTypes.func
     },
 
-    submitNewElection: function(e) {
+    submitElection: function(e) {
         e.preventDefault();
 
-        this.props = {
+        //TODO: a spinner or something
+
+        var electionData = {
             name:                   React.findDOMNode(this.refs.name).value.trim(),
             description:            React.findDOMNode(this.refs.description).value.trim(),
             url_handle:             React.findDOMNode(this.refs.url_handle).value.trim(),
-            start:                  React.findDOMNode(this.refs.start).value,
-            end:                    React.findDOMNode(this.refs.end).value,
+            start_date:                  React.findDOMNode(this.refs.start).value,
+            end_date:                    React.findDOMNode(this.refs.end).value,
+            is_timed:                  React.findDOMNode(this.refs.timed).value,
             privacy_strategy:       React.findDOMNode(this.refs.privacy_strategy).value,
-            randomize_answer_order: React.findDOMNode(this.refs.randomize_answer_order).value,
-            two_factor_auth:        React.findDOMNode(this.refs.two_factor_auth).value,
-            force_two_factor_auth:  React.findDOMNode(this.refs.force_two_factor_auth).value,
-            timed:                  React.findDOMNode(this.refs.timed).value,
-            accepting_votes:        React.findDOMNode(this.refs.accepting_votes).value
+            randomize_questions: React.findDOMNode(this.refs.randomize_answer_order).value,
+            allow_2_auth:        React.findDOMNode(this.refs.two_factor_auth).value,
+            force_2_auth:  React.findDOMNode(this.refs.force_two_factor_auth).value,
         };
 
-        var elections = this.state.data;
-        elections.push(election);
+        console.log(electionData);
+        axios.post('/api/v1/elections/create', {election: electionData})
+             .then(function(response){
+                //todo: kill the spinner
+                //transition to the next page, with parameter id equal to the new election id
+                this.context.router.transitionTo('electionAdmin', {id: response.data.id});
+             }.bind(this));
 
-        this.setState({data: elections}, function() {
-            axios.post('/', election)
-                .then(function(res) {
-                    this.setState({data: res});
-                });
-        });
-
-        this.context.router.transitionTo('electionAdmin');
     },
 
     render: function() {

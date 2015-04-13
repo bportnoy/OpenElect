@@ -11,10 +11,11 @@ var Poll = React.createClass({
 
     allQuestions.forEach(function(question){
       questions.push(<Question
-                        title={question.title}
+                        title={question.name}
                         instructions={question.instructions}
                         options={question.options}
-                        id={question.id} />);
+                        id={question.id}
+                        key={question.id}/>);
     });
 
     return (
