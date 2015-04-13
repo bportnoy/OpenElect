@@ -26,7 +26,7 @@ var elections = {
           res.status(404);
           req.send('Election object not found');
         }
-      })
+      });
   },
 
   // create a new election entry ( POST /elections/create )
@@ -37,8 +37,8 @@ var elections = {
       var election = new Election({
         name: data.name,
         description: data.description || 'no description',
-        start: data.start_date,
-        end: data.end_date,
+        // start: data.start_date, //TODO re-enable this - we need to ensure consistent date/time formatting between back and front
+        // end: data.end_date, 
         timed: data.is_timed,
         privacy_strategy: data.privacy_strategy,
         randomize_answer_order: data.randomize_questions,
@@ -76,7 +76,7 @@ var elections = {
           res.staus = 404;
           res.send();
         }
-      })
+      });
   },
 
   // election update method for administration ( POST /elections/update/:id )
@@ -95,7 +95,7 @@ var elections = {
                 ) { 
                     election.set(property, value); 
                 }
-          })
+          });
           election.save().then(function(election){
             res.send(election.toJSON());
           });
@@ -103,7 +103,7 @@ var elections = {
           res.status(404);
           res.end('Election object not found');
         }
-      })
+      });
   },
 
   voterGetById: function(id, req, res) {
@@ -116,9 +116,9 @@ var elections = {
         election.related('poll').load(['question'])
           .then(function(poll) {
             res.send(poll);
-          })
+          });
       }
-    })
+    });
   },
 
   // election request method for voters ( GET /elections/vote/:id )
@@ -160,12 +160,12 @@ var elections = {
           election.tabulate()
             .then(function(election){
               res.json(election.get('results'));
-            })
+            });
         } else {
           res.status(404);
           res.end('Election object not found');
         }
-      })
+      });
   },
 
   // view vote results - accessible to all users ( GET /elections/results:id )
@@ -177,6 +177,6 @@ var elections = {
   }
 
 
-}
+};
 
 module.exports = elections;

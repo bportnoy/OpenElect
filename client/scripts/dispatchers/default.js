@@ -2,23 +2,4 @@
 
 var Dispatcher = require('flux').Dispatcher;
 
-// var assign = require('object-assign');
-// var PayloadSources = require('../constants/payload-sources');
-
-// var DefaultDispatcher = assign(new Dispatcher(), {
-//   handleViewAction: function(action) {
-//     this.dispatch({
-//       source: PayloadSources.VIEW_ACTION,
-//       action: action
-//     });
-//   },
-
-//   handleOptionSelect: function(action) {
-//     this.dispatch({
-//       source: PayloadSources.OPTION_SELECT,
-//       action: action
-//     });
-//   }
-// });
-
 module.exports = new Dispatcher();

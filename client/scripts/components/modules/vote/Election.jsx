@@ -12,16 +12,16 @@ var Election = React.createClass({
   },
 
   submitBallot: function(){
+    BallotActions.submitBallot(this.props.id, this.props.userId);
     this.context.router.transitionTo('submitting');
-    // BallotActions.submitBallot(this.props.id, this.props.userId);
   },
 
   render: function() {
     var allPolls = this.props.polls;
     var polls = [];
 
-    allPolls.forEach(function(poll){
-      polls.push(<Poll name={poll.pollName} questions={poll.questions} />);
+    allPolls && allPolls.forEach(function(poll){
+      polls.push(<Poll name={poll.name} questions={poll.question} key={poll.id}/>);
     });
 
     return (

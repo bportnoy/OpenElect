@@ -21,7 +21,8 @@ var Question = React.createClass({
                               party={option.party}
                               statement={option.statement}
                               id={option.id}
-                              questionId={this.props.id} />);
+                              questionId={this.props.id}
+                              key={option.id}/>);
     }.bind(this));
 
     return (

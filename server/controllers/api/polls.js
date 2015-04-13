@@ -9,8 +9,8 @@ var Poll = require('../../database/models/poll');
 var polls = {
 	
 	create: function ( req, res ) {
-		if ( req.body.poll ) {
-      var data = req.body.poll;
+		if ( req.body ) {
+      var data = req.body;
       console.log(data);
       var poll = new Poll({
         name: data.name,
