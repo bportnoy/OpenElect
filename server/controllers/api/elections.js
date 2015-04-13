@@ -29,6 +29,17 @@ var elections = {
       });
   },
 
+  // list elections ( GET /elections )
+  list: function(req, res) {
+    var election = new Election;
+    election.fetchAll({
+      withRelated: ['poll']
+    })
+    .then(function(collection){
+      res.send(collection.toJSON());
+    });
+  },
+
   // create a new election entry ( POST /elections/create )
   create: function(req, res) {
     if ( req.body.election ) {
@@ -106,6 +117,7 @@ var elections = {
       });
   },
 
+  // currently in use by endpoint - see future version below, requires front-end refactor
   voterGetById: function(id, req, res) {
     var election = new Election({ id: id });
     election.fetch({
