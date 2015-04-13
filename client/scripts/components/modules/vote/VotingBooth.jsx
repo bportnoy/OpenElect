@@ -33,6 +33,8 @@ var VotingBooth = React.createClass({
   },
   
   render: function() {
+    if (this.state.polls === null) return (<i className="fa fa-circle-o-notch fa-spin fa-5x page-loading"></i>);
+
     return (
       <div>
         <Election

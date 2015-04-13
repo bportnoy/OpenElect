@@ -1,3 +1,5 @@
+'use strict';
+
 var db = require('../../config/database');
 var Question = require('./question');
 var Election = require('./election');
@@ -8,14 +10,16 @@ var Poll = db.Model.extend({
   hasTimestamps: true,
 
   question: function(){
-    return this.hasMany(Question);
+    return this.hasMany('Question');
   },
+
   election: function(){
-    return this.belongsTo(Election);
+    return this.belongsTo('Election');
   },
+
   group: function(){
-    return this.hasOne(Group);
+    return this.hasOne('Group');
   }
 });
 
-module.exports = Poll;
+module.exports = db.model('Poll', Poll);

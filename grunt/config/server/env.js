@@ -12,12 +12,14 @@ var taskConfig = function(grunt) {
       DB_USER: "skillfulcactus-dev",
       DB_PASSWORD: "skdev",
       DB_NAME: "skillfulcactus",
-      PORT: "5432"
+      PORT: "5432",
+      // SESSION_SECRET: "sk-dev-secret"
     },
     prod: {
       NODE_ENV: 'production'
     },
     all: {
+      SESSION_SECRET: "sk-dev-secret"
       // Environment variables that are always loaded
 
     }

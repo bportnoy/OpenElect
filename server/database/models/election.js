@@ -1,7 +1,9 @@
+'use strict';
+
 var db = require('../../config/database');
+var Poll = require('./poll');
 var User = require('./user');
 var Ballot = require('./ballot');
-var Poll = require('./poll');
 
 // Get all ballot from DB
 var ballotArray, selection;
@@ -29,14 +31,17 @@ var Election = db.Model.extend({
   hasTimestamps: true,
 
   user: function(){
-    return this.hasMany(User);
+    return this.hasMany('User');
   },
+
   ballot: function(){
-    return this.hasMany(Ballot);
+    return this.hasMany('Ballot');
   },
+
   poll: function(){
-    return this.hasMany(Poll);
+    return this.hasMany('Poll');
   },
+  
   tabulate: function() {
     var that = this;
     return Ballot.where({election_id: that.get('id')}).fetchAll().then(function(ballot){
@@ -50,5 +55,4 @@ var Election = db.Model.extend({
   }
 });
 
-
-module.exports = Election;
+module.exports = db.model('Election', Election);

@@ -1,3 +1,5 @@
+'use strict';
+
 var db = require('../../config/database');
 
 var Session = db.Model.extend({
@@ -6,4 +8,4 @@ var Session = db.Model.extend({
   
 });
 
-module.exports = Session;
+module.exports = db.model('Session', Session);

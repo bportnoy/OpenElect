@@ -260,3 +260,12 @@ input[type=submit], button {
   border: solid 1px #ccc;
   padding: 2em;
 }
+
+.warning {
+  font-weight: bold;
+  color: red;
+}
+
+.page-loading {
+  @include center(both);
+}

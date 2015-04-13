@@ -7,6 +7,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var _ = require('lodash');
+var passport = require('../config/passport');
 
 // controllers live here
 var api = require('../controllers/api');
@@ -17,6 +18,22 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
 var routes = function(app) {
+
+  /**
+   *  routes for user authentication
+   *  ===================================
+   */
+
+  //login
+  router.route('/users/signup')
+    .post(function(req, res){
+      api.users.create(req,res);
+    });
+
+  router.route('/users/login')
+    .post(passport.authenticate('local'), function(req, res){
+      res.status(200).send('index');
+    });
 
   /**
    *  routes for elections

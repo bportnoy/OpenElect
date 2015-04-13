@@ -11,13 +11,14 @@ var elections = require('./api/elections');
 var polls = require('./api/polls');
 var questions = require('./api/questions');
 var ballots = require('./api/ballots');
+var users = require('./api/users');
 
 var api = { // an object to contain all response handlers
   elections: elections,
   polls: polls,
   questions: questions,
   ballots: ballots,
-  users: null, // todo: create controllers
+  users: users,
   groups: null // todo: create controllers
 };
 
