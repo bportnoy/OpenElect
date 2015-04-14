@@ -1,3 +1,5 @@
+'use strict';
+
 var db = require('../../config/database');
 var Poll = require('./poll');
 
@@ -10,4 +12,4 @@ var Question = db.Model.extend({
   }
 });
 
-module.exports = Question;
+module.exports = db.model('Question', Question);

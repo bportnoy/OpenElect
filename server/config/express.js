@@ -11,10 +11,14 @@ var logger = require('morgan');
 var path = require('path');
 var methodOverride = require('method-override');
 var errorHandler = require('errorhandler');
+var session = require('express-session');
+var BookshelfStore = require('connect-bookshelf')(session);
+var SessionModel = require('../database/models/session');
 
 // Configuration files
 var settings = require('./env/default');
 var security = require('./security');
+var passport = require('./passport');
 
 var expressConfig = function(app, express, db) {
 
@@ -62,6 +66,18 @@ var expressConfig = function(app, express, db) {
 
   // Setup log level for server console output
   app.use(logger(settings.server.logLevel));
+
+  //set up sessions and authentication
+  // app.use(session({
+  //   secret: process.env.SESSION_SECRET,
+  //   resave: false,
+  //   saveUninitialized: true,
+  //   store: new BookshelfStore({model: SessionModel})
+  // }));
+
+  app.use(passport.initialize());
+  // app.use(passport.session());
+  //sessions & auth
 
   if (env === 'development') {
 

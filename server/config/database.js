@@ -19,15 +19,15 @@ var knex = require('knex')({
   }, debug: false
 });
 
-// console.log("Environt variable", process.env);
-
 var db = require('bookshelf')(knex);
+
+db.plugin('registry'); // registry plugin handles node circular dependency issues
 
 db.knex.schema.hasTable('users').then(function(exists) {
   if (!exists) {
     db.knex.schema.createTable('users', function (users) {
-      users.increments('id').primary();
-      users.string('email');
+      users.increments('id');
+      users.string('email').unique();
       users.string('password');
       users.string('first_name');
       users.string('last_name');
@@ -44,7 +44,7 @@ db.knex.schema.hasTable('users_groups').then(function(exists) {
     db.knex.schema.createTable('users_groups', function (users_groups) {
       users_groups.increments('id').primary();
       users_groups.integer('user_id').references('id').inTable('users');
-      users_groups.string('group_id').references('id').inTable('groups');
+      users_groups.integer('group_id').references('id').inTable('groups');
       users_groups.timestamps();
     }).then(function (table) {
       console.log('Created Table', table);
