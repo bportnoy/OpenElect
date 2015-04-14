@@ -5,67 +5,67 @@ var axios = require('axios');
 
 var Results = React.createClass({
 
+  contextTypes: {
+    router: React.PropTypes.func
+  },
+
   getInitialState: function() {
 
-    function getQuestions() {
-      return axios.get('/elections/'+{this.id});
+    // Helper function to get election response object
+    function getQuestions(election_id) {
+      return axios.get( '/elections/' + election_id );
     }
 
-    function getResults() {
-      return axios.get('/elections/results/'+{this.id});
+    // Helper function to get results response object
+    function getResults(election_id) {
+      return axios.get( '/elections/results/' + election_id );
     }
 
-    var election = axios.all([getQuestions(), getResults()])
-      .then(axios.spread(function(allQuestions, allResults) {
-        var data = {};
-
-        data.electionName = allQuestions.props.pollName;
-        data.allQuestions = allQuestions.props.questions;
-        data.allResults = allResults.props.results.questions;
-
-        return data;
+    // Get election questions and results
+    var election_id = this.context.router.getCurrentParams().electionId;
+    var election = axios
+      .all([getQuestions(election_id), getResults(election_id)])
+      .then(axios.spread(function(election, resultSummary) {
+        return {
+          electionName: election.props.pollName,
+          election: election.props.questions,
+          resultSummary: resultSummary.props.results.questions,
+        };
       }));
   },
 
   render: function() {
     var results = [];
 
-    this.allQuestions.forEach(function(element) {
-      questions.push(
-        <h5>element.question</h5>
-        insertOptions(element.);
-      );
-    });
-
-    function insertOptions() {
-    for (var optIndex = 0; optIndex < this.allQuestions.options.length; optIndex++ ) {
-      results.push(
-        <h5 className='result-question'>this.allQuestions[qIndex].question</h5>
-        <h5 className='result-vote-count'>
-          <span className='result-option-name'>this.allQuestions[].</span>
-          <span className='result-option-party'>this.allQuestions[idx]</span>
-          <span className='result-option-votes'>this.allResults[idx]</span>
-        </h5>
-      );
-
+    // Helper function to get option information and vote count for a question
+    function insertVoteCounts(index) {
+      for (var j = 1; j <= this.resultSummary[index].totals.length; j++) {
+        return(
+          <h5><span className='result-name'>{ this.election[index].options[j].name }</span>
+          <span className='result-party'>this.election[index].options[j].party</span>
+          <span className='result-votes'>this.resultSummary[index].totals[j].votes</span></h5>
+        );
+      }
     }
 
+    // Add formatted questions to results array
+    for (var i = 1; i <= this.resultSummary.length; i++ ) {
+      results.push(
+        <div className='question-vote-count'>
+          <h2>Question { i }</h2>
+          <h5>{ this.election[i].question }</h5>
+          <h2>Response</h2>
+          { insertVoteCounts(i) }
+        </div>
+      );
+    }
 
     return (
-      <h1>Election Results</h1>
-      <h3>{ this.electionName }</h3>
-
-      <h1>Questions</h1>
-
-
-      // for each question at index, print question index and prompt
-      <h3>{ index }. { election.props.questions[index].question }<h3>
-        // for each option n, print option and votecount
-        <p>
-          <span>Name: { election.props.questions[index].options[n].name }</span>
-          <span>Party: { election.props.questions[index].options[n].party }</span>
-          <span>Vote count: { result.props.results.questions[index].totals[n].votes }</span>
-        </p>
+      <div className='result'>
+        <h1>Election Results for</h1>
+        <h3>{ this.electionName }</h3>
+        <div>{ results }</div>
+      </div>
     )
   }
 });
