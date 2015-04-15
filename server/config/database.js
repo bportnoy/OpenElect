@@ -26,7 +26,7 @@ db.plugin('registry'); // registry plugin handles node circular dependency issue
 db.knex.schema.hasTable('users').then(function(exists) {
   if (!exists) {
     db.knex.schema.createTable('users', function (users) {
-      users.increments('id');
+      users.uuid('id').primary();
       users.string('email').unique();
       users.string('password');
       users.string('first_name');
