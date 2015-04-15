@@ -24,9 +24,9 @@ API affordances in the form of the links in the JSON body.
 
 Resources related to Elections in the API.
 
-## Election [/id/{election_id}]
+## Election [/elections]
 
-A Question object has the following attributes:
+Elections are the top-level organizational unit for OpenElect content. Elections contain polls, which contain questions. 
 
 + question
 + published_at - An ISO8601 date when the question was published.
@@ -36,34 +36,32 @@ A Question object has the following attributes:
 + Parameters
     + election_id (required, number, `1`) ... ID of the Election in form of an integer
 
-### Retrieve an Election Detail [GET]
+### List all Elections [GET]
 
 + Response 200 (application/json)
 
-                {
-                    "question": "Favourite programming language?",
-                    "published_at": "2014-11-11T08:40:51.620Z",
-                    "url": "/questions/1",
-                    "choices": [
-                        {
-                            "choice": "Swift",
-                            "url": "/questions/1/choices/1",
-                            "votes": 2048
-                        }, {
-                            "choice": "Python",
-                            "url": "/questions/1/choices/2",
-                            "votes": 1024
-                        }, {
-                            "choice": "Objective-C",
-                            "url": "/questions/1/choices/3",
-                            "votes": 512
-                        }, {
-                            "choice": "Ruby",
-                            "url": "/questions/1/choices/4",
-                            "votes": 256
-                        }
-                    ]
-                }
+                [
+                    {
+                    "id": 2,
+                    "owner_id": 1,
+                    "name": "2016 Federal Electioons",
+                    "description": "Federal elections for United States Presidency and Congress",
+                    "start": "2016-11-08T08:00:00.000Z",
+                    "end": "2016-11-10T08:00:00.000Z",
+                    "timed": true,
+                    "accepting_votes": null,
+                    "locked": null,
+                    "privacy_strategy": "secret",
+                    "url_handle": null,
+                    "randomize_answer_order": true,
+                    "two_factor_auth": true,
+                    "force_two_factor_auth": false,
+                    "results": null,
+                    "created_at": "2015-04-10T23:18:16.016Z",
+                    "updated_at": "2015-04-10T23:18:16.016Z",
+                    "poll": [ ]
+                    }
+                ]
 
 ## Choice [/questions/{question_id}/choices/{choice_id}]
 
