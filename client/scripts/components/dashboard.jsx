@@ -1,15 +1,23 @@
 'use strict';
 
+// dependencies
 var React = require('react/addons');
 var DefaultLayout = require('./layouts/default.jsx');
 var Link = require('react-router').Link;
 var axios = require('axios');
+var _ = require('underscore');
 
-// Custom components
+// store and actions
+var ElectionStore = require('../stores/ElectionStore.js');
+var ElectionActions = require('../actions/ElectionActions.js');
+
+// components
 var ListElection = require('./modules/admin/ListElection.jsx');
 var Spinner = require('./widgets/Spinner.jsx');
 
-// The Index Page
+// STUB DATA
+var userId = 1;
+
 var IndexComponent = React.createClass({
 
   mixins: [React.addons.LinkedStateMixin],
@@ -28,18 +36,8 @@ var IndexComponent = React.createClass({
     this.context.router.transitionTo('/results/' + election);
   },
 
-  getElections: function() {
-    axios.get('/api/v1/elections')
-      .then(function(response){
-        this.setState( { elections: response.data } );
-      }.bind(this))
-      .catch(function(error){
-
-      });
-  },
-
   getInitialState: function () {
-    this.getElections();
+    ElectionActions.getUserElections(userId);
     return {
       elections: null,
       voteText: '',
@@ -48,9 +46,10 @@ var IndexComponent = React.createClass({
 
   render: function() {
     var elections;
-    if (this.state.elections) {
+    var userElections = ElectionStore.getCurrentUserElections();
+    if ( _.size(userElections) ) {
       elections = [];
-      this.state.elections.forEach(function(election){
+      userElections.forEach(function(election){
         elections.push(<ListElection name={election.name} description={election.description} start={election.start} key={election.id}/>);
       });
     } else {
@@ -64,13 +63,13 @@ var IndexComponent = React.createClass({
           <ul>{elections}</ul>
           <h3><Link to='electionCreate'>Create an Election</Link></h3>
         </div>
-        <h2>Vote in an Election:</h2><input type='text' 
-                                                placeholder='Enter election ID'
-                                                valueLink={this.linkState('voteText')}/>
+        <h2>Vote in an Election:</h2><input type='text'
+                                            placeholder='Enter election ID'
+                                            valueLink={this.linkState('voteText')}/>
                                         <button onClick={this.goVote}>Vote!</button>
         <h2>View Results</h2><input type='text'
-                                        placeholder='Enter election ID'
-                                        valueLink={this.linkState('resultsText')} /><button>Who won?</button>
+                                    placeholder='Enter election ID'
+                                    valueLink={this.linkState('resultsText')} /><button>Who won?</button>
         <h5><a href='/docs/api/index.html'>API Reference</a></h5>
         <h5><a href='/docs/styleguide/index.html'>Style Guide</a></h5>
       </div>

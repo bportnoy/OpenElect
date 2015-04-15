@@ -46,6 +46,13 @@ var routes = function(app) {
       api.elections.list(req,res);
     });
 
+
+  // list elections by owner
+  router.route('/elections/owner/:id')
+    .get(function(req, res) {
+      api.elections.ownerList(req.params.id, req, res);
+    });
+
   // create an election
   router.route('/elections/create') 
     .post(function(req, res) {
@@ -68,12 +75,12 @@ var routes = function(app) {
     });
 
   // begin vote tabulation or view results
-  router.route('/elections/results/:id') 
+  router.route('/elections/results/:id')
     .get(function(req, res) {
-      api.elections.tabulate(req.params.id, req, res);
+      api.elections.getResultsById(req.params.id, req, res);
     })
     .post(function(req, res) {
-      api.elections.getResultsById(req.params.id, req, res);
+      api.elections.tabulate(req.params.id, req, res);
     });
 
 

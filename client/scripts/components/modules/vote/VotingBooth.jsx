@@ -5,6 +5,7 @@ var Election = require('./Election.jsx');
 var BallotStore = require('../../../stores/BallotStore');
 var BallotActions = require('../../../actions/BallotActions');
 var axios = require('axios');
+var Spinner = require('../../widgets/Spinner.jsx');
 
 var VotingBooth = React.createClass({
   
@@ -33,7 +34,7 @@ var VotingBooth = React.createClass({
   },
   
   render: function() {
-    if (this.state.polls === null) return (<i className="fa fa-circle-o-notch fa-spin fa-5x page-loading"></i>);
+    if (this.state.polls === null) return (<Spinner/>);
 
     return (
       <div>

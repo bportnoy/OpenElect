@@ -34,13 +34,13 @@ var ElectionForm = React.createClass({
             name:                   React.findDOMNode(this.refs.name).value.trim(),
             description:            React.findDOMNode(this.refs.description).value.trim(),
             url_handle:             React.findDOMNode(this.refs.url_handle).value.trim(),
-            start_date:                  React.findDOMNode(this.refs.start).value,
-            end_date:                    React.findDOMNode(this.refs.end).value,
-            is_timed:                  React.findDOMNode(this.refs.timed).value,
+            start_date:             React.findDOMNode(this.refs.start).value,
+            end_date:               React.findDOMNode(this.refs.end).value,
+            is_timed:               React.findDOMNode(this.refs.timed).value,
             privacy_strategy:       React.findDOMNode(this.refs.privacy_strategy).value,
-            randomize_questions: React.findDOMNode(this.refs.randomize_answer_order).value,
-            allow_2_auth:        React.findDOMNode(this.refs.two_factor_auth).value,
-            force_2_auth:  React.findDOMNode(this.refs.force_two_factor_auth).value,
+            randomize_questions:    React.findDOMNode(this.refs.randomize_answer_order).value,
+            allow_2_auth:           React.findDOMNode(this.refs.two_factor_auth).value,
+            force_2_auth:           React.findDOMNode(this.refs.force_two_factor_auth).value,
         };
 
         console.log(electionData);
@@ -64,11 +64,12 @@ var ElectionForm = React.createClass({
                 <h3>Description</h3>
                 <textarea rows='4' cols='70' className='description-field' placeholder='Enter a detailed description of the election, 1000 characters max' ref='description'></textarea>
 
-                <h3>URL handle</h3>
-                <input type='text' placeholder='Enter a URL handle with no spaces (i.e. http://municipal.gov/clark-county-2015-election)' ref='url_handle' />
+                <h3>Election Handle</h3>
+                <label htmlFor="handle">A unique, url-compatible name for your election. Users will be able to go to https://openelect.org/elections/vote/</label>
+                <input name="handle" type='text' placeholder='Enter a URL handle with no spaces (i.e. http://municipal.gov/clark-county-2015-election)' ref='url_handle' />
 
                 <h3>Timed Election</h3>
-                <input type='checkbox' ref='timed' defautChecked='true' />Election has preset start and end dates
+                <input name="timed" type='checkbox' ref='timed' defautChecked='true' /><label htmlFor="timed">Election has preset start and end dates</label>
 
                 <h3>Election date</h3>
                     <h5>Start date</h5>
