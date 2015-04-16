@@ -40,6 +40,14 @@ var elections = {
     });
   },
 
+  ownerList: function(userId, req, res) {
+    var election = new Election({ owner_id: userId });
+    election.fetchAll()
+    .then(function(collection){
+      res.send(collection.toJSON());
+    });
+  },
+
   // create a new election entry ( POST /elections/create )
   create: function(req, res) {
     if ( req.body.election ) {

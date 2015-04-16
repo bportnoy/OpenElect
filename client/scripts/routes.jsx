@@ -11,6 +11,7 @@ var App = require('./components/layouts/app.jsx');
 var Vote = require('./components/modules/vote/VotingBooth.jsx');
 var Submitting = require('./components/modules/vote/Submitting.jsx');
 var Submitted = require('./components/modules/vote/Submitted.jsx');
+var Dashboard = require('./components/dashboard.jsx');
 var Election = require('./components/modules/admin/ElectionAdmin.jsx');
 var ElectionCreate = require('./components/modules/admin/ElectionForm.jsx');
 var PollCreate = require('./components/modules/admin/PollForm.jsx');
@@ -23,6 +24,7 @@ var routes = (
     <Route name='vote' path='/vote/:electionId' handler={Vote}/>
     <Route name='submitting' path='/submitting' handler={Submitting} />
     <Route name='submitted' path='/submitted' handler={Submitted} />
+    <Route name='dashboard' path='/dashboard' handler={Dashboard} />
     <Route name='electionCreate' path='/dashboard/election/create' handler={ElectionCreate} />
     <Route name='electionAdmin' path='/dashboard/election/view/:id' handler={Election} />
     <Route name='pollCreate' path='/dashboard/poll/create/:electionId' handler={PollCreate} />

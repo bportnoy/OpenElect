@@ -20,8 +20,8 @@ var Poll = React.createClass({
 
     return (
       <section className='poll'>
-      <h1 className='poll-title'>{this.props.name}</h1>
-      <div className='question-list'>{questions}</div>
+        <h1 className='poll-title'>{this.props.name}</h1>
+        <div className='question-list'>{questions}</div>
       </section>
     );
   }
