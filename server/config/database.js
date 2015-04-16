@@ -31,6 +31,11 @@ db.knex.schema.hasTable('users').then(function(exists) {
       users.string('password');
       users.string('first_name');
       users.string('last_name');
+      users.text('public_key');
+      users.text('private_key');
+      users.string('key_status'); //can be 'waiting' (key has not yet been generated), 
+                                    //'site' (we automatically generated a keypair),
+                                    //'user' (the user supplied an OpenPGP keypair)
       users.integer('admin_level');
       users.timestamps();
     }).then(function (table) {
@@ -114,6 +119,7 @@ db.knex.schema.hasTable('elections').then(function(exists) {
       elections.boolean('randomize_answer_order').defaultTo(true);
       elections.boolean('two_factor_auth').defaultTo(false);
       elections.boolean('force_two_factor_auth').defaultTo(false);
+      elections.text('public_key'); //the key that will be used to encrypt this election
       elections.json('results');
       elections.timestamps();
     }).then(function (table) {

@@ -6,6 +6,7 @@ var Ballot = require('./ballot');
 var Election = require('./election');
 var Promise = require('bluebird');
 var scrypt = require('scrypt');
+var Security = require('../../controllers/security');
 
 //set up scrypt with strong work factor and set up encoding of hash and verify input/output
 var scryptParams = {N:16384, r:8, p:1};
@@ -33,6 +34,7 @@ var User = db.Model.extend({
 
   initialize: function(){
     this.on('creating', this.hashPassword);
+    this.on('created', this.generateKeys);
   },
 
   hashPassword: function(){
@@ -52,6 +54,10 @@ var User = db.Model.extend({
     });
   },
 
+  generateKeys: function () {
+    Security.requestUserKey(this.get('id'));
+  },
+
   verifyPassword: function(attemptedPassword){
     return new Promise(function(resolve,reject){
       scrypt.verify(this.get('password'), new Buffer(attemptedPassword), function(err, result){
@@ -65,15 +71,3 @@ var User = db.Model.extend({
 });
 
 module.exports = db.model('User', User);
-
-// console.log(scrypt.Hash);
-
-
-// console.log('hash is');
-// scrypt.hash(new Buffer('test'), scryptParams, function(err, result){
-//   console.log('err ' + err);
-//   console.log('result ' + result);
-//   var hashed = result;
-//   // new Promise()
-//   console.log(scrypt.verify(hashed, new Buffer('test')));
-// });
