@@ -87,5 +87,6 @@ One example of results save to election
      question: 'Best eater in 2015' },
   '3':
    { selection: { Marcus: 3, Brian: 1 },
-     question: 'Tallest guy in 2015' } }
+     question: 'Tallest guy in 2015' } },
+  'question': "2016 Federal President"
 */
