@@ -16,6 +16,3 @@ test/scripts/bundle.js
 !.elasticbeanstalk/*.global.yml
 # ignore vagrant files
 .vagrant/
-
-#Don't check keys into source control!
-grunt/config/server/env.js
