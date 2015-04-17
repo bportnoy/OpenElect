@@ -1,7 +1,7 @@
 'use strict';
 
 var Dispatcher = require('../dispatchers/default');
-var constants = require('../constants/BallotConstants');
+var constants = require('../constants/Constants');
 var EventEmitter = require('events').EventEmitter;
 var _ = require('underscore');
 var assign = require('object-assign');

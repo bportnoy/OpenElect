@@ -1,7 +1,7 @@
 'use strict';
 
 var Dispatcher = require('../dispatchers/default');
-var ElectionConstants = require('../constants/ElectionConstants');
+var ElectionConstants = require('../constants/Constants');
 var EventEmitter = require('events').EventEmitter;
 
 
