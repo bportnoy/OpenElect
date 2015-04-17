@@ -103,16 +103,20 @@ a {
 
 .question-container {
   margin-bottom: 1em;
+  top-border: solid 4px #222;
 }
 
 .question {
-  background-color: lightgrey;
-  padding: 1em .5em .5em 1em;
+  background-color: #eee;
+  padding: 1em;
+  padding-left: 3em;
   position: relative;
 }
 
 .options-container {
-  margin: 0 0 0 1em;
+  margin: 1em;
+  padding-left: 2em;
+  min-height: 220px;
 }
 
 .candidate-info {
@@ -166,30 +170,28 @@ a {
   @include center(x);
 }
 
-
 .footer {
-  height: 2em;
-  background-color: lightgrey;
-}
-
-.footer p {
-  padding-top: .5em;
-  margin-top: 0em;
+  bottom: 0;
+  width: 100%;
+  margin: 0;
+  padding: 0.2em;
+  background-color: #ddd;
+  text-align: center;
 }
 
 .header {
   height: 52px;
-  background-color: lightgrey;
+  background-color: #ddd;
   text-decoration:none;
   color: #222;
 }
 
 .header h1 {
-  font-size: 1.4em;
+  font-size: 1.2em;
   font-weight: normal;
   margin-top: 0;
   padding: 1em;
-  padding-top: 15px;
+  padding-top: 17px;
   position: absolute;
 }
 .header p {
@@ -219,6 +221,7 @@ a {
     height: $footer-height;
   }
 }
+
 
 .election-form, .poll-form {
   margin: auto;
@@ -284,3 +287,14 @@ input[type=submit], button {
 }
 
 @import 'date-picker';
+
+ul {
+  list-style-type: none;
+}
+
+.fa-circle-o-notch {
+  color: #aaa;
+  padding: 4em 0 4em 0;
+  margin: auto;
+}
+

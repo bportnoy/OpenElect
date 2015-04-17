@@ -28,7 +28,7 @@ var Question = React.createClass({
     return (
       <div className='question-container'>
         <div className='question'>
-          <h3>{this.props.title}</h3>
+          <h2>{this.props.title}</h2>
           <i className='fa fa-check-circle-o fa-2x pull-right vote-status'/>
         </div>
         <div className='options-container'>
