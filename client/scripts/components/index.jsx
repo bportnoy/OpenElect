@@ -10,6 +10,11 @@ var ListElection = require('./modules/admin/ListElection.jsx');
 var Spinner = require('./widgets/Spinner.jsx');
 
 // The Index Page
+/*
+  todo!!! Make this the landing page for the site!
+  -------------------------------------------------
+  ignore the code below - it has been moved to dashboard.jsx
+ */
 var IndexComponent = React.createClass({
 
   mixins: [React.addons.LinkedStateMixin],
@@ -17,6 +22,7 @@ var IndexComponent = React.createClass({
   contextTypes: {
     router: React.PropTypes.func
   },
+
 
   goVote: function () {
     var election = this.state.voteText;
@@ -26,16 +32,6 @@ var IndexComponent = React.createClass({
   whoWon: function () {
     var election = this.state.resultsText;
     this.context.router.transitionTo('/elections/' + election);
-  },
-
-  getElections: function() {
-    axios.get('/api/v1/elections')
-      .then(function(response){
-        this.setState( { elections: response.data } );
-      }.bind(this))
-      .catch(function(error){
-
-      });
   },
 
   getInitialState: function () {

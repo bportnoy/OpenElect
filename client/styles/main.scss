@@ -270,3 +270,5 @@ input[type=submit], button {
 .page-loading {
   @include center(both);
 }
+
+@import 'date-picker';

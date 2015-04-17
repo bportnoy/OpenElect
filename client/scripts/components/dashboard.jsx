@@ -41,16 +41,25 @@ var IndexComponent = React.createClass({
     return {
       elections: null,
       voteText: '',
-      resultsText: ''};
+      resultsText: ''
+    };
+  },
+
+  componentDidMount: function() {
+    ElectionStore.addChangeListener(this._onChange);
+  },
+
+  componentWillUnmount: function() {
+    ElectionStore.removeChangeListener(this._onChange);
   },
 
   render: function() {
     var elections;
-    var userElections = ElectionStore.getCurrentUserElections();
+    var userElections = this.state.elections;
     if ( _.size(userElections) ) {
       elections = [];
-      userElections.forEach(function(election){
-        elections.push(<ListElection name={election.name} description={election.description} start={election.start} key={election.id}/>);
+      _.each(userElections, function(election){
+        elections.push(<ListElection name={election.name} description={election.description} start={election.start} key={election.id} id={election.id}/>);
       });
     } else {
       elections = Spinner;
@@ -73,6 +82,13 @@ var IndexComponent = React.createClass({
         <h5><a href='/docs/styleguide/index.html'>Style Guide</a></h5>
       </div>
     );
+  },
+
+  _onChange: function () {
+    var elections = ElectionStore.currentUserElections();
+    this.setState({
+      elections: elections
+    });
   }
 
 });

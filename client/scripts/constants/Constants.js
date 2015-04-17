@@ -9,5 +9,6 @@ module.exports = keyMirror({
   SUBMIT_BALLOT: null,
   SET_USER_ELECTION: null,
   GET_USER_ELECTIONS: null,
-  SAVE_GROUP_NAME: null
+  SAVE_GROUP_NAME: null,
+  SET_ELECTION_DATA: null
 });

@@ -3,6 +3,9 @@
 var React = require('react');
 var ReactPropTypes = React.PropTypes;
 var axios = require('axios');
+var DatePicker = require('react-date-picker');
+var ElectionStore = require('../../../stores/ElectionStore');
+var ElectionActions = require('../../../actions/ElectionActions');
 
 var ElectionForm = React.createClass({
 
@@ -53,6 +56,16 @@ var ElectionForm = React.createClass({
 
     },
 
+    changeStartDate: function(dateString, moment, isStart) {
+        ElectionActions.setElectionData('start_date', dateString);
+    },
+
+    changeEndDate: function(dateString, moment, isStart) {
+        console.log(dateString);
+        console.log(moment);
+        console.log(isStart);
+    },
+
     render: function() {
         return (
             <form className='election-form' onSubmit={this.handleSubmit}>
@@ -73,9 +86,9 @@ var ElectionForm = React.createClass({
 
                 <h3>Election date</h3>
                     <h5>Start date</h5>
-                    <input type='date' ref='start' />
+                    <DatePicker onChange={this.changeStartDate}></DatePicker>
                     <h5>End date</h5>
-                    <input type='date' ref='end' />
+                    <DatePicker onChange={this.changeEndDate}></DatePicker>
 
                 <h3>Ballot Privacy</h3>
                     <input type='radio' ref='privacy_strategy' name='privacy_strategy' value='open_ballot' />Public ballot, public voter participation<br />
