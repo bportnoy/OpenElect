@@ -5,7 +5,7 @@
 
 'use strict';
 
-var pageStore = require('../../../client/scripts/stores/page');
+// var pageStore = require('../../../client/scripts/stores/page');
 
 xdescribe('Page Store', function() {
 
