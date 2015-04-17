@@ -2,96 +2,140 @@
 
 var React = require('react/addons');
 var axios = require('axios');
-var ValidationMixin = require('react-validation-mixin');
-var Joi = require('joi'); // replace with joi-react shim
+var Formsy = require('formsy-react');
+var Modal = require('react-modal');
+var TextInputField = require('../widgets/TextInputField.jsx');
+var PasswordInputField = require('../widgets/PasswordInputField.jsx');
 
-var SignUp = React.createClass({
 
-  mixins: [React.addons.LinkedStateMixin],
+var appElement = document.getElementById('app-view');
 
-  // componentDidMount: function() {
-  //   //something will go here
-  // },
+Modal.setAppElement(appElement);
+Modal.injectCSS();
 
-  mixins: [ValidationMixin, React.addons.LinkedStateMixin],
+
+var SignUpForm = React.createClass({
 
   contextTypes: {
     router: React.PropTypes.func
   },
 
-  // validatorTypes: {
-  //   first_name: Joi.string().required().label('First Name'),
-  //   last_name: Joi.string().required().label('Last Name'),
-  //   email: Joi.string().email().required().label('E-mail Address'),
-  //   password: Joi.string().regex(/[a-zA-Z0-9]{3,30}/).required().label('Password')
-  // },
+  propTypes: {
+    first_name: React.PropTypes.string,
+    last_name: React.PropTypes.string,
+    email: React.PropTypes.string,
+    password: React.PropTypes.string
+  },
 
   getInitialState: function() {
     return {
       first_name: '',
       last_name: '',
       email: '',
-      password: ''
+      password: '',
+      canSubmit: false,
+      modalIsOpen: true
     };
   },
 
-  handleSubmit: function (e) {
+  openModal: function() {
+    this.setState({modalIsOpen: true});
+  },
 
-    e.preventDefault();
+  closeModal: function() {
+    this.setState({modalIsOpen: false});
+  },
 
+  enableButton: function () {
+    this.setState({
+      canSubmit: true
+    });
+  },
+
+  disableButton: function () {
+    this.setState({
+      canSubmit: false
+    });
+  },
+
+  changeValue: function (event) {
+    this.setValue(event.currentTarget.value);
+  },
+
+  handleSubmit: function (data) {
+    console.log(data)
     axios.post('/api/v1/users/signup',{
-      user: this.state
+      user: data
     }).then(function(response){
       this.context.router.transtionTo(response.data);
     });
 
   },
 
-  getClasses: function(field) {
-    return React.addons.classSet({
-      'form-group': true,
-      'has-error': !this.isValid(field)
-    });
-  },
-
-  renderHelpText: function(message) {
+  render: function () {
     return (
-      <span className='help-block'>{message}</span>
-      );
-  },
-
-  render: function() {
-    console.log(Joi);
-    return (
-      <div className='signup'>
-        <h1>Sign up for Open Elect</h1>
-        <form>
-          <div className={this.getClasses('firstName')}>
-            <label htmlFor='firstName'>First Name</label>
-            <input type='text' id='firstName' placeholder='Franklin' valueLink={this.linkState('first_name')}/>
-            {this.getValidationMessages('firstName').map(this.renderHelpText)}
-          </div><br/>
-          <div className={this.getClasses('lastName')}>
-            <label htmlFor='lastName'>Last Name</label>
-            <input type='text' id='lastName' placeholder='Roosevelt' valueLink={this.linkState('last_name')}/>
-            {this.getValidationMessages('lastName').map(this.renderHelpText)}
-          </div><br/>
-          <div className={this.getClasses('email')}>
-            <label htmlFor='email'>E-mail Address</label>
-            <input type='email' id='email' placeholder='fdr@whitehouse.gov' valueLink={this.linkState('email')}/>
-            {this.getValidationMessages('email').map(this.renderHelpText)}
-          </div><br/>
-          <div className={this.getClasses('password')}>
-            <label htmlFor='password'>Password</label>
-            <input type='password' id='password' valueLink={this.linkState('password')}/>
-            {this.getValidationMessages('password').map(this.renderHelpText)}
-          </div><br/>
-            <button type='submit' onClick={this.handleSubmit}>Submit</button>
-        </form>
+      <div>
+        <Modal className='signup-modal'
+               isOpen={this.state.modalIsOpen}
+               onRequestClose={this.closeModal}>
+          <Formsy.Form className='signup-form' onValidSubmit={this.handleSubmit} onValid={this.enableButton} onInvalid={this.disableButton}>
+            <h1>Welcome to OpenElect</h1>
+            <h3>Register for a new account</h3>
+            <label htmlFor='first_name'>First Name</label>
+            <TextInputField name="first_name"
+                        validations={{
+                          matchRegexp: /^[a-zA-Z0-9\-\s]{1,}$/,
+                          minLength: 1,
+                          maxLength: 50
+                        }}
+                        validationErrors={{
+                          matchRegexp: 'Cannot contain symbols',
+                          minLength: 'Required',
+                          maxLength: 'Cannot be more than 50 characters'
+                        }} required/>
+            <label htmlFor='last_name'>Last Name</label>
+            <TextInputField name="last_name"
+                        validations={{
+                          matchRegexp: /^[a-zA-Z0-9\-\s]{1,}$/,
+                          minLength: 1,
+                          maxLength: 50
+                        }}
+                        validationErrors={{
+                          matchRegexp: 'Cannot contain symbols',
+                          minLength: 'Required',
+                          maxLength: 'Last name cannot be more than 50 characters'
+                        }} required/>
+            <label htmlFor='email'>Email</label>
+            <TextInputField name="email"
+                        validations={{
+                          isEmail: true,
+                          minLength: 0,
+                          maxLength: 50,
+                        }}
+                        validationErrors={{
+                          isEmail: 'Enter a valid email address',
+                          minLength: 'Required',
+                          maxLength: 'Email cannot be more than 50 characters'
+                        }} required/>
+            <label htmlFor='Password'>Password</label>
+            <PasswordInputField name="password"
+                        validations={{
+                          matchRegexp: /^[a-zA-Z0-9]{1,}$/,
+                          minLength: 8,
+                          maxLength: 50
+                        }}
+                        validationErrors={{
+                          matchRegexp: 'Must contain only numbers, lowercase, uppercase letters',
+                          minLength: 'Must be longer than 8 characters',
+                          maxLength: 'Cannot be longer than 50 characters'
+                        }} required/>
+            <button type="submit" disabled={!this.state.canSubmit} onClick={this.closeModal}>Register to Vote</button>
+            <div className='login-link'><a href='#'>Already registered? Sign into your account</a></div>
+          </Formsy.Form>
+        </Modal>
       </div>
     );
-  },
+  }
 });
 
-
-module.exports = SignUp;
+module.exports = SignUpForm;

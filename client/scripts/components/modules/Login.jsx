@@ -2,89 +2,113 @@
 
 var React = require('react/addons');
 var axios = require('axios');
-var ValidationMixin = require('react-validation-mixin');
-var Joi = require('joi');
+var Formsy = require('formsy-react');
+var Modal = require('react-modal');
+var TextInputField = require('../widgets/TextInputField.jsx');
+var PasswordInputField = require('../widgets/PasswordInputField.jsx');
 
-var Login = React.createClass({
 
-  // componentDidMount: function() {
-  //   //something will go here
-  // },
+var appElement = document.getElementById('app-view');
 
-  mixins: [ValidationMixin, React.addons.LinkedStateMixin],
+Modal.setAppElement(appElement);
+Modal.injectCSS();
+
+
+var LoginForm = React.createClass({
+
+  mixins: [React.addons.LinkedStateMixin],
 
   contextTypes: {
     router: React.PropTypes.func
   },
 
-  // validatorTypes: {
-  //   email: Joi.string().required().label('E-mail Address'),
-  //   password: Joi.string().required().label('Password')
-  // },
+  propTypes: {
+    email: React.PropTypes.string,
+    password: React.PropTypes.string
+  },
 
   getInitialState: function() {
     return {
       email: '',
       password: '',
       failedLogins: 0,
-      spinner: false
+      canSubmit: false,
+      modalIsOpen: true
     };
   },
 
-  handleSubmit: function (e) {
-    this.setState({spinner: true});
-    e.preventDefault();
-
-    axios.post('/api/v1/users/login',this.state)
-        .then(function(response){
-          this.setState({spinner: false});
-          this.context.router.transitionTo(response.data);
-        }.bind(this))
-        .catch(function(response){
-          this.setState({
-            spinner: false,
-            failedLogins: this.state.failedLogins+1
-          });
-        }.bind(this));
-
+  openModal: function() {
+    this.setState({modalIsOpen: true});
   },
 
-  getClasses: function(field) {
-    return React.addons.classSet({
-      'form-group': true,
-      'has-error': !this.isValid(field)
+  closeModal: function() {
+    this.setState({modalIsOpen: false});
+  },
+
+  enableButton: function () {
+    this.setState({
+      canSubmit: true
     });
   },
 
-  renderHelpText: function(message) {
-    return (
-      <span className='help-block'>{message}</span>
-      );
+  disableButton: function () {
+    this.setState({
+      canSubmit: false
+    });
   },
 
-  render: function() {
-    var loginWarning = this.state.failedLogins > 0 ? (<span className='warning'>Username or password incorrect</span>) : undefined;
-    var spinner = this.state.spinner > 0 ? (<i className="fa fa-circle-o-notch fa-spin fa-2x"></i>) : undefined;
+  changeValue: function (event) {
+    this.setValue(event.currentTarget.value);
+  },
+
+  handleSubmit: function (data) {
+    axios.post('/api/v1/users/login',{
+        user: data
+      })
+      .then(function(response){
+        this.context.router.transitionTo(response.data);
+        this.closeModal;
+      }.bind(this))
+      .catch(function(response){
+        this.setState({
+          failedLogins: this.state.failedLogins+1
+        });
+      }.bind(this));
+  },
+
+  render: function () {
+    var loginWarning = this.state.failedLogins > 0 ? ('Username or password credentials incorrect') : undefined;
     return (
-      <div className='login'>
-        <h1>Login</h1>
-        <form>
-          <div className={this.getClasses('email')}>
-            <label htmlFor='email'>E-mail Address</label>
-            <input type='email' id='email' placeholder='E-mail' onBlur={this.handleValidation('email')} valueLink={this.linkState('email')}/>
-            {this.getValidationMessages('email').map(this.renderHelpText)}
-          </div><br/>
-          <div className={this.getClasses('password')}>
-            <label htmlFor='password'>Password</label>
-            <input type='password' id='password' placeholder='Password' onBlur={this.handleValidation('password')} valueLink={this.linkState('password')}/>
-            {this.getValidationMessages('password').map(this.renderHelpText)}
-          </div><br/>
-            <button type='submit' onClick={this.handleSubmit}>Submit</button><div>{spinner}</div>
-        </form>
-        <div>{loginWarning}</div>
+      <div>
+        <Modal className='login-modal'
+               isOpen={this.state.modalIsOpen}
+               onRequestClose={this.closeModal}>
+          <Formsy.Form className='login-form' onValidSubmit={this.handleSubmit} onValid={this.enableButton} onInvalid={this.disableButton}>
+            <h1>Sign into your account</h1>
+            <label htmlFor='email'>Email</label>
+            <TextInputField name="email"
+                        validations={{
+                          isEmail: true,
+                        }}
+                        validationErrors={{
+                          isEmail: 'Enter a valid email',
+                        }} required/>
+            <label htmlFor='Password'>Password</label>
+            <PasswordInputField name="password"
+                        validations={{
+                          matchRegexp: /^[a-zA-Z0-9]{1,}$/,
+                        }}
+                        validationErrors={{
+                          matchRegexp: 'Not a valid password',
+                        }} required/>
+            <div className='error-message login-warning'><span>{loginWarning}</span></div>
+            <button type="submit" disabled={!this.state.canSubmit}>Sign In</button>
+            <div className='signin-link'><a href='#'>Register for a new account</a></div>
+          </Formsy.Form>
+        </Modal>
       </div>
     );
   }
 });
 
-module.exports = Login;
+module.exports = LoginForm;
