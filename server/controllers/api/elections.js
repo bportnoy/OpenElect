@@ -57,7 +57,7 @@ var elections = {
         name: data.name,
         description: data.description || 'no description',
         // start: data.start_date, //TODO re-enable this - we need to ensure consistent date/time formatting between back and front
-        // end: data.end_date, 
+        // end: data.end_date,
         timed: data.is_timed,
         privacy_strategy: data.privacy_strategy,
         randomize_answer_order: data.randomize_questions,
@@ -107,12 +107,12 @@ var elections = {
         if ( election ) {
           _(data).forEach(function(value, property){
             // check to make sure we aren't allowing admins to change important stuff
-            if (  property !== 'id' 
-                  && property !== 'created_ad' 
-                  && property !== 'updated_at' 
+            if (  property !== 'id'
+                  && property !== 'created_ad'
+                  && property !== 'updated_at'
                   && property !== 'results' // !!!! todo: more robust checking for rewrite fraud via API
-                ) { 
-                    election.set(property, value); 
+                ) {
+                    election.set(property, value);
                 }
           });
           election.save().then(function(election){
@@ -144,7 +144,7 @@ var elections = {
   // election request method for voters ( GET /elections/vote/:id )
   __voterGetById: function(id, req, res) { // potentially useful in future iterations, not currently in use
     var election = new Election({id: id});
-    election.fetch({ 
+    election.fetch({
       withRelated: ['poll'],
       columns: [
         'id',
@@ -192,7 +192,7 @@ var elections = {
   getResultsById: function(id, req, res) {
     this._checkForElection(id, req, res)
       .then(function(election){
-        res.json(election);
+        res.json(election.toJSON()["results"]);
       });
   }
 

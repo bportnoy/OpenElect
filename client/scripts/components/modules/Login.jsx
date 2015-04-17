@@ -3,7 +3,7 @@
 var React = require('react/addons');
 var axios = require('axios');
 
-var Footer = React.createClass({
+var Login = React.createClass({
 
   mixins: [React.addons.LinkedStateMixin],
 
@@ -18,7 +18,7 @@ var Footer = React.createClass({
   // getInitialState: function() {
   //   //something will go here
   // },
-  
+
   getInitialState: function() {
     return {
       email: '',
@@ -67,4 +67,4 @@ var Footer = React.createClass({
   },
 });
 
-module.exports = Footer;
+module.exports = Login;

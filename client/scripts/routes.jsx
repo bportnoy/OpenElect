@@ -30,7 +30,7 @@ var routes = (
     <Route name='pollCreate' path='/dashboard/poll/create/:electionId' handler={PollCreate} />
     <Route name='signup' path='/signup' handler={Signup} />
     <Route name='login' path='/login' handler={Login} />
-    <Route name='electionResults' path='/result/:electionId' handler={Result} />
+    <Route name='electionResults' path='/elections/:electionId' handler={Result} />
     <DefaultRoute name='index' handler={Index}/>
   </Route>
 );

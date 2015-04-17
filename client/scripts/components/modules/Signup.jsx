@@ -3,7 +3,7 @@
 var React = require('react/addons');
 var axios = require('axios');
 
-var Footer = React.createClass({
+var Signup = React.createClass({
 
   mixins: [React.addons.LinkedStateMixin],
 
@@ -14,7 +14,7 @@ var Footer = React.createClass({
   // getInitialState: function() {
   //   //something will go here
   // },
-  
+
   getInitialState: function() {
     return {
       first_name: '',
@@ -25,7 +25,7 @@ var Footer = React.createClass({
   },
 
   submit: function (e) {
-    
+
     e.preventDefault();
 
     axios.post('/api/v1/users/signup',{
@@ -33,7 +33,7 @@ var Footer = React.createClass({
     }).then(function(response){
       console.log(response);
     });
-    
+
   },
 
   render: function() {
@@ -60,4 +60,4 @@ var Footer = React.createClass({
   },
 });
 
-module.exports = Footer;
+module.exports = Signup;

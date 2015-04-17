@@ -63,13 +63,12 @@ var IndexComponent = React.createClass({
           <ul>{elections}</ul>
           <h3><Link to='electionCreate'>Create an Election</Link></h3>
         </div>
-        <h2>Vote in an Election:</h2><input type='text'
-                                            placeholder='Enter election ID'
-                                            valueLink={this.linkState('voteText')}/>
-                                        <button onClick={this.goVote}>Vote!</button>
-        <h2>View Results</h2><input type='text'
-                                    placeholder='Enter election ID'
-                                    valueLink={this.linkState('resultsText')} /><button>Who won?</button>
+        <h2>Vote in an Election:</h2>
+          <input type='text' placeholder='Enter election ID' valueLink={this.linkState('voteText')}/>
+          <button onClick={this.goVote}>Vote!</button>
+        <h2>View Results</h2>
+          <input type='text' placeholder='Enter election ID' valueLink={this.linkState('resultsText')} />
+          <button onClick={this.whoWon}>Who won?</button>
         <h5><a href='/docs/api/index.html'>API Reference</a></h5>
         <h5><a href='/docs/styleguide/index.html'>Style Guide</a></h5>
       </div>

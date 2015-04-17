@@ -54,7 +54,7 @@ var routes = function(app) {
     });
 
   // create an election
-  router.route('/elections/create') 
+  router.route('/elections/create')
     .post(function(req, res) {
       api.elections.create(req, res);
     });
@@ -94,7 +94,7 @@ var routes = function(app) {
     .post(function(req, res) {
       api.polls.create(req, res);
     });
-  
+
   // retrieve or update a specific poll by id
   router.route('/polls/update/:id')
     .get(function(req, res) {
@@ -114,7 +114,7 @@ var routes = function(app) {
     .post(function(req, res) {
       api.questions.create(req, res);
     });
-  
+
   // retrieve or update a specific poll by id
   router.route('/questions/update/:id')
     .get(function(req, res) {
@@ -130,7 +130,7 @@ var routes = function(app) {
    */
 
   // create a ballot (user submits vote)
-  router.route('/ballots/create') 
+  router.route('/ballots/create')
     .post(function(req, res) {
       api.ballots.create(req,res);
     });
