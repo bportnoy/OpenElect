@@ -6,7 +6,7 @@ ___
 # Admin Login
 ##### Definition
 ###### Login - Generate SSL key and certificate
-    GET https://www.skillfulcactus.com/api/v1/admin
+    GET https://openelect.org/api/v1/admin
 
 ___
 
@@ -14,9 +14,9 @@ ___
 
 ## Create Election
 ##### Definition
-    POST https://www.skillfulcactus.com/api/v1/elections/create
+    POST https://openelect.org/api/v1/elections/create
 ##### Example Request
-    curl https://www.skillfulcactus.com/api/v1/elections/create \
+    curl https://openelect.org/api/v1/elections/create \
       -u { USER_TOKEN }: \
       -d owner_id="" \
       -d name="" \
@@ -181,9 +181,9 @@ ___
 
 ## Create Poll
 ##### Definition
-    POST https://www.skillfulcactus.com/api/v1/polls/create
+    POST https://openelect.org/api/v1/polls/create
 ##### Example Request
-    curl https://www.skillfulcactus.com/api/v1/polls/create \
+    curl https://openelect.org/api/v1/polls/create \
       -u { USER_TOKEN }: \
       -d name="" \
       -d description="" \
@@ -251,7 +251,7 @@ ___
 
 ## Delete Poll
 ##### Definition
-    DELETE https://www.skillfulcactus.com/api/v1/polls/{ POLL_ID }
+    DELETE https://openelect.org/api/v1/polls/{ POLL_ID }
 ##### Example Request
     curl https://www.skilfullcactus.com/api/v1/polls/{ POLL_ID } \
       -u { USER_TOKEN }: \
@@ -259,7 +259,7 @@ ___
 
 ## List Polls
 ##### Definition
-    GET https://www.skillfulcactus.com/api/v1/polls
+    GET https://openelect.org/api/v1/polls
 ##### Example Request
     curl https://www.skilfullcactus.com/api/v1/polls?limit=10 \
       -u { USER_TOKEN }:
@@ -289,9 +289,9 @@ ___
 
 ## Create Ballot
 ##### Definition
-    POST https://www.skillfulcactus.com/api/v1/ballots/create
+    POST https://openelect.org/api/v1/ballots/create
 ##### Example Request
-    curl https://www.skillfulcactus.com/api/v1/ballots/create \
+    curl https://openelect.org/api/v1/ballots/create \
       -u { USER_TOKEN }: \
       -d election_id=8952374 \
       -d user_id=20394820
@@ -334,9 +334,9 @@ ___
 
 ## Create Question
 ##### Definition
-    POST https://www.skillfulcactus.com/api/v1/questions/create
+    POST https://openelect.org/api/v1/questions/create
 ##### Example Request
-    curl https://www.skillfulcactus.com/api/v1/questions/create \
+    curl https://openelect.org/api/v1/questions/create \
       -u { USER_TOKEN }: \
       -d KEY1=VAL1 \
       -d KEY2=VAL2
@@ -346,18 +346,18 @@ ___
 
 ## Retrieve Question
 ##### Definition
-    GET https://www.skillfulcactus.com/api/v1/questions/{ QUESTION_ID }
+    GET https://openelect.org/api/v1/questions/{ QUESTION_ID }
 ##### Example Request
-    curl https://www.skillfulcactus.com/api/v1/questions/{ QUESTION_ID } \
+    curl https://openelect.org/api/v1/questions/{ QUESTION_ID } \
       -u { USER_TOKEN }:
 ##### Example Response
     {}
 
 ## Update Question
 ##### Definition
-    POST https://www.skillfulcactus.com/api/v1/questions/{ QUESTION_ID }
+    POST https://openelect.org/api/v1/questions/{ QUESTION_ID }
 ##### Example Request
-    curl https://www.skillfulcactus.com/api/v1/questions/{ QUESTION_ID } \
+    curl https://openelect.org/api/v1/questions/{ QUESTION_ID } \
       -u { USER_TOKEN }: \
       -d KEY1=VAL1 \
       -d KEY2=VAL2
@@ -366,17 +366,17 @@ ___
 
 ## Delete Question
 ##### Definition
-    DELETE https://www.skillfulcactus.com/api/v1/questions/{ QUESTION_ID }
+    DELETE https://openelect.org/api/v1/questions/{ QUESTION_ID }
 ##### Example Request
-    curl https://www.skillfulcactus.com/api/v1/questions/{ QUESTION_ID } \
+    curl https://openelect.org/api/v1/questions/{ QUESTION_ID } \
       -u { USER_TOKEN }: \
       -X DELETE
 
 ## List Questions
 ##### Definition
-    GET https://www.skillfulcactus.com/api/v1/questions
+    GET https://openelect.org/api/v1/questions
 ##### Example Request
-    curl https://www.skillfulcactus.com/api/v1/questions?limit=10
+    curl https://openelect.org/api/v1/questions?limit=10
       -u { USER_TOKEN }: \
 
 ___
@@ -385,8 +385,18 @@ ___
 ## Group object
 ## Create Group
 ##### Definition
+    POST https://openelect.org/api/vi/groups/create
 ##### Example Request
+    curl https://openelect.org/api/v1/questions/create \
+      -u { USER_TOKEN }: \
+      -d name='CA-11' \
 ##### Example Response
+###### Returns 201 status, response object
+    {
+      name: 'CA-11',
+      owner_id: 'uuid',
+      id: 'uuid'
+    }
 ## Retrieve Group
 ##### Definition
 ##### Example Request
@@ -403,6 +413,16 @@ ___
 ##### Definition
 ##### Example Request
 ##### Example Response
+
+## Upload CSV
+##### Definition
+    POST https://openelect.org/api/v1/groups/csv
+##### Example Request
+    curl https://openelect.org/api/v1/groups/csv
+      -u { USER_TOKEN }:
+      -d voter-roll.csv \
+##### Example Response
+    Returns 201 status and JSON object with array of arrays representing first 10 rows of CSV for preview display.
 
 ___
 

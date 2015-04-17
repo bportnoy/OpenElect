@@ -48,7 +48,7 @@ var Login = React.createClass({
 
   render: function() {
     var loginWarning = this.state.failedLogins > 0 ? (<span className='warning'>Username or password incorrect</span>) : undefined;
-    var spinner = this.state.spinner > 0 ? (<i class="fa fa-circle-o-notch fa-spin fa-2x"></i>) : undefined;
+    var spinner = this.state.spinner > 0 ? (<i className="fa fa-circle-o-notch fa-spin fa-2x"></i>) : undefined;
     return (
       <div className='login'>
         <h1>Login</h1>
@@ -64,7 +64,7 @@ var Login = React.createClass({
         <div>{loginWarning}</div>
       </div>
     );
-  },
+  }
 });
 
 module.exports = Login;

@@ -41,13 +41,13 @@ module.exports = {
     var User = db.model('User');
     var self = this;
     var options = {
-        numBits: 3072,
+        numBits: 2048,
         userId: 'OpenElect User ' + id,
         passphrase: process.env.PEPPER,
     };
-
+    
     openpgp.generateKeyPair(options).then(function(keypair) {
-      User.forge({id: id}).then(function(user){
+      User.forge({id: id}).fetch().then(function(user){
         user.set('private_key', keypair.privateKeyArmored);
         user.set('public_key', keypair.publicKeyArmored);
         user.save();
@@ -55,7 +55,7 @@ module.exports = {
         keypair.publicKeyArmored = null;
       });
     }).catch(function(error) {
-        console.error(error);
+        console.error('Error generating user keypair: ' + error);
     });
   },
 

@@ -5,6 +5,7 @@
 'use strict'
 
 var Question = require('../../database/models/question');
+var uuid = require('uuid');
 
 var questions = {
 	
@@ -14,12 +15,13 @@ var questions = {
       var options = req.body.question.options;
       console.log(data);
       var question = new Question({
+        id: uuid.v4(),
         poll_id: data.poll_id,
         name: data.name,
         description: data.description,
         options: JSON.stringify(options),
         count_strategy: data.count_strategy
-      }).save()
+      }).save({},{method: 'insert'})
       .then(function(model){
         res.status(201);
         res.json({
@@ -47,6 +49,6 @@ var questions = {
 
 	}
 
-}
+};
 
 module.exports = questions;

@@ -6,6 +6,7 @@
 
 var express = require('express');
 var bodyParser = require('body-parser');
+var multer = require('multer');
 var _ = require('lodash');
 var passport = require('../config/passport');
 
@@ -16,6 +17,11 @@ var api = require('../controllers/api');
 var router = express.Router();
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
+router.use(multer({dest: __dirname + '/../uploads/tmp/',
+                    limits: {
+                      files: 1,
+                      fileSize: 50000000 //who needs more than 50mb of voter rolls?
+                    }}));
 
 var routes = function(app) {
 
@@ -107,6 +113,7 @@ var routes = function(app) {
 
   /**
    *  routes for questions
+   *  ===================================
    */
 
   // create a poll - post only
@@ -127,6 +134,7 @@ var routes = function(app) {
 
   /**
    *  routes for ballots
+   *  ===================================
    */
 
   // create a ballot (user submits vote)
@@ -135,13 +143,40 @@ var routes = function(app) {
       api.ballots.create(req,res);
     });
 
+  /**
+   *  routes for groups
+   *  ===================================
+   */
+
+  // create a group
+  router.route('/groups/create')
+    .post(function(req, res) {
+      api.groups.create(req, res);
+  });
+
+  // upload a csv for preview
+  router.route('/groups/csv')
+    .post(function(req, res) {
+      api.groups.csv(req, res);
+  });
+
+  // approve & process previous CSV
+  router.route('/groups/csv/process')
+    .post(function(req, res) {
+      api.groups.addFromCSV(req, res);
+  });
+
+  //see if a group has finished processing its csv
+  router.route('/groups/csv/check/:id')
+    .get(function(req, res) {
+      api.groups.checkCSVInProcess(req.params.id, req, res);
+    });
+
 
   // API Root - lists the endpoints available
   router.get('/', function(req, res){
     res.json({ message: 'welcome to the api, enjoy your stay.' });
   });
-
-  // console.log(router.stack);
 
   app.use('/api/v1', router);
 };

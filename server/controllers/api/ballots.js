@@ -6,6 +6,7 @@
 
 var Ballot = require('../../database/models/ballot');
 var Election = require('../../database/models/election');
+var uuid = require('uuid');
 
 var ballots = {
 	create: function(req, res) {
@@ -23,13 +24,14 @@ var ballots = {
                       .fetch()
                       .then(function(ballot){
                         //check to make sure the user hasn't already voted
-                        // if (ballot) res.send(403, 'You have already voted in this election.'); //need to re-enable
+                        // if (ballot) res.send(403, 'You have already voted in this election.'); //TODO: need to re-enable
                         Ballot.forge(
                           {
+                            id: uuid.v4(),
                             election_id: receivedBallot.election_id,
                             user_id: receivedBallot.user_id,
                             choices: receivedBallot.response
-                          }).save()
+                          }).save({},{method: insert})
                             .then(function(ballot){
                               //todo: hash ballot
                               var hash = 'kj23qlkjasdf';

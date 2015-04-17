@@ -37,6 +37,7 @@ db.knex.schema.hasTable('users').then(function(exists) {
                                     //'site' (we automatically generated a keypair),
                                     //'user' (the user supplied an OpenPGP keypair)
       users.integer('admin_level');
+      users.boolean('must_change_pass');
       users.timestamps();
     }).then(function (table) {
       console.log('Created Table', table);
@@ -44,12 +45,12 @@ db.knex.schema.hasTable('users').then(function(exists) {
   }
 });
 
-db.knex.schema.hasTable('users_groups').then(function(exists) {
+db.knex.schema.hasTable('groups_users').then(function(exists) {
   if (!exists) {
-    db.knex.schema.createTable('users_groups', function (users_groups) {
+    db.knex.schema.createTable('groups_users', function (users_groups) {
       users_groups.increments('id').primary();
-      users_groups.integer('user_id').references('id').inTable('users');
-      users_groups.integer('group_id').references('id').inTable('groups');
+      users_groups.uuid('user_id').references('id').inTable('users');
+      users_groups.uuid('group_id').references('id').inTable('groups');
       users_groups.timestamps();
     }).then(function (table) {
       console.log('Created Table', table);
@@ -60,11 +61,12 @@ db.knex.schema.hasTable('users_groups').then(function(exists) {
 db.knex.schema.hasTable('groups').then(function(exists) {
   if (!exists) {
     db.knex.schema.createTable('groups', function (groups) {
-      groups.increments('id').primary();
-      groups.integer('owner_id').references('id').inTable('users');
-      groups.integer('parent_id');
+      groups.uuid('id').primary();
+      groups.uuid('owner_id').references('id').inTable('users');
+      groups.uuid('parent_id');
       groups.json('children');
       groups.string('name');
+      groups.boolean('pending_adds').To(false); //are we in the process of adding users?
       groups.timestamps();
     }).then(function (table) {
       console.log('Created Table', table);
@@ -75,9 +77,9 @@ db.knex.schema.hasTable('groups').then(function(exists) {
 db.knex.schema.hasTable('polls').then(function(exists) {
   if (!exists) {
     db.knex.schema.createTable('polls', function (polls) {
-      polls.increments('id').primary();
-      polls.integer('election_id').references('id').inTable('elections');
-      polls.integer('group_id').references('id').inTable('groups');
+      polls.uuid('id').primary();
+      polls.uuid('election_id').references('id').inTable('elections');
+      polls.uuid('group_id').references('id').inTable('groups');
       polls.string('name');
       polls.timestamps();
     }).then(function (table) {
@@ -89,8 +91,8 @@ db.knex.schema.hasTable('polls').then(function(exists) {
 db.knex.schema.hasTable('questions').then(function(exists) {
   if (!exists) {
     db.knex.schema.createTable('questions', function (questions) {
-      questions.increments('id').primary();
-      questions.integer('poll_id').references('id').inTable('polls');
+      questions.uuid('id').primary();
+      questions.uuid('poll_id').references('id').inTable('polls');
       questions.string('name');
       questions.text('description');
       questions.json('options');
@@ -105,8 +107,8 @@ db.knex.schema.hasTable('questions').then(function(exists) {
 db.knex.schema.hasTable('elections').then(function(exists) {
   if (!exists) {
     db.knex.schema.createTable('elections', function (elections) {
-      elections.increments('id').primary();
-      elections.integer('owner_id').references('id').inTable('users');
+      elections.uuid('id').primary();
+      elections.uuid('owner_id').references('id').inTable('users');
       elections.string('name');
       elections.text('description').defaultTo('No description');
       elections.datetime('start');
@@ -131,9 +133,9 @@ db.knex.schema.hasTable('elections').then(function(exists) {
 db.knex.schema.hasTable('ballots').then(function(exists) {
   if (!exists) {
     db.knex.schema.createTable('ballots', function (ballots) {
-      ballots.increments('id').primary();
-      ballots.integer('election_id').references('id').inTable('elections');
-      ballots.integer('user_id').references('id').inTable('users');
+      ballots.uuid('id').primary();
+      ballots.uuid('election_id').references('id').inTable('elections');
+      ballots.uuid('user_id').references('id').inTable('users');
       ballots.json('choices');
       ballots.timestamps();
     }).then(function (table) {
@@ -142,12 +144,12 @@ db.knex.schema.hasTable('ballots').then(function(exists) {
   }
 });
 
-db.knex.schema.hasTable('users_elections').then(function(exists) {
+db.knex.schema.hasTable('elections_users').then(function(exists) {
   if (!exists) {
-    db.knex.schema.createTable('users_elections', function (users_elections) {
+    db.knex.schema.createTable('elections_users', function (users_elections) {
       users_elections.increments('id').primary();
-      users_elections.integer('user_id').references('id').inTable('users');
-      users_elections.integer('election_id').references('id').inTable('elections');
+      users_elections.uuid('user_id').references('id').inTable('users');
+      users_elections.uuid('election_id').references('id').inTable('elections');
       users_elections.boolean('participated');
       users_elections.timestamps();
     }).then(function (table) {
@@ -159,7 +161,7 @@ db.knex.schema.hasTable('users_elections').then(function(exists) {
 db.knex.schema.hasTable('sessions').then(function(exists) {
   if (!exists) {
     db.knex.schema.createTable('sessions', function (session) {
-    session.integer('id').primary();
+    session.increments('id').primary();
     session.string('sid').unique();
     session.string('data');
     session.timestamps();

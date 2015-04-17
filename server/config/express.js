@@ -6,6 +6,7 @@
 var compress = require('compression');
 var favicon = require('serve-favicon');
 var bodyParser = require('body-parser');
+var multer = require('multer');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var path = require('path');
@@ -60,6 +61,12 @@ var expressConfig = function(app, express, db) {
   // Returns middleware that parses both json and urlencoded.
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(multer({dest: __dirname + '/../uploads/tmp/',
+                    limits: {
+                      files: 1,
+                      fileSize: 50000000 //who needs more than 50mb of voter rolls?
+                    }}));
+
 
   // Returns middleware that parses cookies
   app.use(cookieParser());
@@ -67,16 +74,16 @@ var expressConfig = function(app, express, db) {
   // Setup log level for server console output
   app.use(logger(settings.server.logLevel));
 
-  //set up sessions and authentication
-  // app.use(session({
-  //   secret: process.env.SESSION_SECRET,
-  //   resave: false,
-  //   saveUninitialized: true,
-  //   store: new BookshelfStore({model: SessionModel})
-  // }));
+  // set up sessions and authentication
+  app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    store: new BookshelfStore({model: SessionModel}) //should add cookie secure here when we get a SSL cert
+  }));
 
   app.use(passport.initialize());
-  // app.use(passport.session());
+  app.use(passport.session());
   //sessions & auth
 
   if (env === 'development') {

@@ -15,7 +15,7 @@ var Group = db.Model.extend({
   },
 
   user: function(){
-    return this.hasMany('User');
+    return this.belongsToMany('User');
   }
 
 });
