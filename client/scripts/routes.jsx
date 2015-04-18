@@ -6,7 +6,8 @@ var Router = require('react-router');
 var DefaultRoute = Router.DefaultRoute;
 var Route = Router.Route;
 
-var Index = require('./components/index.jsx');
+// var Index = require('./components/layouts/app.jsx');
+var Index = require('./components/layouts/landing.jsx');
 var App = require('./components/layouts/app.jsx');
 var Vote = require('./components/modules/vote/VotingBooth.jsx');
 var Submitting = require('./components/modules/vote/Submitting.jsx');
