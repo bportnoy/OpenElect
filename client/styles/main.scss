@@ -22,6 +22,7 @@
 
 // Injects all import files automatically
 // [injector]
+@import '_date-picker';
 // [endinjector]
 
 .yeogurt-info {
@@ -269,3 +270,5 @@ input[type=submit], button {
 .page-loading {
   @include center(both);
 }
+
+@import 'date-picker';

@@ -3,6 +3,7 @@
 // dependencies
 var React = require('react/addons');
 var DefaultLayout = require('./layouts/default.jsx');
+var ElectionActions = require('../actions/ElectionActions');
 var Link = require('react-router').Link;
 var axios = require('axios');
 var _ = require('underscore');
@@ -36,21 +37,34 @@ var IndexComponent = React.createClass({
     this.context.router.transitionTo('/results/' + election);
   },
 
+  createElection: function () {
+    ElectionActions.createElection()
+  },
+
   getInitialState: function () {
     ElectionActions.getUserElections(userId);
     return {
       elections: null,
       voteText: '',
-      resultsText: ''};
+      resultsText: ''
+    };
+  },
+
+  componentDidMount: function() {
+    ElectionStore.addChangeListener(this._onChange);
+  },
+
+  componentWillUnmount: function() {
+    ElectionStore.removeChangeListener(this._onChange);
   },
 
   render: function() {
     var elections;
-    var userElections = ElectionStore.getCurrentUserElections();
+    var userElections = this.state.elections;
     if ( _.size(userElections) ) {
       elections = [];
-      userElections.forEach(function(election){
-        elections.push(<ListElection name={election.name} description={election.description} start={election.start} key={election.id}/>);
+      _.each(userElections, function(election){
+        elections.push(<ListElection name={election.name} description={election.description} start={election.start} key={election.id} id={election.id}/>);
       });
     } else {
       elections = Spinner;
@@ -61,7 +75,7 @@ var IndexComponent = React.createClass({
         <div className="elections">
           <h2 className="active-elections">Your Elections</h2>
           <ul>{elections}</ul>
-          <h3><Link to='electionCreate'>Create an Election</Link></h3>
+          <button onClick={this.createElection}>Create an Election</button>
         </div>
         <h2>Vote in an Election:</h2>
           <input type='text' placeholder='Enter election ID' valueLink={this.linkState('voteText')}/>
@@ -73,6 +87,13 @@ var IndexComponent = React.createClass({
         <h5><a href='/docs/styleguide/index.html'>Style Guide</a></h5>
       </div>
     );
+  },
+
+  _onChange: function () {
+    var elections = ElectionStore.currentUserElections();
+    this.setState({
+      elections: elections
+    });
   }
 
 });
