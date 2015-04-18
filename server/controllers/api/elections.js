@@ -66,13 +66,7 @@ var elections = {
       }).save()
       .then(function(model){
         res.status(201);
-        res.json({
-          id: model.get('id'),
-          url: model.get('url_handle') || 'not yet supported', // todo: implement election short-urls
-          name: model.get('name'),
-          created_at: model.get('created_at')
-        });
-        res.end();
+        res.send(model.toJSON());
       }).error(function(error){
         res.status(500);
         console.error(error);
@@ -108,7 +102,7 @@ var elections = {
           _(data).forEach(function(value, property){
             // check to make sure we aren't allowing admins to change important stuff
             if (  property !== 'id'
-                  && property !== 'created_ad'
+                  && property !== 'created_at'
                   && property !== 'updated_at'
                   && property !== 'results' // !!!! todo: more robust checking for rewrite fraud via API
                 ) {

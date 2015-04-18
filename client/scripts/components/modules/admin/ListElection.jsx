@@ -6,7 +6,7 @@ var Link = require('react-router').Link;
 
 var ListElection = React.createClass({
 	render: function() {
-		var start = moment(this.props.start).format('MMMM Do YYYY');
+		if ( this.props.start ) var start = moment(this.props.start).format('MMMM Do YYYY');
 		return(
 			<Link to='electionAdmin' params={{id: this.props.id}}>
 				<li className="election">

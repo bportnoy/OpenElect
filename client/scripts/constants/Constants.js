@@ -12,3 +12,14 @@ module.exports = keyMirror({
   SAVE_GROUP_NAME: null,
   SET_ELECTION_DATA: null
 });
+
+module.exports.request = keyMirror({
+	TIMEOUT: null,
+	ERROR: null,
+	GET_ENTITY_DATA: null,
+	PENDING: null
+});
+
+module.exports.request.elections = keyMirror({
+	CREATE_ELECTION: null
+});

@@ -3,6 +3,7 @@
 // dependencies
 var React = require('react/addons');
 var DefaultLayout = require('./layouts/default.jsx');
+var ElectionActions = require('../actions/ElectionActions');
 var Link = require('react-router').Link;
 var axios = require('axios');
 var _ = require('underscore');
@@ -34,6 +35,10 @@ var IndexComponent = React.createClass({
   whoWon: function () {
     var election = this.state.resultsText;
     this.context.router.transitionTo('/results/' + election);
+  },
+
+  createElection: function () {
+    ElectionActions.createElection()
   },
 
   getInitialState: function () {
@@ -70,7 +75,7 @@ var IndexComponent = React.createClass({
         <div className="elections">
           <h2 className="active-elections">Your Elections</h2>
           <ul>{elections}</ul>
-          <h3><Link to='electionCreate'>Create an Election</Link></h3>
+          <button onClick={this.createElection}>Create an Election</button>
         </div>
         <h2>Vote in an Election:</h2>
           <input type='text' placeholder='Enter election ID' valueLink={this.linkState('voteText')}/>

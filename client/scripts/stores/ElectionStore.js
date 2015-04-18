@@ -13,7 +13,27 @@ var CHANGE_EVENT = constants.CHANGE_EVENT;
 // Stored Elections Data
 var _initialFetch = false;
 var _elections = {};
-var _currentElection = {};
+var _currentElection = {
+  'id': null,
+  'owner_id': null,
+  'name': null,
+  'description': null,
+  'start': null,
+  'end': null,
+  'timed': null,
+  'accepting_votes': null,
+  'locked': null,
+  'privacy_strategy': null,
+  'url_handle': null,
+  'randomize_answer_order': null,
+  'two_factor_auth': null,
+  'force_two_factor_auth': null,
+  'public_key': null,
+  'results': null,
+  'created_at': null,
+  'updated_at': null
+};
+var _currentElectionOriginal = {};
 
 
 var ElectionStore = assign({}, EventEmitter.prototype, {
@@ -72,7 +92,13 @@ function postElectionData(data) {
 
 function setElectionData(data) {
   _.extendOwn(_currentElection, data);
-  postElectionData(_currentElection);
+  console.log(_currentElection);
+  ElectionStore.emitChange();
+}
+
+function addUserElection(data) {
+  _elections[data.id] = data;
+  ElectionStore.emitChange();
 }
 
 ElectionStore.dispatcherToken = Dispatcher.register(function(action){
@@ -85,6 +111,13 @@ ElectionStore.dispatcherToken = Dispatcher.register(function(action){
 
     case constants.SET_ELECTION_DATA:
       setElectionData(action.data);
+    break;
+
+    case constants.request.elections.CREATE_ELECTION:
+      if (action.response.body) {
+        setElectionData(action.response.body);
+        addUserElection(action.response.body);
+      }
     break;
 
     default: // no-op
