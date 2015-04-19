@@ -24,10 +24,11 @@ var Results = React.createClass({
         // console.log("key for results", Object.keys(response.data.results));
 
         this.setState({ election: response.data });
-      }.bind(this))
-      .catch(function(response){
-        console.error(response);
-      });
+      }.bind(this));
+      // The catch seems to catch other files error. Temperatory disable it
+      // .catch(function(response){
+      //   console.error(response);
+      // });
   },
 
   render: function(){
