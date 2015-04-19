@@ -121,6 +121,7 @@ db.knex.schema.hasTable('elections').then(function(exists) {
       elections.boolean('randomize_answer_order').defaultTo(true);
       elections.boolean('two_factor_auth').defaultTo(false);
       elections.boolean('force_two_factor_auth').defaultTo(false);
+      elections.boolean('archived').defaultTo(false);
       elections.text('public_key'); //the key that will be used to encrypt this election
       elections.json('results');
       elections.timestamps();

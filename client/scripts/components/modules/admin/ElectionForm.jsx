@@ -2,7 +2,6 @@
 
 var React = require('react');
 var ReactPropTypes = React.PropTypes;
-var axios = require('axios');
 var DatePicker = require('react-date-picker');
 var ElectionStore = require('../../../stores/ElectionStore');
 var ElectionActions = require('../../../actions/ElectionActions');

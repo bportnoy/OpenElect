@@ -5,10 +5,23 @@ var Constants = require('../constants/Constants');
 var EventEmitter = require('events').EventEmitter;
 var API = require('../api');
 
+var ElectionStore = require('../stores/ElectionStore');
+
 var _ = require('underscore');
 
+function handleElectionData(keyOrObject, value) {
+	var data = {};
+	if (typeof keyOrObject === 'string') {
+		data[keyOrObject] = value;
+	} else if (typeof keyOrObject === 'object') {
+		data = keyOrObject;
+	}
+	return data;
+}
 
 var ElectionActions = {
+
+	// creates a new empty election object
 	createElection: function(options) {
 		if ( !options ) {
 			options = {};
@@ -22,26 +35,43 @@ var ElectionActions = {
 		API.createElection(options);
 	},
 
-	getUserElections: function(userId) {
-		Dispatcher.dispatch({
-			actionType: Constants.GET_USER_ELECTIONS,
-			userId: userId
-		});
+	// fetches all elections belonging to the current user
+	getUserElections: function() {
+		API.getUserElections();
 	},
 
-	setElectionData: function(keyOrObject, value) {
-		var actionObj = {
-			actionType: Constants.SET_ELECTION_DATA,
-			data: {}
-		};
-		
-		if (typeof keyOrObject === 'string') {
-			actionObj.data[keyOrObject] = value;
-		} else if (typeof keyOrObject === 'object' ) {
-			actionObj.data = keyOrObject;
-		}
+	setCurrentElection: function(id) {
+		API.getElectionById(id, true);
+	},
 
-		Dispatcher.dispatch(actionObj);
+	getElectionById: function(id) {
+		API.getElectionById(id);
+	},
+
+	// posts new data to an election object - requires an id property within the data.election object
+	postElectionData: function(keyOrObject, value) {
+		var data = handleElectionData(keyOrObject, value);
+		data.id = ElectionStore.getCurrentElectionData().id;
+
+		API.postElectionData(data);
+	},
+
+	// update election data in-memory (no save to server)
+	changeElectionData: function(keyOrObject, value) {
+		var action = {
+			actionType: Constants.admin.elections.CHANGE_ELECTION_DATA,
+			data: handleElectionData(keyOrObject, value)
+		};
+		Dispatcher.dispatch(action);
+	},
+
+	// undo unsaved changes to the election
+	undoElectionChange: function(keysOrString) {
+		var action = {
+			actionType: Constants.admin.elections.UNDO_ELECTION_CHANGE,
+			keys: keysOrString
+		};
+		Dispatcher.dispatch(action);
 	}
 
 };

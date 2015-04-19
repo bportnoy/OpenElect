@@ -1,13 +1,12 @@
 'use strict';
 
 var Dispatcher = require('../dispatchers/default');
-var constants = require('../constants/Constants');
+var Constants = require('../Constants/Constants');
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
-var axios = require('axios');
 var _ = require('underscore');
 
-var CHANGE_EVENT = constants.CHANGE_EVENT;
+var CHANGE_EVENT = Constants.CHANGE_EVENT;
 
 
 // Stored Elections Data
@@ -33,7 +32,12 @@ var _currentElection = {
   'created_at': null,
   'updated_at': null
 };
-var _currentElectionOriginal = {};
+
+var _unsavedProperties = _.mapObject(_currentElection, function(val, key){
+  return false;
+});
+
+var _currentElectionOriginal = {}; // todo: we'll store a fresh version of the election object here so the user may undo changes
 
 
 var ElectionStore = assign({}, EventEmitter.prototype, {
@@ -54,45 +58,35 @@ var ElectionStore = assign({}, EventEmitter.prototype, {
     this.removeListener(CHANGE_EVENT, callback);
   },
 
-  getCurrentElectionData: function(keyOrObject, value) {
+  getCurrentElectionData: function() {
     return _currentElection;
   }
 
 });
 
-// Get user elections and store 
-function getElections(userId) {
-  axios.get('/api/v1/elections/owner/' + userId )
-    .then(function(response){
-      _initialFetch = true;
-      if ( response.data.length > 0 ) {
-        response.data.forEach(function(election) {
-          _elections[election.id] = election;
-        });
-        ElectionStore.emitChange();
-      }
-    })
-    .catch(function(err){
-      console.error(err);
-    });
-}
-
-function postElectionData(data) {
-  console.log('post', data);
-  axios.post('/api/v1/elections/update/' + data.id, data)
-    .then(function(response) {
-      _.extendOwn(_currentElection, response.data);
-      console.log('response', response.data);
-      ElectionStore.emitChange();
-    })
-    .catch(function(err){
-      console.error(err);
-    });
-}
-
-function setElectionData(data) {
+function setElectionData(data, unsaved) {
   _.extendOwn(_currentElection, data);
-  console.log(_currentElection);
+  if ( unsaved ) {
+    _.each(data, function(value, key) {
+      _unsavedProperties[key] = true;
+    });
+  } else {
+    _.each(data, function(value, key) {
+      _unsavedProperties[key] = false;
+      _currentElectionOriginal[key] = value;
+    });
+  }
+  ElectionStore.emitChange();
+}
+
+function undoChanges(keys) {
+  if ( typeof keys === 'string' ) {
+    _currentElection[keys] = _currentElectionOriginal[keys];
+  } else {
+    _.each(keys, function(value, key) {
+      _currentElection[key] = _currentElectionOriginal[key];
+    });
+  }
   ElectionStore.emitChange();
 }
 
@@ -102,22 +96,61 @@ function addUserElection(data) {
 }
 
 ElectionStore.dispatcherToken = Dispatcher.register(function(action){
-	
+
 	switch(action.actionType) {
   
-    case constants.GET_USER_ELECTIONS:
-      getElections(action.userId);
-    break;
-
-    case constants.SET_ELECTION_DATA:
-      setElectionData(action.data);
-    break;
-
-    case constants.request.elections.CREATE_ELECTION:
-      if (action.response.body) {
-        setElectionData(action.response.body);
-        addUserElection(action.response.body);
+    case Constants.request.elections.GET_USER_ELECTIONS:
+      if (action.response === 'PENDING') {
+        console.log('request sent');
+      } else {
+        if (action.response.body) {
+          action.response.body.forEach(function(election){
+            addUserElection(election);
+          });
+        } else {
+          console.error('unexpected response from server: ', action.response);
+        }
       }
+    break;
+
+    case Constants.request.elections.SET_ELECTION_DATA:
+      setElectionData(action.response.body);
+    break;
+
+
+    case Constants.request.elections.CREATE_ELECTION:
+      if (action.response === 'PENDING') {
+        console.log('request sent');
+      } else {
+        if (action.response.body) {
+          setElectionData(action.response.body);
+          addUserElection(action.response.body);
+        } else {
+          console.error('unexpected response from server: ', action.response);
+        }
+      }
+    break;
+
+    case Constants.request.elections.POST_ELECTION_DATA:
+      if (action.response === 'PENDING') {
+        console.log('request sent');
+      } else {
+        if (action.response.body) {
+          setElectionData(action.response.body);
+        } else {
+          console.error('unexpected response from server: ', action.response);
+        }
+      }
+    break;
+
+    // updates election data but does not post to server
+    case Constants.admin.elections.CHANGE_ELECTION_DATA:
+      setElectionData(action.data, true);
+    break;
+
+    // undo unsaved changes to an election
+    case Constants.admin.elections.UNDO_ELECTION_CHANGE:
+      undoChanges(action.keys);
     break;
 
     default: // no-op
