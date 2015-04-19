@@ -34,7 +34,7 @@ var IndexComponent = React.createClass({
 
   whoWon: function () {
     var election = this.state.resultsText;
-    this.context.router.transitionTo('/results/' + election);
+    this.context.router.transitionTo('/elections/' + election);
   },
 
   createElection: function () {

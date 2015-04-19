@@ -1,25 +1,18 @@
 'use strict';
 
 var React = require('react');
+var Navbar = require('../modules/landing/nav.jsx');
+var Link = require('react-router').Link;
 
 var Header = React.createClass({
-
-  // componentDidMount: function() {
-  //   //something will go here
-  // },
-
-  // getInitialState: function() {
-    // this.state.user.name;
-  // },
 
   render: function() {
     return (
       <div className='header'>
         <h1>OpenElect</h1>
-        <p><a href='/login'>Login</a></p>
-        <p><a href='/signup'>Register</a></p>
-        <p><a href='#'>My Account</a></p>
-        <p>Signed in as <a href='#'>John Doe</a></p>
+        <p><Link to='dashboard'>My Account</Link></p>
+        <p><Link to='signup'>Sign Up</Link></p>
+        <p><Link to='login'>Log In</Link></p>
       </div>
     );
   },

@@ -8,8 +8,10 @@ var QuestionList = React.createClass({
   render: function(){
     var questionNodes = _.map(this.props.data.results, function(question){
       return (
-        <Question question={question.question} selection={question.selection}>
-        </Question>
+        <div>
+          <Question question={question.question} selection={question.selection}>
+          </Question>
+        </div>
       );
     });
     return (
