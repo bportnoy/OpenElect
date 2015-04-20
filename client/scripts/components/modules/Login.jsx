@@ -6,6 +6,8 @@ var Formsy = require('formsy-react');
 var Modal = require('react-modal');
 var TextInputField = require('../widgets/TextInputField.jsx');
 var PasswordInputField = require('../widgets/PasswordInputField.jsx');
+var Router = require('react-router');
+var Link = Router.Link;
 
 
 var appElement = document.getElementById('app-view');
@@ -66,8 +68,8 @@ var LoginForm = React.createClass({
         user: data
       })
       .then(function(response){
-        this.context.router.transitionTo(response.data);
         this.closeModal;
+        this.context.router.transitionTo('dashboard');
       }.bind(this))
       .catch(function(response){
         this.setState({
@@ -84,6 +86,7 @@ var LoginForm = React.createClass({
                isOpen={this.state.modalIsOpen}
                onRequestClose={this.closeModal}>
           <Formsy.Form className='login-form' onValidSubmit={this.handleSubmit} onValid={this.enableButton} onInvalid={this.disableButton}>
+            <i className="fa fa-times x-close-icon" onClick={this.closeModal}></i>
             <h1>Sign into your account</h1>
             <label htmlFor='email'>Email</label>
             <TextInputField name="email"
@@ -103,7 +106,7 @@ var LoginForm = React.createClass({
                         }} required/>
             <div className='error-message login-warning'><span>{loginWarning}</span></div>
             <button type="submit" disabled={!this.state.canSubmit}>Sign In</button>
-            <div className='signin-link'><a href='#'>Register for a new account</a></div>
+            <div className='signin-link'><Link to='signup'>Register for a new account</Link></div>
           </Formsy.Form>
         </Modal>
       </div>

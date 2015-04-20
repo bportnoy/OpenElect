@@ -429,3 +429,9 @@ duv#twentyfiveWidth{
 .ReactModal__Overlay, .ReactModal__Overlay--after-open {
   background-color: rgba(0, 0, 0, 0.25)
 }
+
+.x-close-icon {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}

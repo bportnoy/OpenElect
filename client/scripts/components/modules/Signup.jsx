@@ -6,6 +6,8 @@ var Formsy = require('formsy-react');
 var Modal = require('react-modal');
 var TextInputField = require('../widgets/TextInputField.jsx');
 var PasswordInputField = require('../widgets/PasswordInputField.jsx');
+var Router = require('react-router');
+var Link = Router.Link;
 
 
 var appElement = document.getElementById('app-view');
@@ -63,13 +65,12 @@ var SignUpForm = React.createClass({
   },
 
   handleSubmit: function (data) {
-    console.log(data)
     axios.post('/api/v1/users/signup',{
       user: data
-    }).then(function(response){
-      this.context.router.transtionTo(response.data);
-    });
-
+    }).then(function(){
+      this.closeModal;
+      this.context.router.transitionTo('login');
+    }.bind(this));
   },
 
   render: function () {
@@ -79,6 +80,7 @@ var SignUpForm = React.createClass({
                isOpen={this.state.modalIsOpen}
                onRequestClose={this.closeModal}>
           <Formsy.Form className='signup-form' onValidSubmit={this.handleSubmit} onValid={this.enableButton} onInvalid={this.disableButton}>
+            <i className="fa fa-times x-close-icon" onClick={this.closeModal}></i>
             <h1>Welcome to OpenElect</h1>
             <h3>Register for a new account</h3>
             <label htmlFor='first_name'>First Name</label>
@@ -129,8 +131,8 @@ var SignUpForm = React.createClass({
                           minLength: 'Must be longer than 8 characters',
                           maxLength: 'Cannot be longer than 50 characters'
                         }} required/>
-            <button type="submit" disabled={!this.state.canSubmit} onClick={this.closeModal}>Register to Vote</button>
-            <div className='login-link'><a href='#'>Already registered? Sign into your account</a></div>
+            <button type="submit" disabled={!this.state.canSubmit}>Register to Vote</button>
+            <div className='login-link'><Link to='login'>Already registered? Sign into your account</Link></div>
           </Formsy.Form>
         </Modal>
       </div>
