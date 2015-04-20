@@ -22,6 +22,12 @@ var GroupActions = {
     });
   },
 
+  beginCreate: function(name) {
+    Dispatcher.dispatch({
+      actionType: Constants.BEGIN_GROUP_CREATE
+    });
+  },
+
   toggleFirstRowStatus: function(){
     Dispatcher.dispatch({
       actionType: Constants.TOGGLE_FIRST_ROW_STATUS
