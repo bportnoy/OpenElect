@@ -97,9 +97,9 @@ var GroupStore = assign({}, EventEmitter.prototype, {
 });
 
 GroupStore.dispatcherToken = Dispatcher.register(function(action){
-  
+
   switch(action.actionType) {
-  
+
     case constants.CREATE_GROUP:
       createGroup(action.name, action.id);
       GroupStore.emitChange();

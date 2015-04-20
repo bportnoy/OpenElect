@@ -64,10 +64,10 @@ var LoginForm = React.createClass({
   },
 
   handleSubmit: function (data) {
-    axios.post('/api/v1/users/login',{
-        user: data
+    axios.post('/api/v1/users/login', {
+        data
       })
-      .then(function(response){
+      .then(function(){
         this.closeModal;
         this.context.router.transitionTo('dashboard');
       }.bind(this))

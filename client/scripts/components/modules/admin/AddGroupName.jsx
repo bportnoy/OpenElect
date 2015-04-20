@@ -9,6 +9,11 @@ var AddGroupName = React.createClass({
 
   mixins: [React.addons.LinkedStateMixin],
 
+  propTypes: {
+    groupName: React.PropTypes.string,
+    spinner: React.PropTypes.bool
+  },
+
   saveName: function(e){
     e.preventDefault();
     this.setState({spinner: true});
