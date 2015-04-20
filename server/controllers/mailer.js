@@ -48,6 +48,22 @@ var Mailer = {
       return false;
     });
 
+  },
+
+  sendInvitation: function(email, firstName, lastName, groupName, tempPassword){
+
+    var message = 'Dear ' + firstName + ',\nYou have been added to the group "'
+                    + groupName + '" on OpenElect, a platform for holding elections.'
+                    + '\nYour temporary password is: ' + tempPassword
+                    + 'Please click this link to login and finish your registration: '
+                    + 'https://openelect.org/#/login?username=' + email + '&password='
+                    + tempPassword + '\n\n Thank you,\n The OpenElect Team';
+
+    var name = firstName + ' ' + lastName;
+
+    var subject = 'Welcome to OpenElect';
+
+    this.sendPlaintextEmail(email, subject, message, name, 'invite');
   }
 
 };

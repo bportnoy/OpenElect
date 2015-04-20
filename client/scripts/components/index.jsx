@@ -35,7 +35,7 @@ var IndexComponent = React.createClass({
   },
 
   getInitialState: function () {
-    this.getElections();
+    // this.getElections();
     return {
       elections: null,
       voteText: '',

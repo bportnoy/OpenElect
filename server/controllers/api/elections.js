@@ -7,6 +7,7 @@
 // Utilities
 var _ = require('lodash');
 var Promise = require('bluebird');
+var uuid = require('uuid');
 
 // DB models
 var Election = require('../../database/models/election');
@@ -54,6 +55,7 @@ var elections = {
       var data = req.body.election;
       console.log(data);
       var election = new Election({
+        id: uuid.v4(),
         name: data.name,
         description: data.description || 'no description',
         // start: data.start_date, //TODO re-enable this - we need to ensure consistent date/time formatting between back and front
@@ -63,7 +65,7 @@ var elections = {
         randomize_answer_order: data.randomize_questions,
         two_factor_auth: data.allow_2_auth,
         force_two_factor_auth: data.force_2_auth
-      }).save()
+      }).save({},{method: 'insert'})
       .then(function(model){
         res.status(201);
         res.send(model.toJSON());

@@ -16,3 +16,6 @@ test/scripts/bundle.js
 !.elasticbeanstalk/*.global.yml
 # ignore vagrant files
 .vagrant/
+#Upload directory
+server/uploads/*
+!server/uploads/tmp/

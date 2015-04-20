@@ -20,15 +20,15 @@ var User = db.Model.extend({
   tableName: 'users',
   hasTimestamps: true,
 
-  group: function(){
+  groups: function(){
     return this.belongsToMany('Group');
   },
 
-  ballot: function(){
+  ballots: function(){
     return this.hasMany('Ballot');
   },
 
-  election: function(){
+  elections: function(){
     return this.belongsToMany('Election');
   },
 

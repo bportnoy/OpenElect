@@ -5,6 +5,7 @@
 'use strict'
 
 var Poll = require('../../database/models/poll');
+var uuid = require('uuid');
 
 var polls = {
 	
@@ -13,10 +14,11 @@ var polls = {
       var data = req.body;
       console.log(data);
       var poll = new Poll({
+        id: uuid.v4(),
         name: data.name,
         election_id: data.election_id,
         group_id: data.group_id
-      }).save()
+      }).save({},{method: 'insert'})
       .then(function(model){
         res.status(201);
         res.json({
@@ -44,6 +46,6 @@ var polls = {
 
 	}
 
-}
+};
 
 module.exports = polls;
