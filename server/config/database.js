@@ -33,7 +33,7 @@ db.knex.schema.hasTable('users').then(function(exists) {
       users.string('last_name');
       users.text('public_key');
       users.text('private_key');
-      users.string('key_status'); //can be 'waiting' (key has not yet been generated), 
+      users.string('key_status'); //can be 'waiting' (key has not yet been generated),
                                     //'site' (we automatically generated a keypair),
                                     //'user' (the user supplied an OpenPGP keypair)
       users.integer('admin_level');
@@ -66,7 +66,7 @@ db.knex.schema.hasTable('groups').then(function(exists) {
       groups.uuid('parent_id');
       groups.json('children');
       groups.string('name');
-      groups.boolean('pending_adds').To(false); //are we in the process of adding users?
+      groups.boolean('pending_adds').defaultTo(false); //are we in the process of adding users?
       groups.timestamps();
     }).then(function (table) {
       console.log('Created Table', table);

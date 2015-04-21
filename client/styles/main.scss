@@ -27,6 +27,10 @@
 @import '_table';
 // [endinjector]
 
+body {
+  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+}
+
 .yeogurt-info {
   text-align: center;
   max-width: 500px;
@@ -242,10 +246,11 @@ a {
 .election-form input, .poll-form input {
   margin-right: 8px;
 }
-.election-form input[type=text], .poll-form input[type=text]{
+.election-form input[type=text], .poll-form input[type=text], .signup-form input[type=text], .signup-form input[type=password], .login-form input[type=text], .login-form input[type=password] {
   padding: 8px;
   max-width:960px;
   width: 100%;
+  border: solid 1px #235BB2;
 }
 
 input[type=submit], button {
@@ -254,7 +259,7 @@ input[type=submit], button {
   border-radius: 3px;
   border: none;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-  background: #00A9FF;
+  background: #235BB2;
   display: inline-block;
   zoom: 1;
   line-height: normal;
@@ -278,11 +283,6 @@ input[type=submit], button {
   background-color: #f4f4f4;
   border: solid 1px #ccc;
   padding: 2em;
-}
-
-.warning {
-  font-weight: bold;
-  color: red;
 }
 
 .page-loading {
@@ -341,7 +341,7 @@ duv#twentyfiveWidth{
 }
 
 .dz {
-  width: 12.25em; 
+  width: 12.25em;
   height: 10em;
   @include center(x);
   margin-bottom: 3em;
@@ -350,3 +350,88 @@ duv#twentyfiveWidth{
 @import 'date-picker';
 @import 'dropzone';
 @import 'table';
+
+.error-message {
+  height: 1.5em;
+  padding-top: 3px;
+  color: #ff0f00;
+  font-size: 0.8em;
+  font-weight: normal;
+}
+
+.login-warning {
+  padding:0;
+  margin:0;
+}
+
+.signup-modal {
+  width: 410px;
+  height: 530px;
+  margin: auto;
+  margin-top: 1em;
+  padding: 30px 40px 20px 40px;
+}
+
+.login-modal {
+  width: 410px;
+  height: 370px;
+  margin: auto;
+  margin-top: 2em;
+  padding: 30px 40px 20px 40px;
+}
+
+.signup-form h1 {
+  font-weight: normal;
+  font-size: 1.6em;
+  margin: 0;
+  margin-top: 8px;
+  text-align: center;
+}
+
+.login-form h1 {
+  font-weight: normal;
+  font-size: 1.6em;
+  margin: 0;
+  margin-top: 8px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.signup-form h3, .login-form h3 {
+  font-weight: normal;
+  font-size: 1em;
+  margin-top: 4px;
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.signup-form button, .login-form button {
+  width: 100%;
+  margin: 0;
+  padding: 1em;
+}
+
+.signup-form label, .login-form label {
+  color: #235BB2;
+}
+
+.login-link, .signin-link {
+  width: 100%;
+  text-align: center;
+  padding-top: 1.4em;
+}
+
+.login-link a, .signin-link a {
+  color: #235BB2;
+  font-size: 1em;
+}
+
+.ReactModal__Overlay, .ReactModal__Overlay--after-open {
+  background-color: rgba(0, 0, 0, 0.25)
+}
+
+.x-close-icon {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}

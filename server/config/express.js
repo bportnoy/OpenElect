@@ -76,7 +76,7 @@ var expressConfig = function(app, express, db) {
 
   // set up sessions and authentication
   app.use(session({
-    secret: process.env.SESSION_SECRET,
+    secret: process.env.SESSION_SECRET || 'openelect',
     resave: false,
     saveUninitialized: true,
     store: new BookshelfStore({model: SessionModel}) //should add cookie secure here when we get a SSL cert
