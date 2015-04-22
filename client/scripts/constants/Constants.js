@@ -21,10 +21,12 @@ var Constants = keyMirror({
   PROCESSED_GROUP_CSV: null
 });
 
+// Admin constants
 Constants.admin = keyMirror({
 
 });
 
+// Election related constants
 Constants.admin.elections = keyMirror({
   CHANGE_ELECTION_DATA: null,
   UNDO_ELECTION_CHANGE: null

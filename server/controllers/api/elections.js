@@ -58,8 +58,8 @@ var elections = {
         id: uuid.v4(),
         name: data.name,
         description: data.description || 'no description',
-        // start: data.start_date, //TODO re-enable this - we need to ensure consistent date/time formatting between back and front
-        // end: data.end_date,
+        start: data.start_date,
+        end: data.end_date,
         timed: data.is_timed,
         privacy_strategy: data.privacy_strategy,
         randomize_answer_order: data.randomize_questions,

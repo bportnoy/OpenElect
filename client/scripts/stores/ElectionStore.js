@@ -4,6 +4,7 @@ var Dispatcher = require('../dispatchers/default');
 var Constants = require('../Constants/Constants');
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
+var moment = require('moment');
 var _ = require('underscore');
 
 var CHANGE_EVENT = Constants.CHANGE_EVENT;
@@ -12,32 +13,13 @@ var CHANGE_EVENT = Constants.CHANGE_EVENT;
 // Stored Elections Data
 var _initialFetch = false;
 var _elections = {};
-var _currentElection = {
-  'id': null,
-  'owner_id': null,
-  'name': null,
-  'description': null,
-  'start': null,
-  'end': null,
-  'timed': null,
-  'accepting_votes': null,
-  'locked': null,
-  'privacy_strategy': null,
-  'url_handle': null,
-  'randomize_answer_order': null,
-  'two_factor_auth': null,
-  'force_two_factor_auth': null,
-  'public_key': null,
-  'results': null,
-  'created_at': null,
-  'updated_at': null
-};
+var _currentElection = require('./emptyElectionObject');
 
 var _unsavedProperties = _.mapObject(_currentElection, function(val, key){
   return false;
 });
 
-var _currentElectionOriginal = {}; // todo: we'll store a fresh version of the election object here so the user may undo changes
+var _currentElectionOriginal = {};
 
 
 var ElectionStore = assign({}, EventEmitter.prototype, {
@@ -60,12 +42,40 @@ var ElectionStore = assign({}, EventEmitter.prototype, {
 
   getCurrentElectionData: function() {
     return _currentElection;
+  },
+
+  getElectionStart: function() {
+    if ( typeof _currentElection.start === 'string' ){
+      return moment.utc(_currentElection.start);
+    }
+    return _currentElection.start;
+  },
+
+  getElectionEnd: function() {
+    if ( typeof _currentElection.end === 'string' ){
+      return moment.utc(_currentElection.end);
+    }
+    return _currentElection.end;
   }
 
 });
 
+function convertDates(data) {
+  if ( data.start || data.end ) { // convert timestamps to moment objects 
+    if ( typeof data.start === 'string' ) {
+      data.start = moment.utc(data.start);
+    }
+    if ( typeof data.start === 'string' ) {
+      data.end = moment.utc(data.end);
+    }
+  }
+  return data;
+}
+
 function setElectionData(data, unsaved) {
+  data = _.pick(data, _.keys(_currentElection)); // only set data that's supposed to go in the election object
   _.extendOwn(_currentElection, data);
+  data = convertDates(data);
   if ( unsaved ) {
     _.each(data, function(value, key) {
       _unsavedProperties[key] = true;
@@ -91,6 +101,7 @@ function undoChanges(keys) {
 }
 
 function addUserElection(data) {
+  data = convertDates(data);
   _elections[data.id] = data;
   ElectionStore.emitChange();
 }
@@ -114,6 +125,7 @@ ElectionStore.dispatcherToken = Dispatcher.register(function(action){
     break;
 
     case Constants.request.elections.SET_ELECTION_DATA:
+      console.log(action.response.body);
       setElectionData(action.response.body);
     break;
 

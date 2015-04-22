@@ -16,7 +16,7 @@ var knex = require('knex')({
     database: process.env.DB_NAME,
     charset: 'utf8',
     port: process.env.DB_PORT
-  }, debug: false
+  }, debug: true
 });
 
 var db = require('bookshelf')(knex);
@@ -111,8 +111,8 @@ db.knex.schema.hasTable('elections').then(function(exists) {
       elections.uuid('owner_id').references('id').inTable('users');
       elections.string('name');
       elections.text('description').defaultTo('No description');
-      elections.datetime('start');
-      elections.datetime('end');
+      elections.dateTime('start');
+      elections.dateTime('end');
       elections.boolean('timed').defaultTo(false);
       elections.boolean('accepting_votes').defaultTo(false);
       elections.boolean('locked').defaultTo(false);
@@ -124,6 +124,7 @@ db.knex.schema.hasTable('elections').then(function(exists) {
       elections.boolean('archived').defaultTo(false);
       elections.text('public_key'); //the key that will be used to encrypt this election
       elections.json('results');
+      elections.text('user_time_zone').defaultTo('utc'); // this doesn't affect how the date/time is stored, only how it's displayed
       elections.timestamps();
     }).then(function (table) {
       console.log('Created Table', table);
