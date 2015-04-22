@@ -4,7 +4,7 @@
   "repository": "https://github.com/SkillfulCactus/OpenElect",
   "scripts": {
     "clean": "rimraf node_modules client/bower_components .tmp dist",
-    "start": "NODE_ENV=production node server.js",
+    "start": "NODE_ENV=production node dist/server.js",
     "test": "grunt test"
   },
   "dependencies": {
