@@ -4,7 +4,7 @@
   "repository": "https://github.com/SkillfulCactus/OpenElect",
   "scripts": {
     "clean": "rimraf node_modules client/bower_components .tmp dist",
-    "start": "NODE_ENV=production node dist/server.js",
+    "start": "NODE_ENV=production node server.js",
     "test": "grunt test"
   },
   "dependencies": {
@@ -30,7 +30,6 @@
     "express-session": "~1.6.0",
     "flux": "~2.0.0",
     "form-serialize": "~0.4.0",
-    "formsy-react": "^0.12.5",
     "generate-password": "^1.1.1",
     "grunt": "^0.4.5",
     "grunt-autoprefixer": "^3.0.0",
@@ -46,7 +45,6 @@
     "moment-timezone": "^0.3.1",
     "morgan": "~1.0.0",
     "multer": "^0.1.8",
-    "newrelic": "^1.18.3",
     "node-jsx": "~0.12.4",
     "object-assign": "~1.0.0",
     "openpgp": "^1.0.1",
@@ -56,7 +54,6 @@
     "react": "~0.13.0",
     "react-d3": "^0.3.1",
     "react-date-picker": "^2.0.15",
-    "react-modal": "^0.1.1",
     "react-router": "^0.13.2",
     "reactify": "^1.1.0",
     "rimraf": "~2.3.2",

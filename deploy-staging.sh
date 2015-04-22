@@ -9,6 +9,13 @@ sudo pip install awsebcli
 #Ensure we're in the master directory
 git checkout master
 
+# Build distribution directory
+grunt build
+
+#Move to distribution directory
+cd dist
+echo "Now in:"
+pwd
 echo "Preparing to upload to Elastic Beanstalk."
 
 #Initialize eb instance to our app.
