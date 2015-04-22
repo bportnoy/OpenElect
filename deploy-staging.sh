@@ -24,4 +24,4 @@ eb init -r us-west-1 OpenElect
 #Deploy directory to staging.
 eb deploy openelect-production
 
-echo "Deployment complete, have a prickly day!"
+echo "Deployment complete, have a prickly day!!"
