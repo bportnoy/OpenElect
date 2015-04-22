@@ -13,11 +13,31 @@ var uuid = require('uuid');
 var async = require('async');
 var validator = require('validator');
 var rimraf = Promise.promisify(require('rimraf'));
+var _ = require('lodash');
 
 var Group = require('../../database/models/group');
 var UserController = require('../users');
 
 var Groups = {
+
+  list: function(req, res){
+    if (req.query.own === 'true'){
+      Group.where({owner_id: req.user.id}).fetchAll({withRelated: ['user']})
+      .then(function(groups){
+        res.status(200).send(groups.toJSON({shallow: true}));
+      });
+    } else {
+      Group.fetchAll({
+        withRelated: [{ // this little bit of code fetches all a user's groups
+          'user': function(qb) {
+            qb.where('id', req.user.id);
+          }
+        }]
+      }).then(function(groups){
+        res.status(200).send(groups.toJSON({shallow: true}));
+      });
+    }
+  },
 
   create: function(req, res){
     Group.forge({
@@ -32,6 +52,27 @@ var Groups = {
     });
   },
 
+  update: function(req, res){
+    Group.forge({id: req.body.id}).fetch()
+    .then(function(group){
+      if (!group) res.status(400).send('Error: no group with that ID');
+      else {
+        console.log(req.body.attributes);
+        group.set(req.body.attributes);
+        res.status(200).send(group.toJSON());
+      }
+    });
+  },
+
+  listUsers: function(req, res){
+    Group.forge({id: req.params.id}).fetch({withRelated: ['user']})
+    .then(function(group){
+      if (group.get('owner_id') !== req.user.id){
+        res.status(401).send('Error: only group owner may request user list.');
+      } else res.send(group.related(['user']).toJSON());
+    });
+  },
+
   csv: function(req, res) {
     util.makeUploadDir(req.user.id).then(function(success){
       if (success){
@@ -42,7 +83,7 @@ var Groups = {
               //send first 10 lines back to user for review
               var csvPreview = parsedCSV.slice(0,10);
               res.send({csvPreview: csvPreview, filePath: path});
-            }).catch(function(error){console.error(error); res.status(500).send()});//parseCSV
+            }).catch(function(error){console.error(error); res.status(500).send();});//parseCSV
           });//readfile
         });//moveToUploads
       }
@@ -78,11 +119,51 @@ var Groups = {
   },
 
   checkCSVInProcess: function(id, req, res) {
-    Group.forge({id: id}).fetch()
+    Group.forge({id: id}).fetch({withRelated: ['user']})
     .then(function(group){
-      res.status(200).send({status: group.get('pending_adds')});
+      console.log(req.user);
+      console.log(group);
+      if (group.get('owner_id') !== req.user.id){
+        res.status(401).send('You must be the owner to check status.');
+      }
+      if (group.get('pending_adds') || group.member_count === 0){
+        res.status(200).send(true);
+      } else res.status(200).send(group.toJSON({shallow: true}));
+    });
+  },
+
+  addUsers: function(req, res){
+    async.each(req.body.users, function(user, eachCallback){
+      if (validator.isEmail(user.EmailAddress)){
+        UserController.addToGroup(user, req.body.groupId)
+        .then(function(success){
+          eachCallback();
+        });
+      }
+    }, function(err){
+      //called after the full each has run
+      if (err) res.status(500).send(err);
+      else {
+        Group.forge({id: req.body.groupId}).fetch({withRelated: ['user']})
+        .then(function(group){
+          res.status(201).send(group.toJSON({shallow: true}));   
+        });
+      }
+    });
+  },
+
+  removeUser: function(req, res){
+    UserController.removeFromGroup(req.body.user_id, req.body.group_id)
+    .then(function(success){
+      if (success){
+        Group.forge({id: req.body.group_id}).fetch({withRelated: ['user']})
+        .then(function(group){
+          res.status(200).send(group.related(['user']).toJSON());
+        });
+      }
     });
   }
+
 };
 
 module.exports = Groups;

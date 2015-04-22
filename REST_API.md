@@ -383,6 +383,7 @@ ___
 
 # Groups
 ## Group object
+
 ## Create Group
 ##### Definition
     POST https://openelect.org/api/vi/groups/create
@@ -409,11 +410,29 @@ ___
 ##### Definition
 ##### Example Request
 ##### Example Response
+
 ## List Groups
 ##### Definition
+    GET https://openelect.org/api/vi/groups/create
 ##### Example Request
+    curl https://openelect.org/api/v1/groups/list?own=true \
+      -u { USER_TOKEN }: \
 ##### Example Response
-
+###### Returns 200 status, response object
+    [{
+      name: 'CA-11',
+      owner_id: 'uuid',
+      id: 'uuid',
+      parent: 'uuid',
+      children: ['uuid']
+    },
+      {
+      name: 'CA-12',
+      owner_id: 'uuid',
+      id: 'uuid',
+      parent: 'uuid',
+      children: ['uuid']
+      }]
 ## Upload CSV
 ##### Definition
     POST https://openelect.org/api/v1/groups/csv

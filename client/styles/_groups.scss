@@ -1,0 +1,33 @@
+#grouphead {
+  display: inline-block;
+  margin-right: .2em;
+}
+
+.pagination {
+    margin: 1em;
+    padding: 0;
+    display: inline-block;
+    list-style: none;
+}
+.pagination li {
+    margin: 0;
+    margin-right: 1em;
+    padding: 0.5em;
+
+    display: inline-block;
+
+    background: #ddd;
+}
+.pagination a {
+    text-decoration: none;
+}
+.pagination .selected {
+    background: #222;
+}
+.pagination .selected a {
+    color: #eee;
+}
+
+td button {
+  margin: 0;
+}

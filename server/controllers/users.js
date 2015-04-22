@@ -15,15 +15,15 @@ module.exports = {
   The callback is sometimes used in an asynchronous iterator, if present it will be called to let the iterator know we're done.
    */
   addToGroup: function(userDetails, groupId, callback){
-
-    Group.forge({id: groupId}).fetch()
+    return Group.forge({id: groupId}).fetch()
     .then(function(group){
-      var groupName = group.get('name');
-      User.forge({email: userDetails.EmailAddress}).fetch()
+      var groupName = group.get('name');//for the email!
+      return User.forge({email: userDetails.EmailAddress}).fetch()
       .then(function(user){
         if (user){
           user.groups().attach(groupId); //if the user exists, add them to the group
           callback && callback();//thanks iterator!
+          return true;
         }
         else {
           var tempPassword = generator.generate({numbers: true});
@@ -35,18 +35,28 @@ module.exports = {
             password: tempPassword,
             must_change_pass: true
           };
-          User.forge(newUser).save({}, {method: 'insert'}).then(function(user){
+          return User.forge(newUser).save({}, {method: 'insert'}).then(function(user){
             user.groups().attach(groupId);
-            user.save().then(function(user){
+            return user.save().then(function(user){
               mailer.sendInvitation(userDetails.EmailAddress, userDetails.FirstName,
                                    userDetails.LastName, groupName, tempPassword);
               callback && callback();//thanks iterator!
+              return true;
             });//save user
           });//forge user
         }
       });//fetch by email
     });//group
+  },
 
+  removeFromGroup: function(userId, groupId){
+    return Group.forge({id: groupId}).fetch({withRelated: ['user']})
+    .then(function(group){
+      return group.user().detach(userId)
+      .then(function(group){
+        return true;
+      }).catch(function(err){console.log(err);});
+    });
   }
 
 };
