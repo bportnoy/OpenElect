@@ -4,9 +4,9 @@
 'use strict';
 
 // Enable app monitoring for production
-if ( process.env.NODE_ENV === 'production' ){
-	require('newrelic');
-}
+// if ( process.env.NODE_ENV === 'production' ){
+// 	require('newrelic');
+// }
 
 // Module dependencies.
 var express = require('express');
