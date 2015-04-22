@@ -25,3 +25,4 @@ eb init -r us-west-1 OpenElect
 eb deploy openelect-production
 
 echo "Deployment complete, have a prickly day!"
+echo "I hope this works!"
