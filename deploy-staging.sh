@@ -15,6 +15,7 @@ grunt build
 #Move to distribution directory
 cd dist
 echo "Now in:"
+cp ../newrelic.js .
 pwd
 echo "Preparing to upload to Elastic Beanstalk."
 
