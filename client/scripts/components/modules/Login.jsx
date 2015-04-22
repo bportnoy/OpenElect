@@ -64,9 +64,7 @@ var LoginForm = React.createClass({
   },
 
   handleSubmit: function (data) {
-    axios.post('/api/v1/users/login', {
-        data
-      })
+    axios.post('/api/v1/users/login', data)
       .then(function(){
         this.closeModal;
         this.context.router.transitionTo('dashboard');
