@@ -1,7 +1,7 @@
 'use strict';
 
 var Dispatcher = require('../dispatchers/default');
-var Constants = require('../Constants/Constants');
+var Constants = require('../constants/Constants');
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
 var moment = require('moment');
