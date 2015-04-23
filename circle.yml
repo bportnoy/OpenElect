@@ -1,12 +1,12 @@
+machine:
+  environment:
+    DBURL: postgres://ubuntu:@127.0.0.1:5432/circle_test
+
 dependencies:
   pre:
     - bower install
 
 deployment:
-  # production:
-    # branch: production
-    # commands:
-    #   - ./deploy_prod.sh
 
   staging:
     branch: master
