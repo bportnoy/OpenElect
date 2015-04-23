@@ -8,6 +8,10 @@ deployment:
     # commands:
     #   - ./deploy_prod.sh
 
+machine:
+  environment:
+    DBURL: postgres://ubuntu:@127.0.0.1:5432/circle_test
+
   staging:
     branch: master
     commands:
