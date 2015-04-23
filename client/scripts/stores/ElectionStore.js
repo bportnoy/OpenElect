@@ -1,38 +1,24 @@
 'use strict';
 
 var Dispatcher = require('../dispatchers/default');
-var constants = require('../constants/Constants');
+var Constants = require('../Constants/Constants');
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
-var axios = require('axios');
+var moment = require('moment');
 var _ = require('underscore');
 
-var CHANGE_EVENT = constants.CHANGE_EVENT;
+var CHANGE_EVENT = Constants.CHANGE_EVENT;
 
 
 // Stored Elections Data
 var _initialFetch = false;
 var _elections = {};
-var _currentElection = {
-  'id': null,
-  'owner_id': null,
-  'name': null,
-  'description': null,
-  'start': null,
-  'end': null,
-  'timed': null,
-  'accepting_votes': null,
-  'locked': null,
-  'privacy_strategy': null,
-  'url_handle': null,
-  'randomize_answer_order': null,
-  'two_factor_auth': null,
-  'force_two_factor_auth': null,
-  'public_key': null,
-  'results': null,
-  'created_at': null,
-  'updated_at': null
-};
+var _currentElection = require('./emptyElectionObject');
+
+var _unsavedProperties = _.mapObject(_currentElection, function(val, key){
+  return false;
+});
+
 var _currentElectionOriginal = {};
 
 
@@ -54,70 +40,129 @@ var ElectionStore = assign({}, EventEmitter.prototype, {
     this.removeListener(CHANGE_EVENT, callback);
   },
 
-  getCurrentElectionData: function(keyOrObject, value) {
+  getCurrentElectionData: function() {
     return _currentElection;
+  },
+
+  getElectionStart: function() {
+    if ( typeof _currentElection.start === 'string' ){
+      return moment.utc(_currentElection.start);
+    }
+    return _currentElection.start;
+  },
+
+  getElectionEnd: function() {
+    if ( typeof _currentElection.end === 'string' ){
+      return moment.utc(_currentElection.end);
+    }
+    return _currentElection.end;
   }
 
 });
 
-// Get user elections and store 
-function getElections(userId) {
-  axios.get('/api/v1/elections/owner/' + userId )
-    .then(function(response){
-      _initialFetch = true;
-      if ( response.data.length > 0 ) {
-        response.data.forEach(function(election) {
-          _elections[election.id] = election;
-        });
-        ElectionStore.emitChange();
-      }
-    })
-    .catch(function(err){
-      console.error(err);
-    });
+function convertDates(data) {
+  if ( data.start || data.end ) { // convert timestamps to moment objects 
+    if ( typeof data.start === 'string' ) {
+      data.start = moment.utc(data.start);
+    }
+    if ( typeof data.start === 'string' ) {
+      data.end = moment.utc(data.end);
+    }
+  }
+  return data;
 }
 
-function postElectionData(data) {
-  console.log('post', data);
-  axios.post('/api/v1/elections/update/' + data.id, data)
-    .then(function(response) {
-      _.extendOwn(_currentElection, response.data);
-      console.log('response', response.data);
-      ElectionStore.emitChange();
-    })
-    .catch(function(err){
-      console.error(err);
-    });
-}
-
-function setElectionData(data) {
+function setElectionData(data, unsaved) {
+  data = _.pick(data, _.keys(_currentElection)); // only set data that's supposed to go in the election object
   _.extendOwn(_currentElection, data);
-  console.log(_currentElection);
+  data = convertDates(data);
+  if ( unsaved ) {
+    _.each(data, function(value, key) {
+      _unsavedProperties[key] = true;
+    });
+  } else {
+    _.each(data, function(value, key) {
+      _unsavedProperties[key] = false;
+      _currentElectionOriginal[key] = value;
+    });
+  }
+  ElectionStore.emitChange();
+}
+
+function undoChanges(keys) {
+  if ( typeof keys === 'string' ) {
+    _currentElection[keys] = _currentElectionOriginal[keys];
+  } else {
+    _.each(keys, function(value, key) {
+      _currentElection[key] = _currentElectionOriginal[key];
+    });
+  }
   ElectionStore.emitChange();
 }
 
 function addUserElection(data) {
+  data = convertDates(data);
   _elections[data.id] = data;
   ElectionStore.emitChange();
 }
 
 ElectionStore.dispatcherToken = Dispatcher.register(function(action){
-	
+
 	switch(action.actionType) {
   
-    case constants.GET_USER_ELECTIONS:
-      getElections(action.userId);
-    break;
-
-    case constants.SET_ELECTION_DATA:
-      setElectionData(action.data);
-    break;
-
-    case constants.request.elections.CREATE_ELECTION:
-      if (action.response.body) {
-        setElectionData(action.response.body);
-        addUserElection(action.response.body);
+    case Constants.request.elections.GET_USER_ELECTIONS:
+      if (action.response === 'PENDING') {
+        console.log('request sent');
+      } else {
+        if (action.response.body) {
+          action.response.body.forEach(function(election){
+            addUserElection(election);
+          });
+        } else {
+          console.error('unexpected response from server: ', action.response);
+        }
       }
+    break;
+
+    case Constants.request.elections.SET_ELECTION_DATA:
+      console.log(action.response.body);
+      setElectionData(action.response.body);
+    break;
+
+
+    case Constants.request.elections.CREATE_ELECTION:
+      if (action.response === 'PENDING') {
+        console.log('request sent');
+      } else {
+        if (action.response.body) {
+          setElectionData(action.response.body);
+          addUserElection(action.response.body);
+        } else {
+          console.error('unexpected response from server: ', action.response);
+        }
+      }
+    break;
+
+    case Constants.request.elections.POST_ELECTION_DATA:
+      if (action.response === 'PENDING') {
+        console.log('request sent');
+      } else {
+        if (action.response.body) {
+          setElectionData(action.response.body);
+        } else {
+          console.error('unexpected response from server: ', action.response);
+        }
+      }
+    break;
+
+    // updates election data but does not post to server
+    case Constants.admin.elections.CHANGE_ELECTION_DATA:
+      setElectionData(action.data, true);
+    break;
+
+    // undo unsaved changes to an election
+    case Constants.admin.elections.UNDO_ELECTION_CHANGE:
+      undoChanges(action.keys);
     break;
 
     default: // no-op

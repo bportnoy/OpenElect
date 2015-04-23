@@ -9,6 +9,7 @@ var Constants = keyMirror({
   QUESTION_ADD: null,
   CHANGE_EVENT: null,
   SUBMIT_BALLOT: null,
+<<<<<<< HEAD
   SET_USER_ELECTION: null,
   GET_USER_ELECTIONS: null,
   SAVE_GROUP_NAME: null,
@@ -19,14 +20,15 @@ var Constants = keyMirror({
   TOGGLE_FIRST_ROW_STATUS: null,
   TOGGLE_GROUP_INVITE_BLOCK_STATUS: null,
   PROCESSED_GROUP_CSV: null
+=======
+  SAVE_GROUP_NAME: null
 });
 
-// Admin constants
 Constants.admin = keyMirror({
 
+>>>>>>> implement two-way-binding for election inputs
 });
 
-// Election related constants
 Constants.admin.elections = keyMirror({
   CHANGE_ELECTION_DATA: null,
   UNDO_ELECTION_CHANGE: null
