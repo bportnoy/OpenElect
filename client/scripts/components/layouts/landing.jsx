@@ -3,7 +3,7 @@
 // dependencies
 var React = require('react/addons');
 var Link = require('react-router').Link;
-var NavSelect = require('../modules/landing/NavSelect.jsx');
+var NavSelect = require('../modules/landing/navSelect.jsx');
 
 var Landing = React.createClass({
 
