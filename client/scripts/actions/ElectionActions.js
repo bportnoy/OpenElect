@@ -8,7 +8,6 @@ var API = require('../api');
 
 var ElectionStore = require('../stores/ElectionStore');
 var electionObj = require('../stores/emptyElectionObject');
-console.log(electionObj);
 
 var _ = require('underscore');
 

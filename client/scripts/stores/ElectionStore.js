@@ -133,7 +133,6 @@ ElectionStore.dispatcherToken = Dispatcher.register(function(action){
     break;
 
     case Constants.request.elections.SET_ELECTION_DATA:
-      console.log(action.response.body);
       setElectionData(action.response.body);
     break;
 

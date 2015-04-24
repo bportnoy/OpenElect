@@ -59,7 +59,6 @@ var ElectionAdmin = React.createClass({
         options[groupName][option.name] = option.value;
       });
     });
-    console.log('builtOptions', options);
     return options;
   },
 
@@ -119,8 +118,8 @@ var ElectionAdmin = React.createClass({
               </div>
             </div>
           </div>
-          <div className="group election-privacy">
-            <ElectionInput name="title" type="checkbox" property="two_factor_auth" value={this.state.two_factor_auth}></ElectionInput>
+          <div className="polls">
+
           </div>
         </div>
       </section>
