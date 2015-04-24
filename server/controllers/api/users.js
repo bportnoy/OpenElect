@@ -23,8 +23,10 @@ var Users = {
         .fetch()
         .then(function(possibleExistingUser){
           if (possibleExistingUser) res.status(409).send('User with that e-mail already exists.'); //e-mail must be unique
+          console.log('pre new user');
           newUser.save({},{method: 'insert'})
                   .then(function(user){
+                    console.log('response');
                     res.status(201).send('User created.'); // return the new user's attributes
                   });
         });
