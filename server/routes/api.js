@@ -172,6 +172,36 @@ var routes = function(app) {
       api.groups.checkCSVInProcess(req.params.id, req, res);
     });
 
+  //list groups for a user
+  router.route('/groups/list')
+    .get(function(req, res) {
+      api.groups.list(req, res);
+    });
+
+  //list all users for a group (must be owned)
+  router.route('/groups/:id/users')
+    .get(function(req, res) {
+      api.groups.listUsers(req, res);
+    });
+
+  //update existing group
+  router.route('/groups/update')
+    .post(function(req, res) {
+      api.groups.update(req, res);
+    });
+
+  //remove a user from a group
+  router.route('/groups/users/remove')
+    .post(function(req, res){
+      api.groups.removeUser(req, res);
+    });
+
+  //add smaller batch of users hand-entered by user
+  router.route('/groups/users/add')
+    .post(function(req, res){
+      api.groups.addUsers(req, res);
+    });
+
 
   // API Root - lists the endpoints available
   router.get('/', function(req, res){

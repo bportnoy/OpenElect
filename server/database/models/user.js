@@ -18,7 +18,14 @@ scrypt.verify.config.keyEncoding = 'utf16';
 
 var User = db.Model.extend({
   tableName: 'users',
+
   hasTimestamps: true,
+
+  hidden: ['password',
+           'public_key', 
+           'private_key', 
+           'key_status',
+           'admin_level'], //prevents these files from being included in a .toJSON() call.
 
   groups: function(){
     return this.belongsToMany('Group');

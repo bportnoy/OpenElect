@@ -18,6 +18,7 @@ var Signup = require('./components/modules/Signup.jsx');
 var Login = require('./components/modules/Login.jsx');
 var Result = require('./components/modules/Results.jsx');
 var GroupCreate = require('./components/modules/admin/CreateGroup.jsx');
+var GroupAdmin = require('./components/modules/admin/GroupAdmin.jsx');
 
 var routes = (
   <Route name='app' path='/' handler={App}>
@@ -29,14 +30,13 @@ var routes = (
     <Route name='electionAdmin' path='/dashboard/election/view/:id' handler={Election} />
     <Route name='pollCreate' path='/dashboard/poll/create/:electionId' handler={PollCreate} />
     <Route name='groupCreate' path='/dashboard/group/create' handler={GroupCreate} />
+    <Route name='groupAdmin' path='/dashboard/group/:id' handler={GroupAdmin} />
     <Route name='signup' path='/signup' handler={Signup} />
     <Route name='login' path='/login' handler={Login} />
     <DefaultRoute name='index' handler={Index}/>
   </Route>
 );
 
-exports.run = function(){
-  Router.run(routes, function (Handler) {
+module.exports = Router.run(routes, function (Handler) {
     React.render(<Handler/>, document.getElementById('app-view'));
   });
-};

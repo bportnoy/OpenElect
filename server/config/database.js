@@ -16,12 +16,14 @@ var knex = require('knex')({
     database: process.env.DB_NAME,
     charset: 'utf8',
     port: process.env.DB_PORT
-  }, debug: true
+  }, debug: false
 });
 
 var db = require('bookshelf')(knex);
 
 db.plugin('registry'); // registry plugin handles node circular dependency issues
+db.plugin('visibility'); //can't be sending user secrets all over the place!
+db.plugin('virtuals'); //may as well go for the full set.
 
 db.knex.schema.hasTable('users').then(function(exists) {
   if (!exists) {

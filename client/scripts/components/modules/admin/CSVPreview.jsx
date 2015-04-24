@@ -24,8 +24,14 @@ var CSVPreview = React.createClass({
   },
 
   _ProcessCSV: function() {
+    this.setState({spinner: true});
     GroupActions.processCSV(this.props.filePath);
-    this.setState({spinner: GroupStore.getCSVProcessStatus()});
+    GroupActions.togglePCBlockStatus();
+  },
+
+  _TryAgain: function(){
+    GroupActions.toggleInviteBlockStatus();
+    GroupActions.toggleInviteButtonStatus();
   },
 
   getInitialState: function() {
@@ -33,7 +39,7 @@ var CSVPreview = React.createClass({
   },
 
   render: function() {
-    var spinner = this.state.spinner > 0 ? (<i className="fa fa-circle-o-notch fa-spin spinner"></i>) : undefined;
+    var spinner = this.state.spinner ? (<i className="fa fa-circle-o-notch fa-spin spinner"></i>) : undefined;
     var rows = this.props.response.map(function(row){
       if (row) return <CSVPreviewItem key={row.EmailAddress}
                                 FirstName={row.FirstName}
@@ -56,7 +62,7 @@ var CSVPreview = React.createClass({
                 {rows}
               </tbody>
             </table>
-            <button onClick={GroupActions.toggleInviteBlockStatus}>Try New Upload</button>
+            <button onClick={this._TryAgain}>Try New Upload</button>
             <button onClick={this._ProcessCSV}>Looks Good</button><div className='spinner'>{spinner}</div>
           </div>
 
