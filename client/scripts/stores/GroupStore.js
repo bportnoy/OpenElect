@@ -80,7 +80,6 @@ function togglePCBlock(){
 function checkCSVProcessStatus(){
   return axios.get('/api/v1/groups/csv/check/' + _current)
   .then(function(response){
-    console.log(response);
     return response.data;
   }).catch(function(error){console.error(error);});
 }
@@ -153,8 +152,6 @@ var GroupStore = assign({}, EventEmitter.prototype, {
 
   pollCSVProcessStatus: function(){
     checkCSVProcessStatus().then(function(status){
-      console.log(status);
-      console.log(_groupsOwned[_current]);
       if (status === true){
         setTimeout(GroupStore.pollCSVProcessStatus, 1000);
       } else {
@@ -189,8 +186,6 @@ var GroupStore = assign({}, EventEmitter.prototype, {
 });
 
 GroupStore.dispatcherToken = Dispatcher.register(function(action){
-
-  console.log(action);
   
   switch(action.actionType) {
 

@@ -115,7 +115,6 @@ var API = {
   },
 
   postElectionData: function(data) {
-    console.log(data, 'post');
     var url = makeUrl('/elections/update/' + data.id);
     var key = Constants.request.elections.POST_ELECTION_DATA;
     dispatchPost(key, url, data);
