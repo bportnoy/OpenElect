@@ -104,8 +104,11 @@ var elections = {
           _(data).forEach(function(value, property){
             // check to make sure we aren't allowing admins to change important stuff
             if (  property !== 'id'
+                  && property !== 'owner_id'
                   && property !== 'created_at'
                   && property !== 'updated_at'
+                  && property !== 'url_handle' // url is related to election_id
+                  && property !== 'public_key'
                   && property !== 'results' // !!!! todo: more robust checking for rewrite fraud via API
                 ) {
                     election.set(property, value);
