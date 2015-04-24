@@ -6,14 +6,17 @@
 
 var Question = require('../../database/models/question');
 var uuid = require('uuid');
+var _ = require('lodash');
 
 var questions = {
-	
-	create: function ( req, res ) {
-		if ( req.body.question ) {
+
+	create: function (req, res) {
+		if ( req.body.question) {
       var data = req.body.question;
-      var options = req.body.question.options;
-      console.log(data);
+      var options = req.body.options;
+      console.log('in controller, question', data);
+      console.log('options are ', options);
+
       var question = new Question({
         id: uuid.v4(),
         poll_id: data.poll_id,
@@ -26,7 +29,11 @@ var questions = {
         res.status(201);
         res.json({
           id: model.get('id'),
+          poll_id: model.get('poll_id'),
           name: model.get('name'),
+          description: model.get('description'),
+          options: model.get('options'),
+          count_strategy: model.get('count_strategy'),
           created_at: model.get('created_at')
         });
         res.end();
@@ -41,12 +48,58 @@ var questions = {
     }
 	},
 
-	adminGetById: function ( id, req, res ) {
-
+	adminGetById: function (id, req, res) {
+    if(req.body){
+      var data = req.body;
+      var question = new Question({id: id})
+        .fetch()
+        .then(function(model){
+          res.status(201);
+          res.json({
+            id: model.get('id'),
+            poll_id: model.get('poll_id'),
+            name: model.get('name'),
+            description: model.get('description'),
+            options: model.get('options'),
+            count_strategy: model.get('count_strategy'),
+            created_at: model.get('created_at')
+          });
+          res.end();
+        }).error(function(error){
+          res.stats(500);
+          console.log(error);
+          res.end();
+        });
+    } else {
+      res.status(400);
+      res.end('Bad request');
+    }
 	},
-	
-	updateById: function ( id, req, res ) {
 
+	updateById: function (id, req, res) {
+    var data = req.body;
+    var question = new Question({id: id});
+    question.fetch()
+      .then(function(question){
+        if(question){
+          _(data).forEach(function(value, property){
+            // check to make sure we aren't allowing admins to change important stuff
+            if (  property !== 'id'
+                  && property !== 'poll_id'
+                  && property !== 'created_at'
+                  && property !== 'updated_at'
+                ) {
+                    question.set(property, value);
+                }
+          });
+          question.save().then(function(question){
+            res.send(question.toJSON());
+          });
+        } else {
+          res.status(404);
+          res.end('Question object not found');
+        }
+      });
 	}
 
 };

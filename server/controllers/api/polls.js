@@ -10,7 +10,7 @@ var _ = require('lodash');
 
 var polls = {
 
-	create: function ( req, res ) {
+	create: function (req, res) {
 		if ( req.body ) {
       var data = req.body;
       console.log('in controller', data);
@@ -41,10 +41,10 @@ var polls = {
     }
 	},
 
-	adminGetById: function ( id, req, res ) {
+	adminGetById: function (id, req, res) {
     if( req.body){
       var data = req.body;
-      var poll = new Poll({election_id: id})
+      var poll = new Poll({id: id})
           .fetch()
           .then(function(model){
             res.status(201);
@@ -67,9 +67,9 @@ var polls = {
     }
 	},
 
-	updateById: function ( id, req, res ) {
+	updateById: function (id, req, res) {
     var data = req.body;
-    var poll = new Poll({election_id: id});
+    var poll = new Poll({id: id});
     poll.fetch()
       .then(function(poll){
         if(poll){
@@ -92,7 +92,7 @@ var polls = {
           res.end('Poll object not found');
         }
       });
-  },
+  }
 
 };
 
