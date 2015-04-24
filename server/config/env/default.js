@@ -9,8 +9,6 @@ var env = process.env.NODE_ENV || 'development';
 var envConfig = require('./' + env);
 
 // All configurations will extend these options
-console.log('!!!!!!');
-console.log(process.env.PORT);
 var defaults = {
   server: {
     // Port to run server on

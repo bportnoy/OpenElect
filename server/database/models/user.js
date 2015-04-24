@@ -54,8 +54,10 @@ var User = db.Model.extend({
     });
   },
 
-  generateKeys: function () {
-    Security.requestUserKey(this.get('id'));
+  generateKeys: function (model) {
+    setTimeout(function(){
+      Security.requestUserKey(this.get('id'));
+    }.bind(model), 100); //generate the keys after the new user response is set
   },
 
   verifyPassword: function(attemptedPassword){
