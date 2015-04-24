@@ -8,7 +8,7 @@ var GroupStore = require('../stores/GroupStore');
 
 
 var GroupActions = {
-  
+
   createGroup: function(name) {
     axios.post('/api/v1/groups/create', {name: name})
     .then(function(response){
