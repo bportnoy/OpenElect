@@ -70,6 +70,10 @@ var ElectionActions = {
     API.getElectionById(id);
   },
 
+  getElectionPolls: function(id) {
+    API.getPollsByElectionId(id);
+  },
+
   // posts new data to an election object - requires an id property within the data.election object
   postElectionData: function(keyOrObject, value) {
     var data = handleElectionData(keyOrObject, value);

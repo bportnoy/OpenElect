@@ -14,6 +14,7 @@ var CHANGE_EVENT = Constants.CHANGE_EVENT;
 var _initialFetch = false;
 var _elections = {};
 var _currentElection = require('./emptyElectionObject');
+var _currentElectionPolls = [];
 
 var _unsavedProperties = _.mapObject(_currentElection, function(val, key){
   return false;
@@ -64,6 +65,10 @@ var ElectionStore = assign({}, EventEmitter.prototype, {
       return moment.utc(_currentElection.end);
     }
     return _currentElection.end;
+  },
+
+  getElectionPolls: function() {
+    return _currentElectionPolls;
   }
 
 });
@@ -114,6 +119,11 @@ function addUserElection(data) {
   ElectionStore.emitChange();
 }
 
+function addPoll(data) {
+  _currentElectionPolls.push(data);
+  ElectionStore.emitChange();
+}
+
 ElectionStore.dispatcherToken = Dispatcher.register(function(action){
 
 	switch(action.actionType) {
@@ -161,6 +171,19 @@ ElectionStore.dispatcherToken = Dispatcher.register(function(action){
         }
       }
     break;
+
+    case Constants.request.polls.CREATE_POLL:
+      if (action.response === 'PENDING') {
+        console.log('request sent');
+      } else {
+        if (action.response.body) {
+          addPoll(action.response.body);
+        } else {
+          console.error('unexpected response from server: ', action.response);
+        }
+      }
+    break;
+
 
     // updates election data but does not post to server
     case Constants.admin.elections.CHANGE_ELECTION_DATA:

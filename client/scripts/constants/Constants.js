@@ -53,7 +53,12 @@ Constants.request.elections = keyMirror({
 	CREATE_ELECTION: null,
   GET_USER_ELECTIONS: null,
   POST_ELECTION_DATA: null,
-  SET_ELECTION_DATA: null
+  SET_ELECTION_DATA: null,
+  GET_ELECTION_POLLS: null
+});
+
+Constants.request.polls = keyMirror({
+  CREATE_POLL: null
 });
 
 module.exports = Constants;

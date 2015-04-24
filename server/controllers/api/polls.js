@@ -92,6 +92,20 @@ var polls = {
           res.end('Poll object not found');
         }
       });
+  },
+
+  getByElectionId: function(id, req, res) {
+    var poll = new Poll()
+      poll.where({ election_id: id })
+        .fetchAll()
+        .then(function(collection){
+          res.status(201);
+          res.send(collection.toJSON());
+      }).error(function(error){
+        res.status(500);
+          console.error(error);
+        res.end();
+      });
   }
 
 };
