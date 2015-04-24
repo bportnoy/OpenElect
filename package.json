@@ -58,7 +58,7 @@
     "react-paginate": "^0.1.26",
     "react-router": "^0.13.2",
     "react-select": "^0.4.6",
-    "react-tooltip": "^0.1.2",
+    "react-tooltip": "0.1.2",
     "reactify": "^1.1.0",
     "rimraf": "~2.3.2",
     "scrypt": "^4.0.7",
