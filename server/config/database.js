@@ -16,7 +16,7 @@ var knex = require('knex')({
     database: process.env.DB_NAME,
     charset: 'utf8',
     port: process.env.DB_PORT
-  }, debug: true
+  }, debug: false
 });
 
 var db = require('bookshelf')(knex);

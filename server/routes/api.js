@@ -30,15 +30,25 @@ var routes = function(app) {
    *  ===================================
    */
 
-  //login
+  //signup
   router.route('/users/signup')
     .post(function(req, res){
       api.users.create(req,res);
     });
 
+  //login
   router.route('/users/login')
     .post(passport.authenticate('local'), function(req, res){
       res.status(200).send('index');
+    });
+
+  //logout
+  router.route('/users/logout')
+    .get(function(req, res){
+      console.log(req);
+      console.log(res);
+      req.session.destroy();
+      res.redirect('/');
     });
 
   /**
