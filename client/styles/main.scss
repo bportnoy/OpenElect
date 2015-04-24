@@ -25,6 +25,7 @@
 @import '_date-picker';
 @import '_dropzone';
 @import '_election-admin';
+@import '_landing-page';
 @import '_table';
 // [endinjector]
 
@@ -319,12 +320,6 @@ ul {
   margin-top:0px;
 }
 
-.votingboothImg{
-  background-image: url("../../images/votingbooth.png");
-  width: 100%;
-  height: 768px;
-  margin-top:0px;
-}
 
 div#tenWidth{
   width: 10%;
@@ -351,6 +346,7 @@ duv#twentyfiveWidth{
 @import 'date-picker';
 @import 'dropzone';
 @import 'table';
+@import 'landing-page';
 
 .error-message {
   height: 1.5em;
