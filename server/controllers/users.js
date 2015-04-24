@@ -4,7 +4,6 @@ var Promise = require('bluebird');
 var _ = require('lodash');
 var User = require('../database/models/user');
 var Group = require('../database/models/group');
-var generator = require('generate-password');
 var mailer = require('./mailer');
 var uuid = require('uuid');
 
@@ -26,20 +25,20 @@ module.exports = {
           return true;
         }
         else {
-          var tempPassword = generator.generate({numbers: true});
+          var resetCode = uuid.v4();
           var newUser = {
             first_name: userDetails.FirstName,
             last_name: userDetails.LastName,
             email: userDetails.EmailAddress,
             id: uuid.v4(),
-            password: tempPassword,
-            must_change_pass: true
+            password: uuid.v4(),
+            reset_code: resetCode
           };
           return User.forge(newUser).save({}, {method: 'insert'}).then(function(user){
             user.groups().attach(groupId);
             return user.save().then(function(user){
               mailer.sendInvitation(userDetails.EmailAddress, userDetails.FirstName,
-                                   userDetails.LastName, groupName, tempPassword);
+                                   userDetails.LastName, groupName, resetCode);
               callback && callback();//thanks iterator!
               return true;
             });//save user

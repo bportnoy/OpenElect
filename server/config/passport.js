@@ -30,9 +30,11 @@ passport.use(new LocalStrategy({
           user.verifyPassword(password)
               .then(function(result){
                 if (!result){
-                  console.log('incorrect pass');
                   return done(null, false);
                 } else {
+                    if (!user.get('has_logged_in')){
+                      user.set('has_logged_in', true).save();
+                    }
                     return done(null, user);
                 }
               });

@@ -8,9 +8,9 @@ var Link = require('react-router').Link;
 var _ = require('underscore');
 
 // store and actions
-var ElectionStore = require('../stores/ElectionStore.js');
-var ElectionActions = require('../actions/ElectionActions.js');
-
+var ElectionStore = require('../stores/ElectionStore');
+var ElectionActions = require('../actions/ElectionActions');
+var UserStore = require('../stores/UserStore');
 // components
 var ListElection = require('./modules/admin/ListElection.jsx');
 var Spinner = require('./widgets/Spinner.jsx');

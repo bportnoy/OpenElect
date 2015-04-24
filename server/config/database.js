@@ -16,7 +16,7 @@ var knex = require('knex')({
     database: process.env.DB_NAME,
     charset: 'utf8',
     port: process.env.DB_PORT
-  }, debug: false
+  }, debug: true
 });
 
 var db = require('bookshelf')(knex);
@@ -40,6 +40,9 @@ db.knex.schema.hasTable('users').then(function(exists) {
                                     //'user' (the user supplied an OpenPGP keypair)
       users.integer('admin_level');
       users.boolean('must_change_pass');
+      users.boolean('has_logged_in').defaultTo(false);
+      users.uuid('reset_code');
+      users.dateTime('reset_requested').defaultTo(null);
       users.timestamps();
     }).then(function (table) {
       console.log('Created Table', table);

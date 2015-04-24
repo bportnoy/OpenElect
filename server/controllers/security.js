@@ -112,9 +112,18 @@ module.exports = {
     var sha512 = crypto.createHash('sha512');
     sha512.update(data, 'ascii');
     return sha512.digest('hex');
-  }
+  },
 
-    
+  checkLoggedIn: function(req){
+    return req.session ? !!req.user : false;
+  },
+
+  authenticateAPI: function(req, res, next){
+    if (module.exports.checkLoggedIn(req)){
+      next();
+    }
+    else res.status(401).send('Error: not logged in.');
+  }
 
 };
 

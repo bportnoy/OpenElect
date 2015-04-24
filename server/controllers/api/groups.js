@@ -57,7 +57,6 @@ var Groups = {
     .then(function(group){
       if (!group) res.status(400).send('Error: no group with that ID');
       else {
-        console.log(req.body.attributes);
         group.set(req.body.attributes);
         res.status(200).send(group.toJSON());
       }
@@ -121,8 +120,6 @@ var Groups = {
   checkCSVInProcess: function(id, req, res) {
     Group.forge({id: id}).fetch({withRelated: ['user']})
     .then(function(group){
-      console.log(req.user);
-      console.log(group);
       if (group.get('owner_id') !== req.user.id){
         res.status(401).send('You must be the owner to check status.');
       }

@@ -12,6 +12,7 @@ var dateTimes = require('../../../data/dateTimes.js');
 var ElectionInput = require('./election/ElectionInput.jsx');
 var PollList = require('./election/PollList.jsx');
 
+
 var ElectionAdmin = React.createClass({
 
   contextTypes: {
