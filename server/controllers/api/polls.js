@@ -8,16 +8,16 @@ var Poll = require('../../database/models/poll');
 var uuid = require('uuid');
 
 var polls = {
-	
+
 	create: function ( req, res ) {
 		if ( req.body ) {
       var data = req.body;
-      console.log(data);
+      console.log('in controller', data);
       var poll = new Poll({
         id: uuid.v4(),
         name: data.name,
-        election_id: data.election_id,
-        group_id: data.group_id
+        election_id: data.poll.election_id,
+        group_id: data.poll.group_id
       }).save({},{method: 'insert'})
       .then(function(model){
         res.status(201);
@@ -41,7 +41,7 @@ var polls = {
 	adminGetById: function ( id, req, res ) {
 
 	},
-	
+
 	updateById: function ( id, req, res ) {
 
 	}
