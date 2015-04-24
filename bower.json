@@ -7,7 +7,9 @@
     "modernizr": "~2.8.1",
     "normalize.css": "~3.0.1",
     "es5-shim": "~3.4.0",
-    "font-awesome": "~4.3.0"
+    "font-awesome": "~4.3.0",
+    "bourbon": "~4.2.2",
+    "neat": "~1.7.2"
   },
   "devDependencies": {}
 }

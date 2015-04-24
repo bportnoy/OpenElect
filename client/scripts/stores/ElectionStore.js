@@ -44,6 +44,14 @@ var ElectionStore = assign({}, EventEmitter.prototype, {
     return _currentElection;
   },
 
+  isUnsavedProperty: function(property) {
+    if ( _unsavedProperties[property] === true ) {
+      return true;
+    } else {
+      return false;
+    }
+  },
+
   getElectionStart: function() {
     if ( typeof _currentElection.start === 'string' ){
       return moment.utc(_currentElection.start);
