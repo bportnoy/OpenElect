@@ -22,6 +22,7 @@
 
 // Injects all import files automatically
 // [injector]
+@import '_dashboard';
 @import '_date-picker';
 @import '_dropzone';
 @import '_election-admin';
