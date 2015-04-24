@@ -55,7 +55,7 @@ var CreateGroup = React.createClass({
   },
 
   getInitialState: function() {
-    GroupActions.beginCreate();
+    // GroupActions.beginCreate();
     return {showButtons: GroupStore.getNewest(),
             showInviteBlock: GroupStore.getInviteBlockStatus(),
             groupName: '',
