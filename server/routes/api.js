@@ -111,7 +111,7 @@ var routes = function(app) {
       api.polls.create(req, res);
     });
 
-  // retrieve or update a specific poll by id
+  // retrieve or update a specific poll by poll id
   router.route('/polls/update/:id')
     .get(function(req, res) {
       api.polls.adminGetById(req.params.id, req, res);
@@ -132,7 +132,7 @@ var routes = function(app) {
       api.questions.create(req, res);
     });
 
-  // retrieve or update a specific poll by id
+  // retrieve or update a specific question by question id
   router.route('/questions/update/:id')
     .get(function(req, res) {
       api.questions.adminGetById(req.params.id, req, res);
