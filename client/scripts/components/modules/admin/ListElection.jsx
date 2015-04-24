@@ -14,8 +14,7 @@ var ListElection = React.createClass({
 
 	render: function() {
 		if ( this.props.start ) {
-			console.log('props');
-			var start = ( <span className="start-date">this.props.start.format('MMMM Do YYYY')</span> );
+			var start = ( <span className="start-date">{this.props.start.format('MMMM Do YYYY')}</span> );
 		}
 		return(
 			<li className="election">

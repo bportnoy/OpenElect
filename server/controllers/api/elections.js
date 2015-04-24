@@ -128,8 +128,9 @@ var elections = {
       withRelated: ['poll']
     })
     .then(function(election){
+      console.log(election);
       if ( election ) {
-        election.related('poll').load(['question'])
+        election.related(['poll']).load(['question'])
           .then(function(poll) {
             res.send(poll);
           });

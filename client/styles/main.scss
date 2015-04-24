@@ -18,6 +18,8 @@
 
 // Injects all bower_component files automatically
 // bower:scss
+@import "../bower_components/bourbon/app/assets/stylesheets/_bourbon.scss";
+@import "../bower_components/neat/app/assets/stylesheets/_neat.scss";
 // endbower
 
 // Injects all import files automatically
@@ -31,9 +33,15 @@
 @import '_select';
 @import '_table';
 // [endinjector]
+//
 
 body {
-  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+.container {
+  @include outer-container;
+  padding: 1em 0 2em 0;
 }
 
 .yeogurt-info {

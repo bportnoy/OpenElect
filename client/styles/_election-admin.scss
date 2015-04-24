@@ -1,3 +1,140 @@
-.election-admin {
-	
+.edit-election {
+	h1 {
+		font-size: 1.2em;
+		margin-bottom: 1.5em;
+	}
+	@include span-columns(8);
+	@include shift(2);
+	label {
+		display: block;
+		font-size: 1.2em;
+		font-weight: 700;
+		text-transform: capitalize;
+	}
+	.edit-election-inner {
+		border: 1px solid #979797;
+		padding: 2.5em;
+	}
+	.group {
+		margin: 0 0 2.5em 0;
+	}
+	.input-field {
+
+
+		position: relative;
+		input {
+			position: relative;
+		}
+		input[type="text"],
+		input[type="number"],
+		textarea {
+			display: block;
+			width: 100%;
+			border: 2px dashed transparent;
+			line-height: 1;
+			padding: 0.25em 0.15em;
+			transition: 0.2s;
+			background-color: transparent;
+			z-index: 2;
+			&:hover,
+			&:focus {
+				border: 2px dashed gainsboro;
+			}
+			&:focus {
+				outline: none;
+			}
+		}
+		&.unsaved {
+			input[type="text"],
+			input[type="number"],
+			textarea {
+				border: 2px dashed red;
+				&:hover,
+				&:focus {
+					border: 2px dashed red;
+				}
+			}
+		}
+
+		.edit-tooltip {
+			position: absolute;
+			opacity: 1;
+			transition: 0.2s;
+			color: #999;
+			right: 10%;
+			top: 0;
+			bottom: 0;
+			margin: auto;
+			height: 1em;
+			line-height: 1em;
+			font-size: 0.9em;
+			z-index: 1;
+			transition: 0.2s;
+		}
+		&.unsaved .edit-tooltip,
+		textarea:focus+.edit-tooltip,
+		input:focus+.edit-tooltip {
+			visibility: hidden;
+			opacity: 0;
+		}
+
+		
+		// buttons
+		.save-buttons {
+			position: absolute;
+			bottom: -2.25em;
+		}
+		.save,
+		.undo {
+			font-size: 0.8em;
+			margin: 0 1em 0 0;
+			padding: 0.75em 1em;
+			opacity: 0;
+			visibility: hidden;
+			transition: 0.2s;
+			color: #999;
+			background-color: transparent;
+			text-shadow: none;
+			line-height: 1;
+			&:hover {
+				background-color: whitesmoke;
+			}
+		}
+		&.unsaved {
+			.save,
+			.undo {
+				visibility: visible;
+				opacity: 1;
+			}
+		}
+
+		// Individual fields
+		&.title input {
+			font-size: 2em;
+			font-weight: 200;
+			margin-left: -0.25em;
+		}
+		&.description textarea {
+			resize: none;
+			overflow: visible;
+			position: relative;
+			padding: 0.5em;
+			margin-left: -0.5em;
+			width: 100%;
+			height: auto;
+			color: #767676;
+		}
+	}
+
+	.election-dates {
+		.date-selectors {
+			opacity: 0.5;
+			transition: 0.3s;
+			&.active {
+				height: auto;
+				opacity: 1;
+			}
+		}
+	}
+
 }

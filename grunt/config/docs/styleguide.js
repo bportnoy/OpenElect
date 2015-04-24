@@ -21,14 +21,14 @@ var taskConfig = function(grunt) {
     server: {
       files: {
         '<%= yeogurt.tmp %>/docs/styleguide': [
-          '<%= yeogurt.client %>/styles/*.*'
+          '<%= yeogurt.tmp %>/styles/main.css'
         ]
       }
     },
     dist: {
       files: {
         '<%= yeogurt.dist %>/client/docs/styleguide': [
-          '<%= yeogurt.client %>/styles/*.*'
+          '<%= yeogurt.dist %>/client/styles/main.css'
         ]
       }
     }

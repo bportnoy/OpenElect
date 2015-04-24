@@ -2,11 +2,11 @@
 
 var React = require('react');
 var ElectionActions = require('../../../../actions/ElectionActions');
+var ElectionStore = require('../../../../stores/ElectionStore');
 var DatePicker = require('react-date-picker');
 var _ = require('underscore');
 
 var ElectionInput = React.createClass({
-
   handleChange: function(event) {
     var value;
     if ( this.props.type === 'checkbox' || this.props.type === 'radio' ) {
@@ -18,7 +18,9 @@ var ElectionInput = React.createClass({
     if ( this.props.type === 'checkbox' || this.props.type === 'radio' || this.props.type === 'select'){
       ElectionActions.postElectionData( this.props.property, value );
     }
-    this.setState({value: value});
+    this.setState({
+      value: value
+    });
   },
 
   handleSave: function(event) {
@@ -31,21 +33,31 @@ var ElectionInput = React.createClass({
     ElectionActions.undoElectionChange( this.props.property );
   },
 
-  render: function() {
-    var input;
+  isSaved: function() {
+    if ( ElectionStore.isUnsavedProperty(this.props.property) ){
+      return "unsaved";
+    } else {
+      return "saved";
+    }
+  },
 
-    var save = (<button action="submit" onClick={this.handleSave}>Save</button>);
-    var undo = (<button action="submit" onClick={this.handleUndo}>Undo Changes</button>);
+  render: function() {
+    var input, save, undo, editTooltip;
+
+    save = (<button action="submit" className="save" onClick={this.handleSave}>Save</button>);
+    undo = (<button action="submit" className="save" onClick={this.handleUndo}>Undo</button>);
 
     switch ( this.props.type ) { // different inputs are different!
 
       case 'text':
       case 'number':
-        input = ( <input key={ this.props.property } className={ this.props.classes } type={ this.props.type } name={ this.props.name } value={ this.props.value } onChange={ this.handleChange } /> );
+        input = ( <input key={ this.props.property } className={ this.props.classes } type={ this.props.type } name={ this.props.name } value={ this.props.value } disabled={this.props.disabled} onChange={ this.handleChange } /> );
+        editTooltip = ( <span className="edit-tooltip">Edit</span> );
       break;
 
       case 'textarea':
-        input = ( <textarea key={ this.props.property } className={ this.props.classes } name={ this.props.name } value={ this.props.value } onChange={ this.handleChange } /> );
+        input = ( <textarea key={ this.props.property } className={ this.props.classes } name={ this.props.name } value={ this.props.value } disabled={this.props.disabled} onChange={ this.handleChange } /> );
+        editTooltip = ( <span className="edit-tooltip">Edit</span> );
       break;
 
       case 'select':
@@ -59,7 +71,7 @@ var ElectionInput = React.createClass({
           ));
         });
         input = (
-                <select key={ this.props.property } className={this.props.classes} name={ this.props.name } value={ this.props.value } onChange={ this.handleChange }>
+                <select key={ this.props.property } className={this.props.classes} name={ this.props.name } value={ this.props.value } disabled={this.props.disabled} onChange={ this.handleChange }>
                   {options}
                 </select>
                 );
@@ -79,11 +91,16 @@ var ElectionInput = React.createClass({
     }
 
     return(
-      <div className="electionInput">
+      <div className={"electionInput" } >
         <label htmlFor={this.props.name}>{this.props.name}</label>
-        {input}
-        {save}
-        {undo}
+        <div className={"input-field " + this.props.name + " " + this.isSaved()}>
+          {input}
+          {editTooltip}
+          <div className="save-buttons">
+            {save}
+            {undo}
+          </div>
+        </div>
       </div>
     );
   
