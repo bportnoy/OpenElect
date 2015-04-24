@@ -1,0 +1,38 @@
+.header {
+  background: -webkit-linear-gradient(left, #367CCF , #4AADA5);
+  background: -o-linear-gradient(right, #367CCF, #4AADA5);
+  background: -moz-linear-gradient(right, #367CCF, #4AADA5);
+  background: linear-gradient(to right, #367CCF , #4AADA5);
+  border-bottom: solid 1px #468CDF;
+  position: fixed;
+  top:0;
+  width: 100%;
+  z-index: 100;
+  height: 50px;
+  text-decoration:none;
+  color: #FFFFFF;
+  margin-bottom:0px;
+  font-weight: 300;
+}
+
+.header h1 {
+  color: #FFFFFF;
+  font-size: 1em;
+  font-weight: normal;
+  margin-top: 0;
+  padding: 1em;
+  padding-top: 13px;
+  position: absolute;
+}
+
+.header a {
+  color: #FFFFFF;
+  font-size: 1em;
+}
+
+.header p {
+  float: right;
+  margin-top: 0;
+  padding-top: 13px;
+  padding-right: 1.5em;
+}

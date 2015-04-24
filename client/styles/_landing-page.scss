@@ -1,13 +1,85 @@
-.votingboothImg{
-  background-image: url("../../images/votingbooth.jpg");
+.voteblock {
+  text-align: center;
   width: 100%;
-  height: 768px;
+  padding: 0;
+  margin: 0;
+  color: #ffffff;
+}
+
+.voteblockimage {
+  height: 160px;
+  background-image: url('../../images/finiteelement_white.png');
+  background-size: 104px;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.6;
+}
+
+.voteblockbg {
+  background: -webkit-linear-gradient(left, #367CCF , #4AADA5);
+  background: -o-linear-gradient(right, #367CCF, #4AADA5);
+  background: -moz-linear-gradient(right, #367CCF, #4AADA5);
+  background: linear-gradient(to right, #367CCF , #4AADA5);
+  width: 100%;
+  height: 550px;
   margin-top: 0px;
-  position: absolute;
   top: 0;
 }
 
 .voteblock a, .voteblock a:active, .voteblock a:hover {
-  color: #00A9FF;
+  color: #FFFFFF;
   text-decoration: none;
+}
+
+.voteblock h1 {
+  color: #FFFFFF;
+  font-size: 4.6em;
+  margin: auto;
+  margin-top: -30px;
+}
+
+.voteblock h2 {
+  color: #FFFFFF;
+  font-size: 3em;
+  letter-spacing: 0.2px;
+  font-weight: 100;
+  margin: auto;
+  padding-top: 36px;
+}
+
+.voteblock h3 {
+  color: #FFFFFF;
+  font-size: 1.1em;
+  font-weight: 100;
+  margin: auto;
+  letter-spacing: 0.5px;
+}
+
+.voteblock {
+  margin-top:0px;
+}
+
+button.vote-button {
+  background-color: #ffffff;
+  padding: 11px 20px 14px 20px;
+  border: solid 1px #ffffff;
+  margin: 60px auto;
+  a {
+    color: #498DAE;
+  }
+  &:hover {
+    background-color: transparent;
+    a {
+      color: #FFFFFF;
+    }
+  }
+}
+
+.content, .content h1, .content h2 {
+  color: #222;
+}
+
+.content h2 {
+  font-weight: 300;
+  font-size: 1.6em;
 }

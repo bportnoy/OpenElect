@@ -1,0 +1,85 @@
+
+.error-message {
+  height: 1.5em;
+  padding-top: 3px;
+  color: #ff0f00;
+  font-size: 0.8em;
+  font-weight: normal;
+}
+
+.login-warning {
+  padding:0;
+  margin:0;
+}
+
+.signup-modal {
+  width: 410px;
+  height: 540px;
+  margin: auto;
+  margin-top: 1em;
+  padding: 30px 40px 20px 40px;
+}
+
+.login-modal {
+  width: 410px;
+  height: 380px;
+  margin: auto;
+  margin-top: 2em;
+  padding: 30px 40px 20px 40px;
+}
+
+.signup-form h1 {
+  font-weight: normal;
+  font-size: 1.6em;
+  margin: 0;
+  margin-top: 8px;
+  text-align: center;
+}
+
+.login-form h1 {
+  font-weight: normal;
+  font-size: 1.6em;
+  margin: 0;
+  margin-top: 8px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.signup-form h3, .login-form h3 {
+  font-weight: normal;
+  font-size: 1em;
+  margin-top: 4px;
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.signup-form button, .login-form button {
+  width: 100%;
+  margin: 0;
+  padding: 1em;
+}
+
+.signup-form label, .login-form label {
+  color: #498DAE;
+}
+
+.login-link, .signin-link {
+  width: 100%;
+  text-align: center;
+  padding-top: 1.4em;
+}
+
+.login-link a, .signin-link a {
+  color: #498DAE;
+  font-size: 1em;
+}
+
+.ReactModal__Overlay, .ReactModal__Overlay--after-open {
+  background-color: rgba(0, 0, 0, 0.25)
+}
+
+.x-close-icon {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
