@@ -54,24 +54,24 @@ var ElectionActions = {
       end_date: moment.utc().add(1, 'days').toISOString()
     });
 
-    API.createElection(options);
+    API.election.createElection(options);
   },
 
   // fetches all elections belonging to the current user
   getUserElections: function() {
-    API.getUserElections();
+    API.election.getUserElections();
   },
 
   setCurrentElection: function(id) {
-    API.getElectionById(id, true);
+    API.election.getElectionById(id, true);
   },
 
   getElectionById: function(id) {
-    API.getElectionById(id);
+    API.election.getElectionById(id);
   },
 
   getElectionPolls: function(id) {
-    API.getPollsByElectionId(id);
+    API.election.getPollsByElectionId(id);
   },
 
   // posts new data to an election object - requires an id property within the data.election object
@@ -88,7 +88,7 @@ var ElectionActions = {
         }
       }
       data.id = ElectionStore.getCurrentElectionData().id;
-      API.postElectionData(data);
+      API.election.postElectionData(data);
     }
   },
 

@@ -24,7 +24,7 @@ var PollActions = {
   		group_id: null
   	};
   	data.poll = _.defaults(data.poll, defaults);
-  	API.createPoll(data);
+  	API.poll.create(data);
   },
 
   updatePoll: function(data) {
