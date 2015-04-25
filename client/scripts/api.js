@@ -114,9 +114,21 @@ var API = {
     dispatchGet(key, url, params);
   },
 
+  getPollsByElectionId: function(id) {
+    var url = makeUrl('/polls/election/' + id);
+    var key = Constants.request.elections.GET_ELECTION_POLLS;
+    dispatchGet(key, url);
+  },
+
   postElectionData: function(data) {
     var url = makeUrl('/elections/update/' + data.id);
     var key = Constants.request.elections.POST_ELECTION_DATA;
+    dispatchPost(key, url, data);
+  },
+
+  createPoll: function(data) {
+    var url = makeUrl('/polls/create');
+    var key = Constants.request.polls.CREATE_POLL;
     dispatchPost(key, url, data);
   }
 

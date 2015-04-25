@@ -14,6 +14,7 @@ var Submitted = require('./components/modules/vote/Submitted.jsx');
 var Dashboard = require('./components/dashboard.jsx');
 var Election = require('./components/modules/admin/ElectionAdmin.jsx');
 var PollCreate = require('./components/modules/admin/PollForm.jsx');
+var PollAdmin = require('./components/modules/admin/poll/PollAdmin.jsx');
 var Signup = require('./components/modules/Signup.jsx');
 var Login = require('./components/modules/Login.jsx');
 var Result = require('./components/modules/Results.jsx');
@@ -29,6 +30,7 @@ var routes = (
     <Route name='dashboard' path='/dashboard' handler={Dashboard} />
     <Route name='electionAdmin' path='/dashboard/election/view/:id' handler={Election} />
     <Route name='pollCreate' path='/dashboard/poll/create/:electionId' handler={PollCreate} />
+    <Route name='pollAdmin' path='/dashboard/poll/:id' handler={PollAdmin} />
     <Route name='groupCreate' path='/dashboard/group/create' handler={GroupCreate} />
     <Route name='groupAdmin' path='/dashboard/group/:id' handler={GroupAdmin} />
     <Route name='signup' path='/signup' handler={Signup} />

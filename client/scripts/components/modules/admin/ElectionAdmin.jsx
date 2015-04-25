@@ -3,12 +3,14 @@
 var React = require('react');
 var ElectionStore = require('../../../stores/ElectionStore');
 var ElectionActions = require('../../../actions/ElectionActions');
+var PollActions = require('../../../actions/PollActions');
 var moment = require('moment');
 var _ = require('underscore');
 
 var dateTimes = require('../../../data/dateTimes.js');
 
 var ElectionInput = require('./election/ElectionInput.jsx');
+var PollList = require('./election/PollList.jsx');
 
 var ElectionAdmin = React.createClass({
 
@@ -23,13 +25,17 @@ var ElectionAdmin = React.createClass({
     if ( !state.id ) {
       var id = this.context.router.getCurrentParams();
       ElectionActions.setCurrentElection(id.id);
+      ElectionActions.getElectionPolls(id.id);
       state.start = state.end = moment('2013-02-08 09:30:26.123+07:00'); // in case we don't have any start or end dates we still need to populate the <select>'s
+    }
+    else {
+      ElectionActions.getElectionPolls(state.id);
     }
     return state;
   },
 
-  addPoll: function(){
-    this.context.router.transitionTo('pollCreate', {electionId: this.state.id});
+  createPoll: function(){
+    PollActions.createPoll(this.state.id);
   },
 
   componentWillMount: function() {
@@ -48,6 +54,7 @@ var ElectionAdmin = React.createClass({
     var election = ElectionStore.getCurrentElectionData();
     election.start = ElectionStore.getElectionStart();
     election.end = ElectionStore.getElectionEnd();
+    election.polls = ElectionStore.getElectionPolls();
     this.setState(election);
   },
 
@@ -86,7 +93,7 @@ var ElectionAdmin = React.createClass({
 
     var startDays = this._buildDayOptions('start');
     var endDays = this._buildDayOptions('end');
-
+    
     return (
       <section className="edit-election">
         <h1 className="title">Editing {this.state.name}</h1>
@@ -119,7 +126,9 @@ var ElectionAdmin = React.createClass({
             </div>
           </div>
           <div className="polls">
-
+            <h3>Polls</h3>
+            <PollList polls={this.state.polls} />
+            <button onClick={this.createPoll}>Add a Poll</button>
           </div>
         </div>
       </section>

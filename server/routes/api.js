@@ -111,6 +111,12 @@ var routes = function(app) {
       api.polls.create(req, res);
     });
 
+  // retrieve all polls that belong to an election
+  router.route('/polls/election/:id')
+    .get(function(req, res) {
+      api.polls.getByElectionId(req.params.id, req, res);
+    });
+
   // retrieve or update a specific poll by poll id
   router.route('/polls/update/:id')
     .get(function(req, res) {
@@ -126,7 +132,7 @@ var routes = function(app) {
    *  ===================================
    */
 
-  // create a poll - post only
+  // create a question
   router.route('/questions/create')
     .post(function(req, res) {
       api.questions.create(req, res);

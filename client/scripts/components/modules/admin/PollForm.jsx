@@ -15,7 +15,6 @@ var PollForm = React.createClass({
 
   getInitialState: function () {
     var params = this.context.router.getCurrentParams();
-    console.log(params);
     return {questionCount: 1,
             electionId: params.electionId};
   },
