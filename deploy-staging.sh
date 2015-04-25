@@ -19,10 +19,10 @@ pwd
 echo "Preparing to upload to Elastic Beanstalk."
 
 #Initialize eb instance to our app.
-eb init -r us-west-1 OpenElect
-eb use openelect-staging
+eb init -r us-west-1 -e openelect-staging -q OpenElect
 
 #Deploy directory to staging.
+echo "Beginning deployment"
 eb deploy openelect-production
 
 echo "Deployment complete, have a prickly day!!"
