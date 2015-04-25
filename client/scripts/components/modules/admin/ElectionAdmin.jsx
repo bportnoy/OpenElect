@@ -22,11 +22,14 @@ var ElectionAdmin = React.createClass({
     var state = ElectionStore.getCurrentElectionData();
     state.start = moment(state.start);
     state.end = moment(state.end);
-    state.polls = ElectionStore.getElectionPolls();
     if ( !state.id ) {
       var id = this.context.router.getCurrentParams();
       ElectionActions.setCurrentElection(id.id);
+      ElectionActions.getElectionPolls(id.id);
       state.start = state.end = moment('2013-02-08 09:30:26.123+07:00'); // in case we don't have any start or end dates we still need to populate the <select>'s
+    }
+    else {
+      ElectionActions.getElectionPolls(state.id);
     }
     return state;
   },
@@ -90,9 +93,7 @@ var ElectionAdmin = React.createClass({
 
     var startDays = this._buildDayOptions('start');
     var endDays = this._buildDayOptions('end');
-
-    console.log('this should be an array of polls', this.state.polls );
-
+    
     return (
       <section className="edit-election">
         <h1 className="title">Editing {this.state.name}</h1>

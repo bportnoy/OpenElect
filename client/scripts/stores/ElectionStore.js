@@ -184,6 +184,20 @@ ElectionStore.dispatcherToken = Dispatcher.register(function(action){
       }
     break;
 
+    case Constants.request.elections.GET_ELECTION_POLLS:
+      if (action.response === 'PENDING') {
+        console.log('request sent');
+      } else {
+        if (action.response.body) {
+          _.each(action.response.body, function(poll) {
+            addPoll(poll);
+          });
+        } else {
+          console.error('unexpected response from server: ', action.response);
+        }
+      }
+    break;
+
 
     // updates election data but does not post to server
     case Constants.admin.elections.CHANGE_ELECTION_DATA:

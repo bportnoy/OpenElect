@@ -6,17 +6,19 @@ var _ = require('underscore');
 var PollListItem = require('./PollListItem.jsx');
 
 var PollList = React.createClass({
+
+	polls: function() {
+		var list = [];
+		_.each(this.props.polls, function(poll) {
+			list.push( <PollListItem poll={poll} key={poll.id}/> );
+		});
+		return list;
+	},
+
 	render: function() {
-		var polls = function(){
-			var list;
-			_.each(this.props.polls, function(poll) {
-				list.push( <PollListItem data={poll} /> );
-			});
-			return list;
-		};
 		return (
 			<ul className="poll-list">
-				{polls}
+				{this.polls()}
 			</ul>
 		);
 	}

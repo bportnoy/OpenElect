@@ -114,9 +114,10 @@ var API = {
     dispatchGet(key, url, params);
   },
 
-  getPollsbyElectionId: function(id) {
+  getPollsByElectionId: function(id) {
     var url = makeUrl('/polls/election/' + id);
     var key = Constants.request.elections.GET_ELECTION_POLLS;
+    dispatchGet(key, url);
   },
 
   postElectionData: function(data) {

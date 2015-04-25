@@ -26,7 +26,12 @@ var PollActions = {
   	data.poll = _.defaults(data.poll, defaults);
   	API.createPoll(data);
   },
+
   updatePoll: function(data) {
+
+  },
+
+  setCurrentPoll: function(pollId) {
 
   }
 };
