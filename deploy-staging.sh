@@ -16,6 +16,9 @@ grunt build:production
 cd dist
 echo "Now in:"
 pwd
+echo "copying newrelic file"
+cp ../newrelic.js .
+ls | grep newrelic
 echo "Preparing to upload to Elastic Beanstalk."
 
 #Initialize eb instance to our app.
