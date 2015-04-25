@@ -20,6 +20,7 @@ echo "Preparing to upload to Elastic Beanstalk."
 
 #Initialize eb instance to our app.
 eb init -r us-west-1 OpenElect
+eb use openelect-staging
 
 #Deploy directory to staging.
 eb deploy openelect-production
