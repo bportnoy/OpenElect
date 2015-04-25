@@ -53,7 +53,7 @@ var elections = {
   create: function(req, res) {
     if ( req.body.election ) {
       var data = req.body.election;
-      console.log(data);
+
       var election = new Election({
         id: uuid.v4(),
         name: data.name,
@@ -131,11 +131,10 @@ var elections = {
       withRelated: ['poll']
     })
     .then(function(election){
-      console.log(election);
       if ( election ) {
         election.related(['poll']).load(['question'])
           .then(function(poll) {
-            res.send(poll);
+            res.send(poll.toJSON());
           });
       }
     });

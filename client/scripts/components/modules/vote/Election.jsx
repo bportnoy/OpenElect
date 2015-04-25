@@ -21,7 +21,6 @@ var Election = React.createClass({
     var polls = [];
 
     allPolls && allPolls.forEach(function(poll){
-      console.log(poll);
       polls.push(<Poll name={poll.name} questions={poll.question} key={poll.id}/>);
     });
 
