@@ -10,7 +10,7 @@ sudo pip install awsebcli
 git checkout master
 
 # Build distribution directory
-grunt build
+grunt build:production
 
 #Move to distribution directory
 cd dist
@@ -19,7 +19,7 @@ pwd
 echo "Preparing to upload to Elastic Beanstalk."
 
 #Initialize eb instance to our app.
-eb init -r us-west-1 -e openelect-staging -q OpenElect
+eb init -r us-west-1 OpenElect
 
 #Deploy directory to staging.
 echo "Beginning deployment"
