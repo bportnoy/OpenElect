@@ -34,6 +34,10 @@ Constants.admin = keyMirror({
 
 });
 
+Constants.user = keyMirror({
+  UPDTATE_LOGGED_IN: null
+});
+
 // Election related constants
 Constants.admin.elections = keyMirror({
   CHANGE_ELECTION_DATA: null,
@@ -50,7 +54,7 @@ Constants.request = keyMirror({
 
 // API election constants
 Constants.request.elections = keyMirror({
-	CREATE_ELECTION: null,
+  CREATE_ELECTION: null,
   GET_USER_ELECTIONS: null,
   POST_ELECTION_DATA: null,
   SET_ELECTION_DATA: null,

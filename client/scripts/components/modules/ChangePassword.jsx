@@ -16,7 +16,7 @@ Modal.setAppElement(appElement);
 Modal.injectCSS();
 
 
-var LoginForm = React.createClass({
+var ChangePassword = React.createClass({
 
   mixins: [React.addons.LinkedStateMixin],
 
@@ -64,21 +64,20 @@ var LoginForm = React.createClass({
   },
 
   handleSubmit: function (data) {
-    var next = this.context.router.getCurrentQuery().next || 'dashboard';
-    axios.post('/api/v1/users/login', data)
+    axios.put('/api/v1/users/changePassword', data)
       .then(function(){
         this.closeModal;
-        this.context.router.transitionTo(next);
+        this.context.router.transitionTo('dashboard');
       }.bind(this))
       .catch(function(response){
         this.setState({
-          failedLogins: this.state.failedLogins+1
+          warning: response.data
         });
       }.bind(this));
   },
 
   render: function () {
-    var loginWarning = this.state.failedLogins > 0 ? ('Username or password credentials incorrect') : undefined;
+    var loginWarning = this.state.warning ? this.state.warning : undefined;
     return (
       <div>
         <Modal className='login-modal'
@@ -86,26 +85,35 @@ var LoginForm = React.createClass({
                onRequestClose={this.closeModal}>
           <Formsy.Form className='login-form' onValidSubmit={this.handleSubmit} onValid={this.enableButton} onInvalid={this.disableButton}>
             <i className="fa fa-times x-close-icon" onClick={this.closeModal}></i>
-            <h1>Sign into your account</h1>
-            <label htmlFor='email'>Email</label>
-            <TextInputField name="email"
-                        validations={{
-                          isEmail: true,
-                        }}
-                        validationErrors={{
-                          isEmail: 'Enter a valid email',
-                        }} required/>
-            <label htmlFor='Password'>Password</label>
-            <PasswordInputField name="password"
+            <h1>Change Password</h1>
+            <label htmlFor='old'>Old Password</label>
+            <PasswordInputField name="old"
                         validations={{
                           matchRegexp: /^[a-zA-Z0-9]{1,}$/,
                         }}
                         validationErrors={{
                           matchRegexp: 'Not a valid password',
                         }} required/>
+            <label htmlFor='new'>New Password</label>
+            <PasswordInputField name="new"
+                        validations={{
+                          matchRegexp: /^[a-zA-Z0-9]{1,}$/,
+                          minLength: 8,
+                          maxLength: 50
+                        }}
+                        validationErrors={{
+                          matchRegexp: 'Must contain only numbers, lowercase, uppercase letters',
+                          minLength: 'Must be longer than 8 characters',
+                          maxLength: 'Cannot be longer than 50 characters'
+                        }} required/>
+            <label htmlFor='new'>Repeat New Password</label>
+            <PasswordInputField name="repeat"
+                        validations={{equalsField:'new'}}
+                        validationErrors={{
+                          equalsField: 'Passwords do not match',
+                        }} required/>
             <div className='error-message login-warning'><span>{loginWarning}</span></div>
-            <button type="submit" disabled={!this.state.canSubmit}>Sign In</button>
-            <div className='signin-link'><Link to='signup'>Register for a new account</Link></div>
+            <button type="submit" disabled={!this.state.canSubmit}>Change Password</button>
           </Formsy.Form>
         </Modal>
       </div>
@@ -113,4 +121,4 @@ var LoginForm = React.createClass({
   }
 });
 
-module.exports = LoginForm;
+module.exports = ChangePassword;

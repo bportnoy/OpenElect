@@ -8,6 +8,7 @@ var TextInputField = require('../widgets/TextInputField.jsx');
 var PasswordInputField = require('../widgets/PasswordInputField.jsx');
 var Router = require('react-router');
 var Link = Router.Link;
+var Spinner = ('../widgets/Spinner.jsx');
 
 
 var appElement = document.getElementById('app-view');
@@ -16,7 +17,7 @@ Modal.setAppElement(appElement);
 Modal.injectCSS();
 
 
-var LoginForm = React.createClass({
+var ResetPassword = React.createClass({
 
   mixins: [React.addons.LinkedStateMixin],
 
@@ -35,7 +36,8 @@ var LoginForm = React.createClass({
       password: '',
       failedLogins: 0,
       canSubmit: false,
-      modalIsOpen: true
+      modalIsOpen: true,
+      spinner: false
     };
   },
 
@@ -64,21 +66,30 @@ var LoginForm = React.createClass({
   },
 
   handleSubmit: function (data) {
-    var next = this.context.router.getCurrentQuery().next || 'dashboard';
-    axios.post('/api/v1/users/login', data)
-      .then(function(){
-        this.closeModal;
-        this.context.router.transitionTo(next);
+    // this.setState({spinner: true});
+    axios.put('/api/v1/users/' + data.email + '/resetPassword',{
+      reset_code: this.context.router.getCurrentParams().token,
+      new: data.new
+    })
+      .then(function(response){
+        this.setState({success: response.data});
+        setTimeout(function(){
+          this.closeModal;
+          this.context.router.transitionTo('login');
+        }.bind(this), 500);
       }.bind(this))
       .catch(function(response){
         this.setState({
-          failedLogins: this.state.failedLogins+1
+          warning: response.data,
+          spinner: false
         });
       }.bind(this));
   },
 
   render: function () {
-    var loginWarning = this.state.failedLogins > 0 ? ('Username or password credentials incorrect') : undefined;
+    var loginWarning = this.state.warning ? this.state.warning : undefined;
+    var successMessage = this.state.success ? this.state.success : undefined;
+    var spinner = this.state.spinner ? <Spinner/> : undefined;
     return (
       <div>
         <Modal className='login-modal'
@@ -86,26 +97,40 @@ var LoginForm = React.createClass({
                onRequestClose={this.closeModal}>
           <Formsy.Form className='login-form' onValidSubmit={this.handleSubmit} onValid={this.enableButton} onInvalid={this.disableButton}>
             <i className="fa fa-times x-close-icon" onClick={this.closeModal}></i>
-            <h1>Sign into your account</h1>
-            <label htmlFor='email'>Email</label>
+            <h1>Set Password</h1>
+            <label htmlFor='email'>Confirm E-mail</label>
             <TextInputField name="email"
                         validations={{
                           isEmail: true,
+                          minLength: 0,
+                          maxLength: 50,
                         }}
                         validationErrors={{
-                          isEmail: 'Enter a valid email',
+                          isEmail: 'Enter a valid email address',
+                          minLength: 'Required',
+                          maxLength: 'Email cannot be more than 50 characters'
                         }} required/>
-            <label htmlFor='Password'>Password</label>
-            <PasswordInputField name="password"
+            <label htmlFor='new'>New Password</label>
+            <PasswordInputField name="new"
                         validations={{
                           matchRegexp: /^[a-zA-Z0-9]{1,}$/,
+                          minLength: 8,
+                          maxLength: 50
                         }}
                         validationErrors={{
-                          matchRegexp: 'Not a valid password',
+                          matchRegexp: 'Must contain only numbers, lowercase, uppercase letters',
+                          minLength: 'Must be longer than 8 characters',
+                          maxLength: 'Cannot be longer than 50 characters'
+                        }} required/>
+            <label htmlFor='new'>Repeat New Password</label>
+            <PasswordInputField name="repeat"
+                        validations={{equalsField:'new'}}
+                        validationErrors={{
+                          equalsField: 'Passwords do not match',
                         }} required/>
             <div className='error-message login-warning'><span>{loginWarning}</span></div>
-            <button type="submit" disabled={!this.state.canSubmit}>Sign In</button>
-            <div className='signin-link'><Link to='signup'>Register for a new account</Link></div>
+            <div className='success-message login-warning'><span>{successMessage}</span></div>
+            <button type="submit" disabled={!this.state.canSubmit}>Change Password</button><div>{spinner}</div>
           </Formsy.Form>
         </Modal>
       </div>
@@ -113,4 +138,4 @@ var LoginForm = React.createClass({
   }
 });
 
-module.exports = LoginForm;
+module.exports = ResetPassword;

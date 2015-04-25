@@ -25,12 +25,6 @@ var CreateGroup = React.createClass({
     doneWithButtons: React.PropTypes.bool
   },
 
-  // saveName: function(e){
-  //   e.preventDefault();
-  //   this.setState({spinner: true});
-  //   GroupActions.createGroup(this.state.groupName);
-  // },
-
   componentDidMount: function() {
     GroupActions.getGroupList(true);
     GroupStore.addChangeListener(this._onChange);

@@ -12,6 +12,7 @@ var passport = require('../config/passport');
 
 // controllers live here
 var api = require('../controllers/api');
+var authenticate = require('../controllers/security').authenticateAPI;
 
 // create our router for the API
 var router = express.Router();
@@ -33,7 +34,7 @@ var routes = function(app) {
   //signup
   router.route('/users/signup')
     .post(function(req, res){
-      api.users.create(req,res);
+      api.users.create(req, res);
     });
 
   //login
@@ -45,10 +46,33 @@ var routes = function(app) {
   //logout
   router.route('/users/logout')
     .get(function(req, res){
-      console.log(req);
-      console.log(res);
       req.session.destroy();
       res.redirect('/');
+    });
+
+  //check if user is logged in
+  router.route('/users/checkLoggedIn')
+    .get(authenticate, function(req, res){
+      res.status(200).send({loggedin: true,
+                               id: req.user.id,
+                               first_name: req.user.first_name,
+                               last_name: req.user.last_name,
+                               email: req.user.email});
+    });
+
+  //change password
+  router.route('/users/changePassword')
+    .put(authenticate, function(req, res){
+      api.users.changePassword(req, res);
+    });
+
+  //reset password
+  router.route('/users/:email/resetPassword')
+    .get(function(req, res){
+      api.users.startPasswordReset(req, res);
+    })
+    .put(function(req, res){
+      api.users.resetPassword(req, res);
     });
 
   /**
@@ -58,44 +82,44 @@ var routes = function(app) {
 
   // list elections
   router.route('/elections')
-    .get(function(req, res){
+    .get(authenticate, function(req, res){
       api.elections.list(req,res);
     });
 
 
   // list elections by owner
   router.route('/elections/owner/:id')
-    .get(function(req, res) {
+    .get(authenticate, function(req, res) {
       api.elections.ownerList(req.params.id, req, res);
     });
 
   // create an election
   router.route('/elections/create')
-    .post(function(req, res) {
+    .post(authenticate, function(req, res) {
       api.elections.create(req, res);
     });
 
   // retrieve or update a specific election by id
   router.route('/elections/update/:id')
-    .get(function(req, res) {
+    .get(authenticate, function(req, res) {
       api.elections.adminGetById(req.params.id, req, res);
     })
-    .post(function(req, res) {
+    .post(authenticate, function(req, res) {
       api.elections.updateById(req.params.id, req, res);
     });
 
   // get an election object to begin voting process (voter user only)
   router.route('/elections/vote/:id')
-    .get(function(req, res) {
+    .get(authenticate, function(req, res) {
       api.elections.voterGetById(req.params.id, req, res);
     });
 
   // begin vote tabulation or view results
   router.route('/elections/results/:id')
-    .get(function(req, res) {
+    .get(authenticate, function(req, res) {
       api.elections.getResultsById(req.params.id, req, res);
     })
-    .post(function(req, res) {
+    .post(authenticate, function(req, res) {
       api.elections.tabulate(req.params.id, req, res);
     });
 
@@ -107,7 +131,7 @@ var routes = function(app) {
 
   // create a poll
   router.route('/polls/create')
-    .post(function(req, res) {
+    .post(authenticate, function(req, res) {
       api.polls.create(req, res);
     });
 
@@ -119,10 +143,10 @@ var routes = function(app) {
 
   // retrieve or update a specific poll by poll id
   router.route('/polls/update/:id')
-    .get(function(req, res) {
+    .get(authenticate, function(req, res) {
       api.polls.adminGetById(req.params.id, req, res);
     })
-    .post(function(req, res) {
+    .post(authenticate, function(req, res) {
       api.polls.updateById(req.params.id, req, res);
     });
 
@@ -134,16 +158,16 @@ var routes = function(app) {
 
   // create a question
   router.route('/questions/create')
-    .post(function(req, res) {
+    .post(authenticate, function(req, res) {
       api.questions.create(req, res);
     });
 
   // retrieve or update a specific question by question id
   router.route('/questions/update/:id')
-    .get(function(req, res) {
+    .get(authenticate, function(req, res) {
       api.questions.adminGetById(req.params.id, req, res);
     })
-    .post(function(req, res) {
+    .post(authenticate, function(req, res) {
       api.questions.updateById(req.params.id, req, res);
     });
 
@@ -166,55 +190,55 @@ var routes = function(app) {
 
   // create a group
   router.route('/groups/create')
-    .post(function(req, res) {
+    .post(authenticate, function(req, res) {
       api.groups.create(req, res);
   });
 
   // upload a csv for preview
   router.route('/groups/csv')
-    .post(function(req, res) {
+    .post(authenticate, function(req, res) {
       api.groups.csv(req, res);
   });
 
   // approve & process previous CSV
   router.route('/groups/csv/process')
-    .post(function(req, res) {
+    .post(authenticate, function(req, res) {
       api.groups.addFromCSV(req, res);
   });
 
   //see if a group has finished processing its csv
   router.route('/groups/csv/check/:id')
-    .get(function(req, res) {
+    .get(authenticate, function(req, res) {
       api.groups.checkCSVInProcess(req.params.id, req, res);
     });
 
   //list groups for a user
   router.route('/groups/list')
-    .get(function(req, res) {
+    .get(authenticate, function(req, res) {
       api.groups.list(req, res);
     });
 
   //list all users for a group (must be owned)
   router.route('/groups/:id/users')
-    .get(function(req, res) {
+    .get(authenticate, function(req, res) {
       api.groups.listUsers(req, res);
     });
 
   //update existing group
   router.route('/groups/update')
-    .post(function(req, res) {
+    .post(authenticate, function(req, res) {
       api.groups.update(req, res);
     });
 
   //remove a user from a group
   router.route('/groups/users/remove')
-    .post(function(req, res){
+    .post(authenticate, function(req, res){
       api.groups.removeUser(req, res);
     });
 
   //add smaller batch of users hand-entered by user
   router.route('/groups/users/add')
-    .post(function(req, res){
+    .post(authenticate, function(req, res){
       api.groups.addUsers(req, res);
     });
 

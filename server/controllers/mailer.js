@@ -30,13 +30,11 @@ var Mailer = {
 
     from = from ? from + '@openelect.org' : 'no-reply@openelect.org';
 
-    console.log(fromName);
     if (!fromName){
       from = 'OpenElect.org <' + from + '>';
     } else {
       from = fromName + ' <' + from + '>';
     }
-    console.log(from);
 
     tag = tag ? {'X-Mailgun-Tag': tag} : undefined;
 
@@ -50,20 +48,37 @@ var Mailer = {
 
   },
 
-  sendInvitation: function(email, firstName, lastName, groupName, tempPassword){
+  sendInvitation: function(email, firstName, lastName, groupName, resetCode){
+
+    var loginLink = 'https://openelect.org/#/dashboard/user/reset/' + resetCode;
 
     var message = 'Dear ' + firstName + ',\nYou have been added to the group "'
-                    + groupName + '" on OpenElect, a platform for holding elections.'
-                    + '\nYour temporary password is: ' + tempPassword
-                    + 'Please click this link to login and finish your registration: '
-                    + 'https://openelect.org/#/login?username=' + email + '&password='
-                    + tempPassword + '\n\n Thank you,\n The OpenElect Team';
+                    + groupName + '" on OpenElect, a secure platform for holding elections.'
+                    + '\nPlease click the following link to login and choose a password:\n\n'
+                    + loginLink + '\n\nThanks,\nThe OpenElect Team';
 
     var name = firstName + ' ' + lastName;
 
     var subject = 'Welcome to OpenElect';
 
     this.sendPlaintextEmail(email, subject, message, name, 'invite');
+  },
+
+  resetPassword: function(user, resetCode){
+
+    var resetLink = 'https://openelect.org/#/dashboard/user/reset/' + resetCode;
+
+    var message = 'Dear ' + user.get('first_name') + ',\nA password reset has been requested for '
+                    + 'the user with your e-mail address at OpenElect.org. To reset your password and login, '
+                    + 'visit this link:\n\n' + resetLink +'\n\nThe link will expire in 24 hours. If you have '
+                    + 'received this message in error, '
+                    + 'there is no need to take action.\nThanks,\nThe OpenElect Team';
+
+    var subject = 'Password Reset';
+
+    var name = user.get('first_name') + ' ' + user.get('last_name');
+
+    this.sendPlaintextEmail(user.get('email'), subject, message, name, 'passwordreset');
   }
 
 };
