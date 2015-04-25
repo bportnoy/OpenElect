@@ -46,6 +46,7 @@
     "moment-timezone": "^0.3.1",
     "morgan": "~1.0.0",
     "multer": "^0.1.8",
+    "newrelic": "^1.18.4",
     "node-jsx": "~0.12.4",
     "object-assign": "~1.0.0",
     "openpgp": "^1.0.1",
