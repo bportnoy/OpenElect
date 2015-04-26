@@ -15,9 +15,9 @@ var taskConfig = function(grunt) {
     dev: {
       NODE_ENV: 'development',
       DB_HOST: "localhost",
-      DB_USER: "skillfulcactus-dev",
-      DB_PASSWORD: "skdev",
-      DB_NAME: "skillfulcactus",
+      DB_USER: "openelect",
+      DB_PASSWORD: "openelect",
+      DB_NAME: "openelect",
       PORT: "5432",
     },
     prod: {
