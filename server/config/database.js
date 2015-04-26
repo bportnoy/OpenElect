@@ -7,6 +7,12 @@ var settings = require('./env/default');
 var path = require('path');
 var fs = require('fs');
 
+console.log('the following should be set:');
+console.log('DB_HOST', process.env.DB_HOST);
+console.log('DB_USER', process.env.DB_USER);
+console.log('DB_PASSWORD', process.env.DB_PASSWORD);
+console.log('DB_PORT', process.env.DB_PORT);
+
 var knex = require('knex')({
   client: 'postgres',
   connection: {

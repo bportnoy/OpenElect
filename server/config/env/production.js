@@ -3,6 +3,12 @@
  */
 'use strict';
 
+console.log('should have the following variables:');
+console.log('process.env.RDS_HOSTNAME', process.env.RDS_HOSTNAME);
+console.log('process.env.RDS_HOSTNAME', process.env.RDS_USERNAME);
+console.log('process.env.RDS_HOSTNAME', process.env.RDS_PASSWORD);
+console.log('process.env.RDS_HOSTNAME', process.env.RDS_PORT);
+
 // Production specific configuration
 var prodConfig = {
   logLevel: 'dev',
