@@ -1,7 +1,6 @@
 'use strict';
 
 var React = require('react/addons');
-var DefaultLayout = require('./layouts/default.jsx');
 var Link = require('react-router').Link;
 var axios = require('axios');
 
