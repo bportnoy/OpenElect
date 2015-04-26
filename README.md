@@ -19,10 +19,10 @@
 
 ## Team
 
-  - __Product Owner__: Ryan Carey
-  - __Technical Lead__: Bradley Portnoy
-  - __Scrum Master__: Brian Hsu
-  - __Project Manager__: Rebekah Kwon
+  - __Product Owner__: [Ryan Carey] (https://github.com/ryyann)
+  - __Technical Lead__: [Bradley Portnoy] (https://github.com/bportnoy)
+  - __Scrum Master__: [Brian Hsu] (https://github.com/brianpchsu)
+  - __Project Manager__: [Rebekah Kwon] (https://github.com/rebekahkwon)
 
 ## Usage
 
@@ -69,6 +69,7 @@ sudo npm install -g bower
 sudo npm install -g nodemon
 npm install
 bower install
+grunt serve
 ```
 
 ### Tasks
