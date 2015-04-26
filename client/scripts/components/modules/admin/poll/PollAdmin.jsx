@@ -11,10 +11,50 @@ var _ = require('underscore');
 
 var PollAdmin = React.createClass({
 
+	contextTypes: {
+      router: React.PropTypes.func
+  },
+
+  getInitialState: function () {
+    var params = this.context.router.getCurrentParams();
+    var poll = PollStore.getCurrent();
+    if ( !poll.id || params.id !== poll.id ) {
+    	console.log('don\'t have a poll');
+    	if ( params.id ) {
+    		PollActions.get(params.id);
+    	}
+    } else {
+    	console.log('got a poll', poll);
+    }
+    return {
+    	questionCount: 1,
+      electionId: params.electionId,
+      poll: poll
+    };
+  },
+
+  componentDidMount: function() {
+    PollStore.addChangeListener(this._onChange);
+  },
+
+  componentWillUnmount: function() {
+    PollStore.removeChangeListener(this._onChange);
+  },
+
+  _onChange: function() {
+  	var poll = PollStore.getCurrent();
+  	this.setState({
+  		poll: poll
+  	});
+  },
+
 	render: function() {
 		return (
-			<div>poll info will go here</div>
-		);
+			<section className='poll-form'>
+        <h2>{ this.state.poll.name }</h2>
+        
+      </section>
+    );
 	}
 
 });

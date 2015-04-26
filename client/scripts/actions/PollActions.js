@@ -4,7 +4,7 @@ var Dispatcher = require('../dispatchers/default');
 var Constants = require('../constants/Constants');
 var EventEmitter = require('events').EventEmitter;
 var moment = require('moment');
-var API = require('../api');
+var api = require('../api');
 
 var ElectionStore = require('../stores/ElectionStore');
 var electionObj = require('../stores/emptyElectionObject');
@@ -13,7 +13,8 @@ var _ = require('underscore');
 
 
 var PollActions = {
-  createPoll: function(electionId) {
+  
+  create: function(electionId) {
   	var data = {
   		poll: {
   			election_id: electionId
@@ -24,16 +25,17 @@ var PollActions = {
   		group_id: null
   	};
   	data.poll = _.defaults(data.poll, defaults);
-  	API.poll.create(data);
+  	api.poll.create(data);
   },
 
-  updatePoll: function(data) {
-
+  get: function(id) {
+    api.poll.get(id);
   },
 
-  setCurrentPoll: function(pollId) {
-
+  update: function(data) {
+    api.poll.update(data);
   }
+
 };
 
 

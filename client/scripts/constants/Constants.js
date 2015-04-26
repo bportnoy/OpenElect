@@ -63,7 +63,9 @@ Constants.request.elections = keyMirror({
 });
 
 Constants.request.polls = keyMirror({
-  CREATE_POLL: null
+  CREATE_POLL: null,
+  GET_POLL: null,
+  UPDATE_POLL: null
 });
 
 module.exports = Constants;

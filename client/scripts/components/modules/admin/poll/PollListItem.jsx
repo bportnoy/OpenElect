@@ -9,7 +9,7 @@ var PollActions = require('../../../../actions/PollActions');
 
 var PollListItem = React.createClass({
 	setPoll: function() {
-
+		PollActions.get(this.props.poll.id);
 	},
 	render: function() {
 		return (
