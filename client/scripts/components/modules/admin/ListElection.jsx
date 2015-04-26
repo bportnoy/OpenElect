@@ -59,9 +59,13 @@ var ListElection = React.createClass({
 				<p className="description">{this.props.description}</p>
 				{start}
 				<Link className="btn" to='electionAdmin' onClick={this.setElection} params={{id: this.props.id}}>Edit Election</Link>
-				{toggleButton}
-				<button onClick={this.goVote}>Vote!</button>
-				<button onClick={this.whoWon}>Who won?</button>
+
+				<div>
+					{toggleButton}
+					<button onClick={this.goVote}>Vote!</button>
+					<button onClick={this.whoWon}>Who won?</button>
+				</div>
+
 			</li>
 		);
 	}

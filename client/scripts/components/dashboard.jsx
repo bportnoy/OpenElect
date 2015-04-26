@@ -50,7 +50,7 @@ var IndexComponent = React.createClass({
   },
 
   render: function() {
-    var elections;
+    var elections, groups;
     var userElections = this.state.elections;
     if ( _.size(userElections) ) {
       elections = [];
@@ -60,18 +60,25 @@ var IndexComponent = React.createClass({
     } else {
       elections = Spinner;
     }
+    groups = [<li>Group Stub 1</li>,<li>Group Stub 2</li>,<li>Group Stub 3</li>,<li>Group Stub 4</li>,<li>Group Stub 5</li>,<li>Group Stub 6</li>];
     return(
-      <div>
-        <h1>Welcome to OpenElect</h1>
-        <div className="elections">
-          <h2 className="active-elections">Your Elections</h2>
-          <ul>{elections}</ul>
-          <button onClick={this.createElection}>Create a new Election</button>
-        </div>
-        <button onClick={this.createGroup}>Create a new Group</button>
-        <h5><a href='/docs/api/index.html'>API Reference</a></h5>
-        <h5><a href='/docs/styleguide/index.html'>Style Guide</a></h5>
+      <div className="dashboard" >
+        <div className="container">
 
+          <h1 className="page-title">Dashboard</h1>
+
+          <div className="elections">
+            <h2>Elections</h2>
+            <button onClick={this.createElection}>Create a new Election</button>
+            <ul>{elections}</ul>
+          </div>
+
+          <div className="groups">
+            <h2>Groups</h2>
+            <button onClick={this.createGroup}>Create a new Group</button>
+            <ul>{groups}</ul>
+          </div>
+        </div>
       </div>
     );
   },

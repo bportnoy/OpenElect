@@ -53,25 +53,6 @@ body {
   width: 100%;
 }
 
-.yeogurt-info {
-  text-align: center;
-  max-width: 500px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.version {
-  font-size: 14px;
-  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-}
-
-.logo {
-  margin-top: 15px;
-}
-
 .links a {
   color: white;
   margin-right: 5px;
@@ -94,7 +75,6 @@ body {
 a {
   text-decoration: none;
 }
-
 
 // Styling on warning for users on IE7 or below
 .browsehappy {
@@ -226,7 +206,7 @@ input[type=submit], button {
   border-radius: 3px;
   border: none;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-  background: #498DAE;
+  background: #3066A1;
   display: inline-block;
   zoom: 1;
   line-height: normal;
@@ -235,7 +215,7 @@ input[type=submit], button {
   text-align: center;
   cursor: pointer;
   font-size: 100%;
-  padding: 0.65em 1em 0.45em 1em;
+  padding: 10px 16px 12px 16px;
   text-decoration: none;
 }
 
@@ -279,21 +259,6 @@ ul {
   padding-top: .5em;
   padding-top: 18px;
   padding-right: 2em;
-}
-
-div#tenWidth{
-  width: 10%;
-  float: left;
-}
-
-div#foutryWidth{
-  width: 40%;
-  float: left;
-}
-
-duv#twentyfiveWidth{
-  width: 25%;
-  float: left;
 }
 
 .dz {
