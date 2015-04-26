@@ -28,20 +28,29 @@
 @import '_date-picker';
 @import '_dropzone';
 @import '_election-admin';
+@import '_footer';
 @import '_groups';
+@import '_header';
 @import '_landing-page';
+@import '_login-signup-modal';
 @import '_select';
 @import '_table';
 // [endinjector]
 //
 
 body {
-  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Lato', Helvetica, Arial, sans-serif;
 }
 
 .container {
   @include outer-container;
   padding: 1em 0 2em 0;
+}
+
+#app-view {
+  position: absolute;
+  top: 50px;
+  width: 100%;
 }
 
 .yeogurt-info {
@@ -105,7 +114,6 @@ a {
   display: inline-block;
   margin: .2em;
   font-size: 1.5em;
-
 }
 
 .suboption {
@@ -189,60 +197,6 @@ a {
   @include center(x);
 }
 
-.footer {
-  bottom: 0;
-  width: 100%;
-  margin: 0;
-  padding: 0.2em;
-  background-color: #ddd;
-  text-align: center;
-}
-
-.header {
-  height: 52px;
-  background-color: #ddd;
-  text-decoration:none;
-  color: #222;
-  margin-bottom:0px;
-}
-
-.header h1 {
-  font-size: 1.2em;
-  font-weight: normal;
-  margin-top: 0;
-  padding: 1em;
-  padding-top: 17px;
-  position: absolute;
-}
-.header p {
-  float: right;
-  margin-top: 0;
-  padding-top: 18px;
-  padding-right: 2em;
-}
-
-@mixin sticky-footer($footer-height, $root-selector: unquote("#root"), $root-footer-selector: unquote("#root_footer"), $footer-selector: unquote("#footer")) {
-  html, body {
-    height: 100%;
-  }
-  #{$root-selector} {
-    clear: both;
-    min-height: 100%;
-    height: auto !important;
-    height: 100%;
-    margin-bottom: -$footer-height;
-    #{$root-footer-selector} {
-      height: $footer-height;
-    }
-  }
-  #{$footer-selector} {
-    clear: both;
-    position: relative;
-    height: $footer-height;
-  }
-}
-
-
 .election-form, .poll-form {
   margin: auto;
   background-color: #f4f4f4;
@@ -263,7 +217,7 @@ a {
   padding: 8px;
   max-width:960px;
   width: 100%;
-  border: solid 1px #235BB2;
+  border: solid 1px #498DAE;
 }
 
 input[type=submit], button {
@@ -272,7 +226,7 @@ input[type=submit], button {
   border-radius: 3px;
   border: none;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-  background: #235BB2;
+  background: #498DAE;
   display: inline-block;
   zoom: 1;
   line-height: normal;
@@ -327,11 +281,6 @@ ul {
   padding-right: 2em;
 }
 
-.voteblock{
-  margin-top:0px;
-}
-
-
 div#tenWidth{
   width: 10%;
   float: left;
@@ -352,102 +301,4 @@ duv#twentyfiveWidth{
   height: 10em;
   @include center(x);
   margin-bottom: 3em;
-}
-
-@import 'date-picker';
-@import 'dropzone';
-@import 'table';
-@import 'landing-page';
-
-.error-message {
-  height: 1.5em;
-  padding-top: 3px;
-  color: #ff0f00;
-  font-size: 0.8em;
-  font-weight: normal;
-}
-
-.success-message {
-  height: 1.5em;
-  padding-top: 3px;
-  color: green;
-  font-size: 0.8em;
-  font-weight: normal;
-}
-
-.login-warning {
-  padding:0;
-  margin:0;
-}
-
-.signup-modal {
-  width: 410px;
-  height: 530px;
-  margin: auto;
-  margin-top: 1em;
-  padding: 30px 40px 20px 40px;
-}
-
-.login-modal {
-  width: 410px;
-  height: 370px;
-  margin: auto;
-  margin-top: 2em;
-  padding: 30px 40px 20px 40px;
-}
-
-.signup-form h1 {
-  font-weight: normal;
-  font-size: 1.6em;
-  margin: 0;
-  margin-top: 8px;
-  text-align: center;
-}
-
-.login-form h1 {
-  font-weight: normal;
-  font-size: 1.6em;
-  margin: 0;
-  margin-top: 8px;
-  margin-bottom: 24px;
-  text-align: center;
-}
-
-.signup-form h3, .login-form h3 {
-  font-weight: normal;
-  font-size: 1em;
-  margin-top: 4px;
-  margin-bottom: 28px;
-  text-align: center;
-}
-
-.signup-form button, .login-form button {
-  width: 100%;
-  margin: 0;
-  padding: 1em;
-}
-
-.signup-form label, .login-form label {
-  color: #235BB2;
-}
-
-.login-link, .signin-link {
-  width: 100%;
-  text-align: center;
-  padding-top: 1.4em;
-}
-
-.login-link a, .signin-link a {
-  color: #235BB2;
-  font-size: 1em;
-}
-
-.ReactModal__Overlay, .ReactModal__Overlay--after-open {
-  background-color: rgba(0, 0, 0, 0.25)
-}
-
-.x-close-icon {
-  position: absolute;
-  right: 10px;
-  top: 10px;
 }

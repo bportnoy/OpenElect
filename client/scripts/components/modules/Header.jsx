@@ -9,7 +9,7 @@ var Header = React.createClass({
   render: function() {
     return (
       <div className='header'>
-        <h1>OpenElect</h1>
+        <h1><Link to='app'>OpenElect</Link></h1>
         <p><Link to='dashboard'>My Account</Link></p>
         <p><Link to='signup'>Sign Up</Link></p>
         <p><a href='/api/v1/users/logout'>Log Out</a></p>

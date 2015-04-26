@@ -2,7 +2,6 @@
 
 // dependencies
 var React = require('react/addons');
-var DefaultLayout = require('./layouts/default.jsx');
 var ElectionActions = require('../actions/ElectionActions');
 var Link = require('react-router').Link;
 var _ = require('underscore');

@@ -1,13 +1,167 @@
-.votingboothImg{
-  background-image: url("../../images/votingbooth.jpg");
+.voteblock {
+  text-align: center;
   width: 100%;
-  height: 768px;
-  margin-top: 0px;
-  position: absolute;
-  top: 0;
+  padding: 0;
+  margin: 0;
+  color: #ffffff;
+}
+
+.voteblockicon {
+  height: 160px;
+  background-image: url('../../images/finiteelement_white.png');
+  background-size: 104px;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.6;
+}
+
+.voteblockbg {
+  width: 100%;
+  min-height: 550px;
+  border-bottom: solid 1px #468CDF;
+  background: -webkit-linear-gradient(left, #3478CA , #4AADA5);
+  background: -o-linear-gradient(right, #3478CA, #4AADA5);
+  background: -moz-linear-gradient(right, #3478CA, #4AADA5);
+  background: linear-gradient(to right, #3478CA , #4AADA5);
+}
+
+.voteblockimage {
+  height: 600px;
+  width: 100%;
+  background-image: url('../../images/votingbooth.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-bottom: solid 1px #D1D1D1;
+  box-shadow: 0 1px 4px #CCCCCC;
+}
+
+.voteblockimage h1 {
+  margin: auto;
+  padding-top: 220px;
 }
 
 .voteblock a, .voteblock a:active, .voteblock a:hover {
-  color: #00A9FF;
+  color: #FFFFFF;
   text-decoration: none;
 }
+
+.voteblock h1 {
+  color: #FFFFFF;
+  font-size: 4.6em;
+  margin: auto;
+  margin-top: -30px;
+}
+
+.voteblock h2, .create-election-cta h2 {
+  color: #FFFFFF;
+  font-size: 3.1em;
+  font-weight: 100;
+  margin: auto;
+  padding-top: 36px;
+}
+
+.create-election-cta h2 {
+  font-size: 2.2em;
+}
+
+.voteblock h3, .create-election-cta h3 {
+  color: #FFFFFF;
+  font-size: 1.4em;
+  font-weight: 100;
+  margin: auto;
+}
+
+.voteblock {
+  margin-top:0px;
+}
+
+button.vote-now, button.create-ballot {
+  background-color: #ffffff;
+  padding: 11px 20px 14px 20px;
+  border: solid 1px #ffffff;
+  margin: 60px auto;
+  a {
+    color: #2F72C2;
+  }
+  &:hover {
+    background-color: transparent;
+    a {
+      color: #FFFFFF;
+    }
+  }
+}
+
+.voteblockimage, .voteblockimage h1, .voteblockimage h2 {
+  color: #222;
+}
+
+.voteblockimage h1 {
+  color: #2e2e2e;
+  font-size: 4.6em;
+  margin: auto;
+}
+
+.voteblockimage h3 {
+  color: #2e2e2e;
+  font-weight: 400;
+}
+
+.content, .content h1, .content h2 {
+  color: #222;
+}
+
+.content h1 {
+  color: #2e2e2e;
+  font-size: 2.8em;
+  margin: auto;
+  padding-bottom: 1.4em;
+}
+
+.content h2 {
+  color: #2e2e2e;
+  font-size: 1.5em;
+  font-weight: 700;
+  padding: 0.6em;
+  margin: auto;
+}
+
+.content h3 {
+  color: #2e2e2e;
+  font-weight: 400;
+  font-size: 1.2em;
+}
+
+.feature-item {
+  @include span-columns(4);
+  padding: 18px;
+}
+
+.row {
+  @include span-columns(12);
+  padding: 40px 60px 40px 60px;
+}
+
+.create-election-cta {
+  width: 100%;
+  min-height: 600px;
+  margin:0;
+  margin-top: 30px;
+  padding: 0;
+  background: -webkit-linear-gradient(left, #2865AE , #39918A);
+  background: -o-linear-gradient(right, #2865AE, #39918A);
+  background: -moz-linear-gradient(right, #2865AE, #39918A);
+  background: linear-gradient(to right, #2865AE , #39918A);
+}
+
+.create-election-cta h1 {
+  color: #ffffff;
+  font-size: 2.8em;
+  padding: 70px 0 40px 0;
+}
+
+.create-ballot-message {
+  padding: 0 240px 0 240px;
+}
+
+
