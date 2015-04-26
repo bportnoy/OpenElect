@@ -33,7 +33,11 @@ var Results = React.createClass({
 
   render: function(){
     // Beginning state
-    var display = (<div>"Loading..."</div>);
+    var display = (
+          <div>
+            <h3>The election result is not available yet. </h3>
+          </div>
+        );
 
     // axios return, election is ture
     if(this.state.election.results !== null){

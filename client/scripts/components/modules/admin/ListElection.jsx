@@ -9,9 +9,24 @@ var axios = require('axios');
 var ElectionActions = require('../../../actions/ElectionActions');
 
 var ListElection = React.createClass({
+
+	mixins: [React.addons.LinkedStateMixin],
+
+	contextTypes: {
+	  router: React.PropTypes.func
+	},
+
 	getInitialState: function() {
 	  return {accepting_votes: false};
 	},
+
+	whoWon: function () {
+	  this.context.router.transitionTo('/elections/' + this.props.id);
+	},
+
+  goVote: function () {
+    this.context.router.transitionTo('/vote/' + this.props.id);
+  },
 
 	setElection: function() {
 		ElectionActions.setCurrentElection(this.props.id);
@@ -45,6 +60,8 @@ var ListElection = React.createClass({
 				{start}
 				<Link className="btn" to='electionAdmin' onClick={this.setElection} params={{id: this.props.id}}>Edit Election</Link>
 				{toggleButton}
+				<button onClick={this.goVote}>Vote!</button>
+				<button onClick={this.whoWon}>Who won?</button>
 			</li>
 		);
 	}

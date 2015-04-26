@@ -54,13 +54,9 @@ var VotingBooth = React.createClass({
       // Beginner state
       var display = (<Spinner/>);
     } else if (this.state.polls ==="not_ready"){
-      var display = (<div>This election is not currently accepting votes.</div>);
+      var display = ( <div><h3>This election is not currently accepting votes.</h3></div> );
     } else {
-      var display = (
-        <div>
-          <Election polls={this.state.polls}/>
-        </div>
-      )
+      var display = ( <div><Election polls={this.state.polls}/></div> )
     }
 
     return (
