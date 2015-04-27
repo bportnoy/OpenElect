@@ -31,7 +31,12 @@ var PollStore = assign({}, EventEmitter.prototype, {
 
   getCurrent: function() {
     return _currentPoll;
-  }
+  },
+
+  getCurrentProperty: function(property) {
+    return _currentPoll[property];
+  },
+
 
 });
 
@@ -40,11 +45,16 @@ function updatePollData(data) {
   PollStore.emitChange();
 }
 
+function setCurrentProperty(property, value) {
+  _currentPoll[property] = value;
+  PollStore.emitChange();
+}
+
 PollStore.dispatcherToken = Dispatcher.register(function(action){
 
   switch(action.actionType) {
     
-    case Constants.request.polls.GET_POLL:
+    case Constants.request.polls.GET_POLL || Constants.request.polls.UPDATE_POLL:
       console.log(action);
       if (action.response === 'PENDING') {
         console.log('request sent');
@@ -57,6 +67,10 @@ PollStore.dispatcherToken = Dispatcher.register(function(action){
       }
     break;
 
+    case Constants.admin.polls.SET_POLL_PROPERTY:
+      setCurrentProperty(action.data.property, action.data.value);
+    break;
+    
     default: // no op
   }
 

@@ -45,6 +45,11 @@ Constants.admin.elections = keyMirror({
   UNDO_ELECTION_CHANGE: null
 });
 
+Constants.admin.polls = keyMirror({
+  SET_POLL_PROPERTY: null,
+
+});
+
 // API related constants
 Constants.request = keyMirror({
 	TIMEOUT: null,

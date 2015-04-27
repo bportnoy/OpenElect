@@ -8,6 +8,7 @@ var PollStore = require('../../../../stores/PollStore');
 var moment = require('moment');
 var _ = require('underscore');
 
+var StatefulInput = require('../../../widgets/StatefulInput.jsx');
 
 var PollAdmin = React.createClass({
 
@@ -48,11 +49,18 @@ var PollAdmin = React.createClass({
   	});
   },
 
+  nameInput: {
+    store: 'PollStore',
+    actions: 'PollActions',
+    property: 'name',
+    classes: []
+  },
+
 	render: function() {
 		return (
 			<section className='poll-form'>
         <h2>{ this.state.poll.name }</h2>
-        
+        <StatefulInput props={ this.nameInput } />
       </section>
     );
 	}

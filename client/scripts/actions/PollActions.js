@@ -6,8 +6,7 @@ var EventEmitter = require('events').EventEmitter;
 var moment = require('moment');
 var api = require('../api');
 
-var ElectionStore = require('../stores/ElectionStore');
-var electionObj = require('../stores/emptyElectionObject');
+var PollStore = require('../stores/PollStore');
 
 var _ = require('underscore');
 
@@ -34,6 +33,25 @@ var PollActions = {
 
   update: function(data) {
     api.poll.update(data);
+  },
+
+  setProperty: function(property, value) {
+    var action = {
+      actionType: Constants.admin.polls.SET_POLL_PROPERTY,
+      data: {
+        property: property, 
+        value: value
+      }
+    };
+    Dispatcher.dispatch(action);
+  },
+
+  saveProperty: function(property) {
+    var data = {
+      id: PollStore.getCurrentProperty('id')
+    };
+    data[property] = PollStore.getCurrentProperty(property);
+    this.update(data);
   }
 
 };
