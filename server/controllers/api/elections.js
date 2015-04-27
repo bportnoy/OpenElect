@@ -13,6 +13,8 @@ var uuid = require('uuid');
 var Election = require('../../database/models/election');
 var User = require('../../database/models/user');
 var Poll = require('../../database/models/poll');
+var db = require('../../config/database');
+var Mailer = require('../mailer');
 
 Promise.promisifyAll(_);
 
@@ -181,10 +183,17 @@ var elections = {
     election.fetch()
       .then(function(election) {
         if ( election && election.get('owner_id') === req.user.id) {
-          election.tabulate()
-            .then(function(election){
-              res.json(election.get('results'));
-            });
+          election.set({accepting_votes: false, locked: true}).save()
+          .then(function(election){
+            console.log('---------------pretab');
+            election.tabulate()
+              .then(function(election){
+                console.log(election.get('results'));
+                election.save().then(function(election){
+                  res.json(election.get('results'));
+                });
+              });
+          });
         } else {
           res.status(400);
           res.end('Error');
@@ -196,8 +205,29 @@ var elections = {
   getResultsById: function(id, req, res) {
     this._checkForElection(id, req, res)
       .then(function(election){
-        res.json(election.toJSON()["results"]);
+        res.send(election);
       });
+  },
+
+  openForVoting: function(req, res){
+    Election.forge({id: req.params.id}).fetch({withRelated: ['poll.group.user']})
+    .then(function(election){
+      if (election.get('owner_id') !== req.user.id){
+        res.status(401).send('Only the owner may open an election.');
+      } else if (election.get('locked')) {
+        res.status(401).send('This election has been locked.');
+      } else{
+          election.set('accepting_votes', true).save()
+          .then(function(election){
+            res.send(election.toJSON({shallow: true}));
+            election.relations.poll.forEach(function(poll){
+              poll.relations.group.relations.user.forEach(function(user){
+                Mailer.inviteToVote(user, election);
+              });//user.foreach
+            });//election/relations/poll/foreach
+          });//election-save
+        }//else
+    });//fetch election
   }
 
 

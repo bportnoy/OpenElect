@@ -60,10 +60,11 @@ var IndexComponent = React.createClass({
   render: function() {
     var elections, groups;
     var userElections = this.state.elections;
+    console.log(this.state.elections);
     if ( _.size(userElections) ) {
       elections = [];
       _.each(userElections, function(election){
-        elections.push(<ListElection name={election.name} description={election.description} start={election.start} key={election.id} id={election.id}/>);
+        elections.push(<ListElection name={election.name} description={election.description} start={election.start} key={election.id} id={election.id} data={election}/>);
       });
     } else {
       elections = Spinner;

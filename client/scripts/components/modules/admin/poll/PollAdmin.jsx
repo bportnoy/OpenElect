@@ -109,8 +109,8 @@ var PollAdmin = React.createClass({
             <button onClick={this.saveProperty.bind(this, 'name')}>Save</button>
           </div>
           <div className="group poll-group">
-            <label htmlFor="group">Voter Group</label>
-            <select name="group" onChange={this.setProperty} value={this.state.poll.group_id}>
+            <label htmlFor="group_id">Voter Group</label>
+            <select name="group_id" onChange={this.setProperty} value={this.state.poll.group_id}>
               {this.state.groupOptions}
             </select>
           </div>
