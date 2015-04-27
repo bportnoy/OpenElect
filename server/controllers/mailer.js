@@ -2,6 +2,7 @@
 
 var Mailgun = require('mailgun');
 var Promise = require('bluebird');
+var Moment = require('moment');
 // var MailComposer = require('mailcomposer');
 
 var mg = Promise.promisifyAll(new Mailgun.Mailgun(process.env.MAILGUN_API_KEY));
@@ -79,6 +80,24 @@ var Mailer = {
     var name = user.get('first_name') + ' ' + user.get('last_name');
 
     this.sendPlaintextEmail(user.get('email'), subject, message, name, 'passwordreset');
+  },
+
+  inviteToVote: function(user, election){
+
+    var votelink = 'https://openelect.org/#/vote/' + election.get('id');
+
+    var endtext = election.get('timed') ? 'The election ends at ' + Moment(election.get('end')).format("dddd, MMMM Do YYYY, h:mm:ss a")
+              + '.\n\n' : '';
+
+    var message = 'Dear ' + user.get('first_name') + ',\nThe election ' + election.get('name')
+                    + ' is now open for voting. To cast your ballot, visit this link (you\'ll need to login):\n\n'
+                    + votelink + '\n\n' + endtext + 'Thanks, The OpenElect Team';
+
+    var name = user.get('first_name') + ' ' + user.get('last_name');
+
+    var subject = election.get('name') + ' is Open for Voting';
+
+    this.sendPlaintextEmail(user.get('email'), subject, message, name, 'voteopen');
   }
 
 };

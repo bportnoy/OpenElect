@@ -5,6 +5,7 @@ var Ink = require('react-ink');
 var moment = require('moment');
 var Link = require('react-router').Link;
 var axios = require('axios');
+var request = require('superagent');
 
 var ElectionActions = require('../../../actions/ElectionActions');
 
@@ -17,7 +18,7 @@ var ListElection = React.createClass({
 	},
 
 	getInitialState: function() {
-	  return {accepting_votes: false};
+	  return {accepting_votes: this.props.data.accepting_votes};
 	},
 
 	whoWon: function () {
@@ -32,14 +33,29 @@ var ListElection = React.createClass({
 		ElectionActions.setCurrentElection(this.props.id);
 	},
 
-	toggleElection: function(){
-		axios.post('api/v1/elections/update/' + this.props.id, {accepting_votes: !this.state.accepting_votes})
-		  .then(function(response){
-		  	this.setState({accepting_votes: response.data.accepting_votes});
-		  }.bind(this))
-		  .catch(function(response){
-		    console.log(response);
-		  }.bind(this));
+	toggleElection: function(e){
+		e.preventDefault();
+		if (!this.props.data.accepting_votes){
+			request.get('/api/v1/elections/update/' + this.props.id)
+			.query({open: true})
+			.end(function(err, response){
+				this.setState({accepting_votes: response.body.accepting_votes});
+			}.bind(this));
+		} else {
+			if(confirm('Are you sure you wish to close this election? Results will be tabulated and no further votes accepted.')){
+				request.post('/api/v1/elections/results/' + this.props.id)
+				.end(function(err, response){
+					console.log(response);
+				});
+			}
+		}
+		// axios.post('api/v1/elections/update/' + this.props.id, {accepting_votes: !this.state.accepting_votes})
+		//   .then(function(response){
+		//   	this.setState({accepting_votes: response.data.accepting_votes});
+		//   }.bind(this))
+		//   .catch(function(response){
+		//     console.log(response);
+		//   }.bind(this));
 	},
 
 	render: function() {
@@ -48,7 +64,7 @@ var ListElection = React.createClass({
 		}
 		// Check the current state of election and show the responding options
 		if (this.state.accepting_votes){
-			var toggleButton = (<button onClick={this.toggleElection}>Stop this election</button>)
+			var toggleButton = (<button onClick={this.toggleElection}>Close this election</button>)
 		} else {
 			var toggleButton = (<button onClick={this.toggleElection}>Start this election</button>)
 		}

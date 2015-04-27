@@ -102,7 +102,13 @@ var routes = function(app) {
   // retrieve or update a specific election by id
   router.route('/elections/update/:id')
     .get(authenticate, function(req, res) {
-      api.elections.adminGetById(req.params.id, req, res);
+      console.log(req.query);
+      if (req.query.open === 'true'){
+        console.log('open!!');
+        api.elections.openForVoting(req, res);
+      } else{
+        api.elections.adminGetById(req.params.id, req, res);
+      }
     })
     .post(authenticate, function(req, res) {
       api.elections.updateById(req.params.id, req, res);

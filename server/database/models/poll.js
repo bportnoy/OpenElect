@@ -18,7 +18,7 @@ var Poll = db.Model.extend({
   },
 
   group: function(){
-    return this.hasOne('Group');
+    return this.belongsTo('Group');
   }
 });
 
