@@ -32,6 +32,10 @@ var UserStore = assign({}, EventEmitter.prototype, {
 
   },
 
+  getUserId: function(){
+    return _currentUser.id;
+  },
+
   emitChange: function () {
     this.emit(CHANGE_EVENT);
   },

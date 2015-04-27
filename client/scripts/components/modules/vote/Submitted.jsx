@@ -2,6 +2,7 @@
 
 var React = require('react');
 var BallotStore = require('../../../stores/BallotStore');
+var Moment = require('moment');
 
 var Submitting = React.createClass({
   
@@ -15,9 +16,13 @@ var Submitting = React.createClass({
   
   render: function() {
     return (
-      <div>
-        <p>Your ballot was recorded at: {this.state.createdAt}</p>
-        <p>Your receipt is: {this.state.receipt}</p>
+      <div className='receiptBox'>
+        <h1 className='text-center'>Your ballot was recorded at:</h1>
+        <h2 className='text-center'>{Moment(this.state.createdAt).format("dddd, MMMM Do YYYY, h:mm:ss a")}</h2>
+        <div className='text-center'>
+          <h3>Your receipt is:</h3>
+          <span id='receipt' className='text-center'>{this.state.receipt}</span>
+        </div>
       </div>
     );
   },

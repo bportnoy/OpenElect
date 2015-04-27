@@ -19,22 +19,21 @@ var PollForm = React.createClass({
             electionId: params.electionId};
   },
 
-  addAnotherQuestion: function() {
+  addAnotherQuestion: function(e) {
+    e.preventDefault();
     this.setState({questionCount: this.state.questionCount+1});
   },
 
-  savePoll: function() {
+  savePoll: function(e) {
     //TODO: spinner here
-    debugger;
+    e.preventDefault();
     axios.post('/api/v1/polls/create', {
       name: this.state.pollName,
       description: this.state.pollDescription,
       election_id: this.state.electionId
     }).then(function(response){
       //todo: kill the spinner
-      debugger;
       this.setState({pollId: response.data.id});
-      debugger;
       console.log('poll saved with id: ' + this.state.pollId);
     }.bind(this)).catch(function(response){
       console.error(response);

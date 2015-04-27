@@ -248,7 +248,7 @@ ul {
 
 .fa-circle-o-notch {
   color: #aaa;
-  padding: 4em 0 4em 0;
+  padding: 1em 0 1em 0;
   margin: auto;
 }
 
@@ -266,4 +266,23 @@ ul {
   height: 10em;
   @include center(x);
   margin-bottom: 3em;
+}
+
+#submitting {
+  text-align: center;
+}
+
+.text-center{
+  text-align: center;
+}
+
+#receipt {
+  width: 70%;
+  background-color: light grey;
+  word-wrap: break-word;
+  margin-bottom: 5em;
+}
+
+.receiptBox {
+  margin-bottom: 5em;
 }

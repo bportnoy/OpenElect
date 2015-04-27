@@ -1,9 +1,6 @@
 'use strict';
 
 var React = require('react');
-var BallotStore = require('../../../stores/BallotStore');
-var BallotActions = require('../../../actions/BallotActions');
-
 
 var Submitting = React.createClass({
   
@@ -15,22 +12,17 @@ var Submitting = React.createClass({
     setTimeout(this.checkSubmit, 1000);
   },
 
-  checkSubmit: function() {
-    if (BallotStore.checkSubmit()){
-      this.context.router.transitionTo('submitted');
-    }
-    else setTimeout(this.checkSubmit, 1000);
-  },
-
   getInitialState: function () {
-    BallotActions.submitBallot();
     return null;
   },
   
   render: function() {
     return (
       <div>
-      <p>Submitting your ballot...</p>
+        <div id='submitting'>
+          <h1>Encrypting & Sending Your Ballot</h1>
+          <i className="fa fa-circle-o-notch fa-spin fa-5x"></i>
+        </div>        
       </div>
     );
   },

@@ -183,6 +183,12 @@ var routes = function(app) {
       api.ballots.create(req,res);
     });
 
+  // if the user browser doesn't suppoer crypto.getRandomValue(), we can't encrypt locally, so we use this instead.
+  router.route('/ballots/encrypt')
+    .post(function(req, res) {
+      api.ballots.encrypt(req, res);
+    });
+
   /**
    *  routes for groups
    *  ===================================

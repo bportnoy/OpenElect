@@ -16,9 +16,9 @@ var polls = {
       console.log('in controller', data);
       var poll = new Poll({
         id: uuid.v4(),
-        name: data.poll.name,
-        election_id: data.poll.election_id,
-        group_id: data.poll.group_id
+        name: data.name,
+        election_id: data.election_id,
+        group_id: data.group_id
       }).save({},{method: 'insert'})
       .then(function(model){
         res.status(201);

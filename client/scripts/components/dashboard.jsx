@@ -93,3 +93,6 @@ var IndexComponent = React.createClass({
 });
 
 module.exports = IndexComponent;
+
+        // <h5><a href='/docs/api/index.html'>API Reference</a></h5>
+        // <h5><a href='/docs/styleguide/index.html'>Style Guide</a></h5>

@@ -4,8 +4,6 @@ var openpgp = require('openpgp');
 var crypto = require('crypto');
 
 process.on('message', function(payload) {
-  console.log('secchild');
-  console.log(payload);
   if (payload === 'test'){
     process.send('test');
   }

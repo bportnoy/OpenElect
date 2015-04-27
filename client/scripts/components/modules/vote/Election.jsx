@@ -11,9 +11,17 @@ var Election = React.createClass({
     router: React.PropTypes.func
   },
 
-  submitBallot: function(){
-    BallotActions.submitBallot(this.props.id, this.props.userId);
-    this.context.router.transitionTo('submitting');
+  submitBallot: function(e){
+    e.preventDefault();
+    if (!this.state.submitted){
+      this.setState({submitted: true});
+      BallotActions.submitBallot(this.context.router);
+      this.context.router.transitionTo('submitting');
+    }
+  },
+
+  getInitialState: function(){
+    return {submitted: false};
   },
 
   render: function() {
