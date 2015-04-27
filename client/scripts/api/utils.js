@@ -54,6 +54,12 @@ function post(url, data) {
         .query();
 }
 
+function remove(url) {
+  return request
+         .delete(url)
+         .timeout(TIMEOUT);
+}
+
 var utils = {
 
   makeUrl: function(part) {
@@ -73,6 +79,14 @@ var utils = {
     dispatch(key, Constants.request.PENDING, data);
     _pendingRequests[key] = post(url, data).end(
       makeDigest(key, data)
+    );
+  },
+
+  dispatchDelete: function(key, url) {
+    abortPendingRequests(key);
+    dispatch(key, Constants.request.PENDING);
+    _pendingRequests[key] = remove(url).end(
+      makeDigest(key)
     );
   }
 

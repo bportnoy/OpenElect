@@ -74,6 +74,11 @@ function updatePollQuestions(questions) {
   PollStore.emitChange();
 }
 
+function deletePollQuestion(id) {
+  delete _currentPoll.questions[id];
+  PollStore.emitChange();
+}
+
 
 PollStore.dispatcherToken = Dispatcher.register(function(action){
 
@@ -126,6 +131,18 @@ PollStore.dispatcherToken = Dispatcher.register(function(action){
 
     case Constants.admin.questions.SET_QUESTION_PROPERTY:
       updatePollQuestion(action.data.id, action.data);
+    break;
+
+    case Constants.request.questions.DELETE_QUESTION:
+      if (action.response === 'PENDING') {
+        console.log(action.actionType);
+      } else {
+        if (action.response.body) {
+          deletePollQuestion(action.response.body.id);
+        } else {
+          console.error('unexpected response from server: ', action.response);
+        }
+      }
     break;
     
     default: // no op

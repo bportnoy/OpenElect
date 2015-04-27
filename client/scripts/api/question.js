@@ -19,6 +19,11 @@ var question = {
   	var url = utils.makeUrl('/questions/update/' + data.id);
   	var key = Constants.request.questions.UPDATE_QUESTION;
   	utils.dispatchPost(key, url, data);
+  },
+  delete: function(id) {
+    var url = utils.makeUrl('/questions/update' + id);
+    var key = Constants.request.questions.DELETE_QUESTION;
+    utils.dispatchDelete(key, url);
   }
 
 };
