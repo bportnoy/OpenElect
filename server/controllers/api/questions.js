@@ -13,10 +13,7 @@ var questions = {
 	create: function (req, res) {
 		if ( req.body.question) {
       var data = req.body.question;
-      var options = req.body.options;
-      console.log('in controller, question', data);
-      console.log('options are ', options);
-
+      var options = req.body.question.options;
       var question = new Question({
         id: uuid.v4(),
         poll_id: data.poll_id,
@@ -66,9 +63,9 @@ var questions = {
           });
           res.end();
         }).error(function(error){
-          res.stats(500);
-          console.log(error);
-          res.end();
+          res.status(500);
+          console.error(error);
+          res.send();
         });
     } else {
       res.status(400);

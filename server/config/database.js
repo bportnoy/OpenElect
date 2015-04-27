@@ -119,7 +119,7 @@ db.knex.schema.hasTable('elections').then(function(exists) {
       elections.boolean('two_factor_auth').defaultTo(false);
       elections.boolean('force_two_factor_auth').defaultTo(false);
       elections.boolean('archived').defaultTo(false);
-      elections.text('public_key'); //the key that will be used to encrypt this election
+      elections.text('public_key'); //the key that will be used to encrypt this election, same as owner's public key
       elections.json('results');
       elections.text('user_time_zone').defaultTo('utc'); // this doesn't affect how the date/time is stored, only how it's displayed
       elections.timestamps();
@@ -136,6 +136,7 @@ db.knex.schema.hasTable('ballots').then(function(exists) {
       ballots.uuid('election_id').references('id').inTable('elections');
       ballots.uuid('user_id').references('id').inTable('users');
       ballots.json('choices');
+      ballots.text('encrypted');
       ballots.timestamps();
     }).then(function (table) {
       console.log('Created Table', table);

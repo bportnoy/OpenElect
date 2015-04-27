@@ -3,6 +3,7 @@
 var React = require('react');
 var Election = require('./Election.jsx');
 var BallotStore = require('../../../stores/BallotStore');
+var UserStore = require('../../../stores/UserStore');
 var BallotActions = require('../../../actions/BallotActions');
 var axios = require('axios');
 var Spinner = require('../../widgets/Spinner.jsx');
@@ -23,7 +24,7 @@ var VotingBooth = React.createClass({
     //ajax call to get the election object
     //var polls = election.polls;
     var electionId = this.context.router.getCurrentParams().electionId;
-    var userId = 1;
+    var userId = UserStore.getUserId();
     BallotActions.setUserAndElection(userId, electionId);
 
     axios.get('api/v1/elections/update/' + electionId)
@@ -31,12 +32,13 @@ var VotingBooth = React.createClass({
         // if currently accepting vote, then show polls
         if(response.data.accepting_votes){
           axios.get('/api/v1/elections/vote/' + electionId)
-            .then(function(election){
-              this.setState({polls: election.data});
-            }.bind(this))
-            .catch(function(election){
-              console.error(election);
-            });
+            .then(function(response){
+              this.setState({polls: response.data.poll});
+              BallotActions.saveElectionData(response.data);
+            }.bind(this));
+            // .catch(function(election){
+            //   console.error(election);
+            // });
         } else {
           // Get election start and end day to show?
           this.setState({polls: "not_ready"});

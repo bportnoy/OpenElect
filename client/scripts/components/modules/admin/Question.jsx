@@ -8,7 +8,8 @@ var Question = React.createClass({
 
   mixins: [React.addons.LinkedStateMixin],
 
-  addAnotherOption: function() {
+  addAnotherOption: function(e) {
+    e.preventDefault();
     this.setState({optionCount: this.state.optionCount+1});
   },
 
@@ -29,6 +30,8 @@ var Question = React.createClass({
         });
       }
     }
+
+    console.log(options);
 
     if (this.props.pollId === undefined){
       console.error("Please save your poll before attempting to add options");

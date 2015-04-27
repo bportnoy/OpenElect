@@ -18,11 +18,12 @@ var Results = React.createClass({
 
   getQuestions: function(){
     var election_id = this.context.router.getCurrentParams().electionId;
-    axios.get('/api/v1/elections/update/' + election_id )
+    // axios.post('/api/v1/elections/update/' + election_id )
+    axios.post('/api/v1/elections/results/' + election_id )
       .then(function(response){
         // console.log("election.data.result", response.data.results);
         // console.log("key for results", Object.keys(response.data.results));
-
+        console.log(response);
         this.setState({ election: response.data });
       }.bind(this));
       // The catch seems to catch other files error. Temperatory disable it

@@ -11,6 +11,7 @@ var uuid = require('uuid');
 
 // DB models
 var Election = require('../../database/models/election');
+var User = require('../../database/models/user');
 var Poll = require('../../database/models/poll');
 
 Promise.promisifyAll(_);
@@ -51,28 +52,33 @@ var elections = {
 
   // create a new election entry ( POST /elections/create )
   create: function(req, res) {
+    console.log(req.user);
     if ( req.body.election ) {
-      var data = req.body.election;
-
-      var election = new Election({
-        id: uuid.v4(),
-        name: data.name,
-        description: data.description || 'no description',
-        start: data.start_date,
-        end: data.end_date,
-        timed: data.is_timed,
-        privacy_strategy: data.privacy_strategy,
-        randomize_answer_order: data.randomize_questions,
-        two_factor_auth: data.allow_2_auth,
-        force_two_factor_auth: data.force_2_auth
-      }).save({},{method: 'insert'})
-      .then(function(model){
-        res.status(201);
-        res.send(model.toJSON());
-      }).error(function(error){
-        res.status(500);
-        console.error(error);
-        res.end();
+      User.forge({id: req.user.id}).fetch()
+      .then(function(user){
+        var data = req.body.election;
+        var election = new Election({
+          id: uuid.v4(),
+          name: data.name,
+          description: data.description || 'no description',
+          start: data.start_date,
+          end: data.end_date,
+          timed: data.is_timed,
+          privacy_strategy: data.privacy_strategy,
+          randomize_answer_order: data.randomize_questions,
+          two_factor_auth: data.allow_2_auth,
+          force_two_factor_auth: data.force_2_auth,
+          public_key: user.get('public_key'),
+          owner_id: req.user.id
+        }).save({},{method: 'insert'})
+        .then(function(model){
+          res.status(201);
+          res.send(model.toJSON());
+        }).error(function(error){
+          res.status(500);
+          console.error(error);
+          res.end();
+        });
       });
     } else {
       res.status(400);
@@ -134,7 +140,7 @@ var elections = {
       if ( election ) {
         election.related(['poll']).load(['question'])
           .then(function(poll) {
-            res.send(poll.toJSON());
+            res.send(election.toJSON());
           });
       }
     });
@@ -172,17 +178,17 @@ var elections = {
 
   // begin vote tabulation - admin only ( POST /elections/results/:id )
   tabulate: function(id, req, res) {
-    var election = new Election({id: id});
+    var election = new Election({id: req.params.id});
     election.fetch()
       .then(function(election) {
-        if ( election ) {
+        if ( election && election.get('owner_id') === req.user.id) {
           election.tabulate()
             .then(function(election){
               res.json(election.get('results'));
             });
         } else {
-          res.status(404);
-          res.end('Election object not found');
+          res.status(400);
+          res.end('Error');
         }
       });
   },
