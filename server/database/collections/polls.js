@@ -1,8 +1,10 @@
-var db = require('../config');
-var Poll = require('../models/poll');
+'use strict';
 
-var Polls = new db.Collection();
+var db = require('../../config/database');
 
-Polls.model = Poll;
+var Polls = db.Collection.extend({
+  model: db.model('Poll')
+});
+
 
 module.exports = Polls;

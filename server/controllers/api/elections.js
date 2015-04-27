@@ -133,18 +133,29 @@ var elections = {
 
   // currently in use by endpoint - see future version below, requires front-end refactor
   voterGetById: function(id, req, res) {
-    var election = new Election({ id: id });
-    election.fetch({
-      withRelated: ['poll']
-    })
-    .then(function(election){
-      if ( election ) {
-        election.related(['poll']).load(['question'])
-          .then(function(poll) {
-            res.send(election.toJSON());
+    // select poll where election id is this election, and group id is one of user's groups
+    db.knex('elections')
+      .join('polls', 'polls.election_id', '=', 'elections.id')
+      .join('groups', 'polls.group_id', '=', 'groups.id')
+      .join('groups_users', 'groups.id', '=', 'groups_users.group_id')
+      .join('users', 'groups_users.user_id', '=', 'users.id')
+      .select('polls.id')
+      .then(function(polls){
+        var pollIds = _.map(polls, function(poll){
+          return poll.id;
+        });
+        Poll.query(function(qb){
+          qb.whereIn('id', pollIds).andWhere('election_id','=',id);
+        }).fetchAll({withRelated: ['question']})
+        .then(function(polls){
+          Election.forge({id: id}).fetch()
+          .then(function(election){
+            election = election.toJSON();
+            election.poll = polls.toJSON();
+            res.send(election);
           });
-      }
-    });
+        });
+      });
   },
 
   // election request method for voters ( GET /elections/vote/:id )
@@ -185,10 +196,8 @@ var elections = {
         if ( election && election.get('owner_id') === req.user.id) {
           election.set({accepting_votes: false, locked: true}).save()
           .then(function(election){
-            console.log('---------------pretab');
             election.tabulate()
               .then(function(election){
-                console.log(election.get('results'));
                 election.save().then(function(election){
                   res.json(election.get('results'));
                 });
