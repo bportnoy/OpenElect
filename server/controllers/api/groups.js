@@ -26,7 +26,7 @@ var Groups = {
       .then(function(groups){
         res.status(200).send(groups.toJSON({shallow: true}));
       });
-    } else {
+    } else {//this code may not work...
       Group.fetchAll({
         withRelated: [{ // this little bit of code fetches all a user's groups
           'user': function(qb) {

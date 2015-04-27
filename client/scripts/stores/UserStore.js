@@ -24,8 +24,10 @@ var UserStore = assign({}, EventEmitter.prototype, {
         _currentUser = res.body;
         if (res.status === 200){
           resolve(true);
+          UserStore.emitChange();
         } else {
           resolve(false);
+          _currentUser = undefined;
         }
       });
     });
@@ -36,8 +38,20 @@ var UserStore = assign({}, EventEmitter.prototype, {
     return _currentUser.id;
   },
 
+  getUser: function(){
+    return _currentUser;
+  },
+
   emitChange: function () {
     this.emit(CHANGE_EVENT);
+  },
+
+  addChangeListener: function(callback) {
+    this.on(CHANGE_EVENT, callback);
+  },
+
+  removeChangeListener: function(callback) {
+    this.removeListener(CHANGE_EVENT, callback);
   },
 
 });

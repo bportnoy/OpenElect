@@ -106,6 +106,7 @@ var LoginForm = React.createClass({
             <div className='error-message login-warning'><span>{loginWarning}</span></div>
             <button type="submit" disabled={!this.state.canSubmit}>Sign In</button>
             <div className='signin-link'><Link to='signup'>Register for a new account</Link></div>
+            <div className='signin-link'><Link to='forgotPassword'>Forgot Your Password?</Link></div>
           </Formsy.Form>
         </Modal>
       </div>

@@ -43,8 +43,7 @@ var elections = {
   },
 
   ownerList: function(userId, req, res) {
-    var election = new Election({ owner_id: userId });
-    election.fetchAll()
+    Election.where({owner_id: userId}).fetchAll()
     .then(function(collection){
       res.send(collection.toJSON());
     });
