@@ -9,9 +9,12 @@ var _ = require('underscore');
 var ElectionStore = require('../stores/ElectionStore');
 var ElectionActions = require('../actions/ElectionActions');
 var UserStore = require('../stores/UserStore');
+var GroupStore = require('../stores/GroupStore');
+var GroupActions = require('../actions/GroupActions');
 // components
 var ListElection = require('./modules/admin/ListElection.jsx');
 var Spinner = require('./widgets/Spinner.jsx');
+var Link = require('react-router').Link;
 
 // STUB DATA
 var userId = 1;
@@ -34,6 +37,8 @@ var IndexComponent = React.createClass({
 
   getInitialState: function () {
     ElectionActions.getUserElections();
+    GroupActions.getGroupList(true);
+
     return {
       elections: null,
       voteText: '',
@@ -43,10 +48,13 @@ var IndexComponent = React.createClass({
 
   componentDidMount: function() {
     ElectionStore.addChangeListener(this._onChange);
+    GroupStore.addChangeListener(this._onChange);
+
   },
 
   componentWillUnmount: function() {
     ElectionStore.removeChangeListener(this._onChange);
+    GroupStore.removeChangeListener(this._onChange);
   },
 
   render: function() {
@@ -60,7 +68,10 @@ var IndexComponent = React.createClass({
     } else {
       elections = Spinner;
     }
-    groups = [<li>Group Stub 1</li>,<li>Group Stub 2</li>,<li>Group Stub 3</li>,<li>Group Stub 4</li>,<li>Group Stub 5</li>,<li>Group Stub 6</li>];
+    groups = this.state.groups ? this.state.groups.map(function(group){
+      return (<li><Link to='groupAdmin' params={{id: group.id}}>{group.name}</Link></li>);
+    }) : undefined;
+    // groups = [<li>Group Stub 1</li>,<li>Group Stub 2</li>,<li>Group Stub 3</li>,<li>Group Stub 4</li>,<li>Group Stub 5</li>,<li>Group Stub 6</li>];
     return(
       <div className="dashboard" >
         <div className="container">
@@ -85,8 +96,10 @@ var IndexComponent = React.createClass({
 
   _onChange: function () {
     var elections = ElectionStore.currentUserElections();
+    var groups = GroupStore.getOwned(true);
     this.setState({
-      elections: elections
+      elections: elections,
+      groups: groups
     });
   }
 

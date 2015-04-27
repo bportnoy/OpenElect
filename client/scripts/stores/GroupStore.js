@@ -7,7 +7,6 @@ var assign = require('object-assign');
 var axios = require('axios');
 var _ = require('lodash');
 
-var GroupActions = require('../actions/GroupActions');
 
 var CHANGE_EVENT = constants.CHANGE_EVENT;
 

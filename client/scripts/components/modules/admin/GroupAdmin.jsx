@@ -34,7 +34,6 @@ var GroupAdmin = React.createClass({
   },
 
   _onChange: function(){
-    console.log('admin-onchange');
     var group = GroupStore.getGroup(this.state.id);
     var users = GroupStore.getUserListForCurrent();
     console.log(users);

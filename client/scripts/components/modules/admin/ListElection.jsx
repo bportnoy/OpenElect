@@ -58,7 +58,7 @@ var ListElection = React.createClass({
 				<h3 className="title"><Link to='electionAdmin' onClick={this.setElection} params={{id: this.props.id}}>{this.props.name}</Link></h3>
 				<p className="description">{this.props.description}</p>
 				{start}
-				<Link className="btn" to='electionAdmin' onClick={this.setElection} params={{id: this.props.id}}>Edit Election</Link>
+				<Link className="btn" to='electionAdmin' onClick={this.setElection} params={{id: this.props.id}}> Edit Election</Link>
 
 				<div>
 					{toggleButton}

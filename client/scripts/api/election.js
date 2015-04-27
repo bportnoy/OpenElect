@@ -2,13 +2,9 @@
 
 var Constants = require('../constants/Constants');
 var utils = require('./utils.js');
+var UserStore = require('../stores/UserStore');
 
 // stub to simulate missing module - todo: make this module!
-var UserStore = {
-  userId: function() {
-    return 1;
-  }
-};
 
 var election = {
 	createElection: function(data) {
@@ -19,7 +15,7 @@ var election = {
   },
 
   getUserElections: function() {
-    var url = utils.makeUrl('/elections/owner/' + UserStore.userId());
+    var url = utils.makeUrl('/elections/owner/' + UserStore.getUserId());
     var key = Constants.request.elections.GET_USER_ELECTIONS;
     var params = {/*user: token */}; // todo: enable user auth
     utils.dispatchGet(key, url, params);
