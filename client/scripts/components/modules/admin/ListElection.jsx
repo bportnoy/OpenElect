@@ -39,7 +39,11 @@ var ListElection = React.createClass({
 			request.get('/api/v1/elections/update/' + this.props.id)
 			.query({open: true})
 			.end(function(err, response){
-				this.setState({accepting_votes: response.body.accepting_votes});
+				if (response.text && response.text === 'This election has been locked.'){
+					alert('This election has been locked and can no longer accept votes.');
+				} else{
+					this.setState({accepting_votes: response.body.accepting_votes});
+				}
 			}.bind(this));
 		} else {
 			if(confirm('Are you sure you wish to close this election? Results will be tabulated and no further votes accepted.')){
