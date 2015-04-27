@@ -81,16 +81,16 @@ var IndexComponent = React.createClass({
 
           <div className="elections">
             <div>
-              <h2>ELECTIONS</h2>
               <button className="create-election" onClick={this.createElection}>Create a new Election</button>
+              <h2>ELECTIONS</h2>
             </div>
             <ul>{elections}</ul>
           </div>
 
           <div className="groups">
             <div>
-              <h2>GROUPS</h2>
               <button className="create-group" onClick={this.createGroup}>Create a new Group</button>
+              <h2>GROUPS</h2>
             </div>
             <ul>{groups}</ul>
           </div>

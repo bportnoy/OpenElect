@@ -20,17 +20,17 @@
   text-align: center;
   margin: 0;
   font-weight: 400;
+  padding-bottom: 12px;
 }
 
 .elections {
   @include span-columns(8);
   height: 100%;
-}w
+}
 
 .groups {
   @include span-columns(4);
   height: 100%;
-  margin:0;
 }
 
 .elections ul, .groups ul {
@@ -54,6 +54,10 @@
 }
 
 .create-election, .create-group {
-  padding: 0;
-  right: 0;
+  float: right;
+  padding: 1px 8px 3px 8px;
+  margin: 9px;
+  background-color: #3066A1;
+  font-weight: 300;
+
 }
