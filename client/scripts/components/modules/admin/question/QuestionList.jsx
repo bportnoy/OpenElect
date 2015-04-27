@@ -4,22 +4,54 @@ var React = require('react');
 var _ = require('underscore');
 
 var QuestionListItem = require('./QuestionListItem.jsx');
+var PollActions = require('../../../../actions/PollActions');
+var QuestionActions = require('../../../../actions/QuestionActions');
+var PollStore = require('../../../../stores/PollStore')
 
 var QuestionList = React.createClass({
 
+	getInitialState: function () {
+    return {
+    	questions: {}
+    };
+  },
+
+	componentDidMount: function() {
+    PollStore.addChangeListener(this._onChange);
+  },
+
+  componentWillUnmount: function() {
+    PollStore.removeChangeListener(this._onChange);
+  },
+
 	questions: function() {
 		var list = [];
-		_.each(this.props.questions, function(poll) {
-			list.push( <PollListItem poll={poll} key={poll.id}/> );
+		_.each(this.state.questions, function(question) {
+			list.push( <QuestionListItem question={question} key={question.id}/> );
 		});
 		return list;
 	},
 
+	addQuestion: function() {
+		QuestionActions.create(this.props.pollId);
+	},
+
+	_onChange: function() {
+		var questions = PollStore.getQuestions();
+		this.setState({
+			questions: questions
+		})
+	},
+
 	render: function() {
+		var questions = this.questions();
 		return (
-			<ul className="poll-list">
-				{this.questions()}
-			</ul>
+			<div className="questions">
+				<ul className="question-list">
+					{questions}
+				</ul>
+				<button onClick={this.addQuestion}>Add a Question</button>
+			</div>
 		);
 	}
 });

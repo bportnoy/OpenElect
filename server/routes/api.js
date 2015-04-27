@@ -168,6 +168,12 @@ var routes = function(app) {
       api.questions.create(req, res);
     });
 
+  // get questions belonging to a poll
+  router.route('/questions/poll/:id')
+    .get(authenticate, function(req, res) {
+      api.questions.getByPollId(req.params.id, req, res);
+    });
+
   // retrieve or update a specific question by question id
   router.route('/questions/update/:id')
     .get(authenticate, function(req, res) {

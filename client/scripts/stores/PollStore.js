@@ -12,7 +12,8 @@ var _currentPoll = {
   election_id: null,
   group_id: null,
   id: null,
-  name: null
+  name: null,
+  questions: {}
 };
 
 var PollStore = assign({}, EventEmitter.prototype, {
@@ -37,6 +38,17 @@ var PollStore = assign({}, EventEmitter.prototype, {
     return _currentPoll[property];
   },
 
+  getQuestions: function() {
+    return _currentPoll.questions;
+  },
+
+  getQuestion: function(id) {
+    return _currentPoll.questions[id];
+  },
+
+  getQuestionProperty: function(id, property) {
+    return _currentPoll.questions[id][property];
+  }
 
 });
 
@@ -50,14 +62,27 @@ function setCurrentProperty(property, value) {
   PollStore.emitChange();
 }
 
+function updatePollQuestion(id, data) {
+  var question = {};
+  question[data.property] = data.value;
+  _.extend(_currentPoll.questions[id], question);
+  PollStore.emitChange();
+}
+
+function updatePollQuestions(questions) {
+  _.extend(_currentPoll.questions, questions);
+  PollStore.emitChange();
+}
+
+
 PollStore.dispatcherToken = Dispatcher.register(function(action){
 
+  var data;
   switch(action.actionType) {
     
     case Constants.request.polls.GET_POLL || Constants.request.polls.UPDATE_POLL:
-      console.log(action);
       if (action.response === 'PENDING') {
-        console.log('request sent');
+        console.log(action.actionType);
       } else {
         if (action.response.body) {
           updatePollData(action.response.body);
@@ -69,6 +94,38 @@ PollStore.dispatcherToken = Dispatcher.register(function(action){
 
     case Constants.admin.polls.SET_POLL_PROPERTY:
       setCurrentProperty(action.data.property, action.data.value);
+    break;
+
+    case Constants.request.polls.GET_POLL_QUESTIONS:
+      if (action.response === 'PENDING') {
+        console.log(action.actionType);
+      } else {
+        if (action.response.body) {
+          data = {};
+          _.each(action.response.body, function(question){
+            data[question.id] = question;
+          });
+          updatePollQuestions(data);
+        } else {
+          console.error('unexpected response from server: ', action.response);
+        }
+      }
+    break;
+
+    case Constants.request.questions.CREATE_QUESTION:
+      if (action.response === 'PENDING') {
+        console.log(action.actionType);
+      } else {
+        if (action.response.body) {
+          updatePollQuestions([action.response.body]);
+        } else {
+          console.error('unexpected response from server: ', action.response);
+        }
+      }
+    break;
+
+    case Constants.admin.questions.SET_QUESTION_PROPERTY:
+      updatePollQuestion(action.data.id, action.data);
     break;
     
     default: // no op

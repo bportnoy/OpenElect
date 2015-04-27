@@ -186,10 +186,12 @@ ElectionStore.dispatcherToken = Dispatcher.register(function(action){
 
     case Constants.request.elections.GET_ELECTION_POLLS:
       if (action.response === 'PENDING') {
-        console.log('request sent');
+        console.log(action.actionType);
       } else {
         if (action.response.body) {
+          console.log('a wild response appears', action.response);
           _.each(action.response.body, function(poll) {
+            console.log('adding a poll', poll);
             addPoll(poll);
           });
         } else {

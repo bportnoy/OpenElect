@@ -6,12 +6,14 @@ var request = require('superagent');
 
 var pollController = require('./api/poll');
 var electionController = require('./api/election');
+var questionController = require('./api/question');
 
 // API call definitions live here
 var API = {
 
   election: electionController,
-  poll: pollController
+  poll: pollController,
+  question: questionController
 
 };
 

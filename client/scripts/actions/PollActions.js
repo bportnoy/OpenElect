@@ -52,6 +52,10 @@ var PollActions = {
     };
     data[property] = PollStore.getCurrentProperty(property);
     this.update(data);
+  },
+
+  getQuestions: function(id) {
+    api.poll.getQuestions(id);
   }
 
 };

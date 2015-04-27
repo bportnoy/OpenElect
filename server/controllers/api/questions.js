@@ -45,6 +45,25 @@ var questions = {
     }
 	},
 
+  getByPollId: function(id, req, res) {
+    if ( id ) {
+      var question = new Question();
+      question.where({ poll_id: id })
+      .fetchAll().then(function(collection){
+        res.status(200);
+        res.send(collection.toJSON());
+      })
+      .error(function(error){
+        res.status(500);
+        console.error(error);
+        res.end();
+      });
+    } else {
+      res.status(400);
+      res.end('Bad request');
+    }
+  },
+
 	adminGetById: function (id, req, res) {
     if(req.body){
       var data = req.body;

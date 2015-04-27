@@ -47,7 +47,10 @@ Constants.admin.elections = keyMirror({
 
 Constants.admin.polls = keyMirror({
   SET_POLL_PROPERTY: null,
+});
 
+Constants.admin.questions = keyMirror({
+  SET_QUESTION_PROPERTY: null,
 });
 
 // API related constants
@@ -70,7 +73,14 @@ Constants.request.elections = keyMirror({
 Constants.request.polls = keyMirror({
   CREATE_POLL: null,
   GET_POLL: null,
-  UPDATE_POLL: null
+  UPDATE_POLL: null,
+  GET_POLL_QUESTIONS: null
+});
+
+Constants.request.questions = keyMirror({
+  CREATE_QUESTION: null,
+  GET_QUESTION: null,
+  UPDATE_QUESTION: null
 });
 
 module.exports = Constants;

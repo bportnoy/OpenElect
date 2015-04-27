@@ -18,8 +18,12 @@ var poll = {
   update: function(data) {
   	var url = utils.makeUrl('/polls/update/' + data.id);
   	var key = Constants.request.polls.UPDATE_POLL;
-    console.log('updating', data);
   	utils.dispatchPost(key, url, data);
+  },
+  getQuestions: function(id) {
+    var url = utils.makeUrl('/questions/poll/' + id);
+    var key = Constants.request.polls.GET_POLL_QUESTIONS;
+    utils.dispatchGet(key, url);
   }
 
 };
