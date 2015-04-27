@@ -15,7 +15,6 @@ var appElement = document.getElementById('app-view');
 Modal.setAppElement(appElement);
 Modal.injectCSS();
 
-
 var SignUpForm = React.createClass({
 
   contextTypes: {
