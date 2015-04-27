@@ -25,7 +25,10 @@ var PollAdmin = React.createClass({
     if ( !poll.id || params.id !== poll.id ) {
     	if ( params.id ) {
     		PollActions.get(params.id);
+        PollActions.getQuestions(params.id);
     	}
+    } else {
+      PollActions.getQuestions(poll.id);
     }
     return {
     	questionCount: 1,
@@ -115,7 +118,7 @@ var PollAdmin = React.createClass({
             </select>
           </div>
           <div className="group poll-questions">
-            <h3>Poll Questions</h3>
+            <h3>Questions</h3>
             <QuestionList pollId={this.state.poll.id} />
           </div>
         </div>

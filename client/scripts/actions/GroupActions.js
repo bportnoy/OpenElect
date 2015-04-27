@@ -72,11 +72,9 @@ var GroupActions = {
   },
 
   getGroupList: function(asOwner, transitionCallback){
-    console.log('get group list');
     asOwner = asOwner || false;
     axios.get('/api/v1/groups/list?own=' +asOwner.toString())
     .then(function(response){
-      console.log(response);
       Dispatcher.dispatch({
         actionType: Constants.GET_GROUP_LIST,
         owner: asOwner,

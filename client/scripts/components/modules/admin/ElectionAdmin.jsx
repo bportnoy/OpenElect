@@ -94,6 +94,7 @@ var ElectionAdmin = React.createClass({
 
     var startDays = this._buildDayOptions('start');
     var endDays = this._buildDayOptions('end');
+    console.log('polls', this.state.polls)
     
     return (
       <section className="edit-election">

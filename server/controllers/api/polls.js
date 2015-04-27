@@ -12,8 +12,7 @@ var polls = {
 
 	create: function (req, res) {
 		if ( req.body ) {
-      var data = req.body;
-      console.log('in controller', data);
+      var data = req.body.poll;
       var poll = new Poll({
         id: uuid.v4(),
         name: data.name,
@@ -47,7 +46,7 @@ var polls = {
       var poll = new Poll({id: id})
           .fetch()
           .then(function(model){
-            res.status(201);
+            res.status(200);
             res.json({
               id: model.get('id'),
               election_id: model.get('election_id'),
@@ -99,7 +98,7 @@ var polls = {
       poll.where({ election_id: id })
         .fetchAll()
         .then(function(collection){
-          res.status(201);
+          res.status(200);
           res.send(collection.toJSON());
       }).error(function(error){
         res.status(500);

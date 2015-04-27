@@ -70,7 +70,14 @@ Constants.request.elections = keyMirror({
 Constants.request.polls = keyMirror({
   CREATE_POLL: null,
   GET_POLL: null,
-  UPDATE_POLL: null
+  UPDATE_POLL: null,
+  GET_POLL_QUESTIONS: null
+});
+
+Constants.request.questions = keyMirror({
+  CREATE_QUESTION: null,
+  GET_QUESTION: null,
+  UPDATE_QUESTION: null
 });
 
 module.exports = Constants;

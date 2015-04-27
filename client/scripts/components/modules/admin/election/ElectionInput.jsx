@@ -7,19 +7,15 @@ var DatePicker = require('react-date-picker');
 var _ = require('underscore');
 
 var ElectionInput = React.createClass({
-  getInitialState: function() {
-      return {value: ''};
-  },
-
   handleChange: function(event) {
     var value;
-    if (this.props.type === 'checkbox' || this.props.type === 'radio') {
+    if ( this.props.type === 'checkbox' || this.props.type === 'radio' ) {
       value = event.target.checked;
     } else {
       value = event.target.value;
     }
-    ElectionActions.changeElectionData(this.props.property, value);
-    if (this.props.type === 'checkbox' || this.props.type === 'radio' || this.props.type === 'select'){
+    ElectionActions.changeElectionData( this.props.property, value );
+    if ( this.props.type === 'checkbox' || this.props.type === 'radio' || this.props.type === 'select'){
       ElectionActions.postElectionData( this.props.property, value );
     }
     this.setState({
@@ -29,12 +25,12 @@ var ElectionInput = React.createClass({
 
   handleSave: function(event) {
     event.preventDefault();
-    ElectionActions.postElectionData(this.props.property, this.state.value);
+    ElectionActions.postElectionData( this.props.property, this.state.value );
   },
 
   handleUndo: function(event) {
     event.preventDefault();
-    ElectionActions.undoElectionChange(this.props.property);
+    ElectionActions.undoElectionChange( this.props.property );
   },
 
   isSaved: function() {
@@ -51,17 +47,17 @@ var ElectionInput = React.createClass({
     save = (<button action="submit" className="save" onClick={this.handleSave}>Save</button>);
     undo = (<button action="submit" className="save" onClick={this.handleUndo}>Undo</button>);
 
-    switch (this.props.type ) { // different inputs are different!
+    switch ( this.props.type ) { // different inputs are different!
 
       case 'text':
       case 'number':
-        input = (<input key={this.props.property} className={this.props.classes} type={this.props.type} name={this.props.name} value={this.state.value} disabled={this.props.disabled} onChange={this.handleChange} /> );
+        input = ( <input key={ this.props.property } className={ this.props.classes } type={ this.props.type } name={ this.props.name } value={ this.props.value } disabled={this.props.disabled} onChange={ this.handleChange } /> );
         editTooltip = ( <span className="edit-tooltip">Edit</span> );
       break;
 
       case 'textarea':
-        input = (<textarea key={this.props.property} className={this.props.classes} name={this.props.name} value={this.state.value} disabled={this.props.disabled} onChange={this.handleChange} /> );
-        editTooltip = (<span className="edit-tooltip">Edit</span> );
+        input = ( <textarea key={ this.props.property } className={ this.props.classes } name={ this.props.name } value={ this.props.value } disabled={this.props.disabled} onChange={ this.handleChange } /> );
+        editTooltip = ( <span className="edit-tooltip">Edit</span> );
       break;
 
       case 'select':
@@ -71,11 +67,11 @@ var ElectionInput = React.createClass({
         ));
         _.each(this.props.options, function(val, key) {
           options.push((
-            <option value={val}>{key}</option>
+            <option key={val} value={val}>{key}</option>
           ));
         });
         input = (
-                <select key={this.props.property} className={this.props.classes} name={this.props.name} value={this.state.value} disabled={this.props.disabled} onChange={this.handleChange}>
+                <select key={ this.props.property } className={this.props.classes} name={ this.props.name } value={ this.props.value } disabled={this.props.disabled} onChange={ this.handleChange }>
                   {options}
                 </select>
                 );
@@ -85,7 +81,7 @@ var ElectionInput = React.createClass({
 
       case 'checkbox':
       case 'radio':
-        input = (<input key={this.props.property} className={this.props.classes} type={this.props.type} name={this.props.name} value={this.state.value} checked={this.props.value} disabled={this.props.disabled} onChange={this.handleChange}/> );
+        input = ( <input key={ this.props.property } className={ this.props.classes } type={ this.props.type } name={ this.props.name } value={ this.props.value } checked={ this.props.value } disabled={this.props.disabled} onChange={ this.handleChange }/> );
         save = null;
         undo = null;
       break;
@@ -107,7 +103,7 @@ var ElectionInput = React.createClass({
         </div>
       </div>
     );
-
+  
   }
 
 });
