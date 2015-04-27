@@ -16,7 +16,8 @@ var QuestionActions = {
   create: function(pollId) {
   	var data = {
   		question: {
-  			poll_id: pollId
+  			poll_id: pollId,
+        options: []
   		}
   	};
   	var defaults = {
@@ -32,6 +33,10 @@ var QuestionActions = {
 
   update: function(data) {
     api.question.update(data);
+  },
+
+  delete: function(id) {
+    api.question.delete(id);
   },
 
   setProperty: function(id, property, value) {
@@ -52,6 +57,19 @@ var QuestionActions = {
     };
     data[property] = PollStore.getQuestionProperty(id, property);
     this.update(data);
+  },
+
+  addOption: function(questionId) {
+    var id = PollStore.getQuestion(questionId).options.length + 1;
+    var defaults = {
+      id: id,
+      name: 'New Option',
+      description: 'New Description'
+    };
+  },
+
+  deleteOption: function(optionId) {
+
   }
 
 };
