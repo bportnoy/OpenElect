@@ -3,15 +3,15 @@
 var React = require('react');
 var _ = require('underscore');
 
-var select = React.createComponent({
+var select = React.createClass({
 
-	render: function() {
-		
-		return (
-			<input type="text" placeholder={ this.props.placeholder } />
-		);
-	
-	}
+  render: function() {
+    
+    return (
+      <input type="text" placeholder={ this.props.placeholder } />
+    );
+  
+  }
 
 });
 

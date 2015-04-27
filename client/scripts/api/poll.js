@@ -18,6 +18,7 @@ var poll = {
   update: function(data) {
   	var url = utils.makeUrl('/polls/update/' + data.id);
   	var key = Constants.request.polls.UPDATE_POLL;
+    console.log('updating', data);
   	utils.dispatchPost(key, url, data);
   }
 

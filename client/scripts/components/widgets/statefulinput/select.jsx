@@ -3,7 +3,7 @@
 var React = require('react');
 var _ = require('underscore');
 
-var select = React.createComponent({
+var select = React.createClass({
 	
 	options: [],
 

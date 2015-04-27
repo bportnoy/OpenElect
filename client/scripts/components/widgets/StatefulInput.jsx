@@ -2,69 +2,65 @@
 
 var React = require('react');
 var _ = require('underscore');
-var store = require('../../stores' + this.props.config.store);
-var actions = requrie('../../actions' + this.props.config.actions);
 
-var text = require('./statefulinput/text.jsx');
-var select = require('./statefulinput/select.jsx');
+var Text = require('./statefulinput/text.jsx');
+var Select = require('./statefulinput/select.jsx');
 
 var StatefulInput = React.createClass({
 
-	property: this.props.config.updates,
-	type: this.props.config.type,
-	placeholder: this.props.config.placeholder,
-	disabled: this.props.config.disabled,
-	classes: this.props.config.classes,
-
-	getInitialState: function() {
+  getInitialState: function() {
     return {
-    	currentVal: store.getCurrentProperty(property)
+      currentVal: this.store.getCurrentProperty(property)
     };
   },
-	
-	componentDidMount: function() {
-    store.addChangeListener(this._onChange);
+  
+  componentWillMount: function() {
+    
+  },
+
+  componentDidMount: function() {
+    this.store.addChangeListener(this._onUpdate);
   },
 
   componentWillUnmount: function() {
-    store.removeChangeListener(this._onChange);
-  },
-
-  _onChange: function() {
-  	store.getCurrentProperty(property);
+    this.store.removeChangeListener(this._onUpdate);
   },
 
   _onUpdate: function() {
-  	actions.setProperty(property, value);
+    this.store.getCurrentProperty(property);
+  },
+
+  _onChange: function() {
+    actions.setProperty(property, value);
   },
 
   _onSave: function() {
-  	actions.saveProperty(property, value);
+    actions.saveProperty(property, value);
   },
 
   _onUndo: function() {
-  	actions.undoProperty(property);
+    actions.undoProperty(property);
   },
 
-	render: function(){
-		
-		switch (this.type) {
-			
-			case 'text':
-				
-			break;
+  render: function(){
+    
+    switch (this.type) {
+      
+      case 'text':
+        <Text placeholder={this.placeholder} onChange={this._onChange} />
+      break;
 
-			case 'select':
+      case 'select':
 
-			break;
+      break;
 
-			default: // no op
+      default: // no op
 
-		}
+    }
 
-		return input;
-	
-	}
+    return input;
+  
+  }
 
 });
 
