@@ -36,7 +36,7 @@ var ElectionAdmin = React.createClass({
   },
 
   createPoll: function(){
-    PollActions.createPoll(this.state.id);
+    PollActions.create(this.state.id);
   },
 
   componentWillMount: function() {

@@ -79,7 +79,6 @@ var polls = {
                   && property !== 'created_at'
                   && property !== 'updated_at'
                   && property !== 'election_id'
-                  && property !== 'group_id'
                 ) {
                     poll.set(property, value);
                 }

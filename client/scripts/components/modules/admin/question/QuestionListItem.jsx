@@ -4,10 +4,10 @@ var React = require('react');
 var Link = require('react-router').Link;
 var _ = require('underscore');
 
-var PollActions = require('../../../../actions/PollActions');
+var QuestionActions = require('../../../../actions/PollActions');
 
 
-var PollListItem = React.createClass({
+var QuestionListItem = React.createClass({
 	setPoll: function() {
 		PollActions.get(this.props.poll.id);
 	},
@@ -20,4 +20,4 @@ var PollListItem = React.createClass({
 	}
 });
 
-module.exports = PollListItem;
+module.exports = QuestionListItem;

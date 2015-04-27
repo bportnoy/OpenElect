@@ -94,7 +94,6 @@ var GroupActions = {
         actionType: Constants.GROUP_USER_LIST_UPDATE,
         users: response.data
       });
-      console.log(response);
     });
   },
 
