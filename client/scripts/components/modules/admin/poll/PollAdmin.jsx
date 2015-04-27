@@ -63,10 +63,8 @@ var PollAdmin = React.createClass({
     }
     // we'll defer saving the property until the user clicks 'save' for text and number inputs
     if ( event.target.type === 'text' || event.target.type === 'number' ) {
-      console.log('we have text');
       PollActions.setProperty(event.target.name, event.target.value);
     } else {
-      console.log('we\'ll save this now');
       var data = {
         id: this.state.poll.id,
       }

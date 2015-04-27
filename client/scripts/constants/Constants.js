@@ -47,7 +47,10 @@ Constants.admin.elections = keyMirror({
 
 Constants.admin.polls = keyMirror({
   SET_POLL_PROPERTY: null,
+});
 
+Constants.admin.questions = keyMirror({
+  SET_QUESTION_PROPERTY: null,
 });
 
 // API related constants

@@ -56,10 +56,6 @@ var PollActions = {
 
   getQuestions: function(id) {
     api.poll.getQuestions(id);
-  },
-
-  addQuestion: function(pollId) {
-    api.question.create(pollId);
   }
 
 };

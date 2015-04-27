@@ -22,7 +22,7 @@ var QuestionActions = {
   	var defaults = {
   		name: 'New Question'
   	};
-  	data.question = _.defaults(data.poll, defaults);
+  	data.question = _.defaults(data.question, defaults);
   	api.question.create(data);
   },
 
@@ -36,7 +36,7 @@ var QuestionActions = {
 
   setProperty: function(id, property, value) {
     var action = {
-      actionType: Constants.admin.question.SET_QUESTION_PROPERTY,
+      actionType: Constants.admin.questions.SET_QUESTION_PROPERTY,
       data: {
         id: id,
         property: property,
@@ -48,9 +48,9 @@ var QuestionActions = {
 
   saveProperty: function(id, property) {
     var data = {
-      id: PollStore.getQuestionProperty('id')
+      id: id
     };
-    data[property] = PollStore.getQuestiontProperty(id, property);
+    data[property] = PollStore.getQuestionProperty(id, property);
     this.update(data);
   }
 
