@@ -64,9 +64,9 @@ var ListElection = React.createClass({
 		}
 		// Check the current state of election and show the responding options
 		if (this.state.accepting_votes){
-			var toggleButton = (<button onClick={this.toggleElection}>Close this election</button>)
+			var toggleButton = (<button onClick={this.toggleElection}>END THIS ELECTION</button>)
 		} else {
-			var toggleButton = (<button onClick={this.toggleElection}>Start this election</button>)
+			var toggleButton = (<button onClick={this.toggleElection}>START THIS ELECTION</button>)
 		}
 
 		return(
@@ -78,8 +78,8 @@ var ListElection = React.createClass({
 
 				<div>
 					{toggleButton}
-					<button onClick={this.goVote}>Vote!</button>
-					<button onClick={this.whoWon}>Who won?</button>
+					<button onClick={this.goVote}>VOTE NOW</button>
+					<button onClick={this.whoWon}>VIEW RESULTS</button>
 				</div>
 
 			</li>

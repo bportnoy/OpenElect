@@ -1,6 +1,7 @@
 .dashboard {
-  background-color: #e4e4e4;
+  background-color: #f5f5f5;
   margin: auto;
+  height: 100%;
 }
 
 .dashboard-content {
@@ -14,23 +15,22 @@
   background-color: #3066A1
 }
 
-.elections {
-
-}
-
 .page-title, .elections h2, .groups h2 {
-  font-size: 1.2em;
+  font-size: 1em;
   text-align: center;
   margin: 0;
   font-weight: 400;
+  padding-bottom: 12px;
 }
 
 .elections {
   @include span-columns(8);
+  height: 100%;
 }
 
 .groups {
   @include span-columns(4);
+  height: 100%;
 }
 
 .elections ul, .groups ul {
@@ -40,16 +40,24 @@
 }
 
 .elections li, .elections h2 {
-  border: solid 1px #bbbbbb; //#3066A1
+  border: solid 1px #d7d7d7; //#3066A1
   background-color: #ffffff;
-  padding: 10px 24px;
-  margin: 12px;
+  padding: 10px 40px;
+  margin: 0;
 }
 
 .groups li, .groups h2 {
-  border: solid 1px #bbbbbb; //#3066A1
-  background-color: #ffffff;
+  border: solid 1px #d7d7d7; //#3066A1
+  background-color: #FFFFFF;
   padding: 10px 24px;
-  margin: 12px;
+  margin: 0;
 }
 
+.create-election, .create-group {
+  float: right;
+  padding: 1px 8px 3px 8px;
+  margin: 9px;
+  background-color: #3066A1;
+  font-weight: 300;
+
+}
