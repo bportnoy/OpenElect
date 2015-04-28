@@ -35,7 +35,6 @@
   border: solid 1px #bbbbbb;
   right: 0;
   height: 100%;
-  padding-bottom: 20px;
 }
 
 .elections ul, .groups ul {
@@ -65,6 +64,10 @@
   list-style-type: none;
   background-color: #FFFFFF;
   padding: 10px 24px;
+}
+
+.groups li {
+  padding: 4px 24px 24px 24px;
 }
 
 .create-group {

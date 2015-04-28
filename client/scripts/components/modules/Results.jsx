@@ -29,7 +29,7 @@ var Results = React.createClass({
   render: function(){
     // Beginning state
     var display = (
-          <div>
+          <div className="container">
             <h3>The election result is not available yet. </h3>
           </div>
         );

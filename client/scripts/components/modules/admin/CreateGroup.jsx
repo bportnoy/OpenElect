@@ -78,7 +78,7 @@ var CreateGroup = React.createClass({
     var spinner = this.state.spinner ? (<i className="fa fa-circle-o-notch fa-spin fa-2x"></i>) : undefined;
 
       return (
-          <div>
+          <div className="container">
             <h1>Create New Group</h1>
             <div>{groupName}</div>
             <div>{inviteChoices}</div>
