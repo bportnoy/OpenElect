@@ -32,6 +32,7 @@ var QuestionActions = {
   },
 
   update: function(data) {
+    console.log('update', data);
     api.question.update(data);
   },
 
@@ -60,12 +61,25 @@ var QuestionActions = {
   },
 
   addOption: function(questionId) {
+    console.log('questactions');
+    var question=PollStore.getQuestion(questionId);
     var id = PollStore.getQuestion(questionId).options.length + 1;
-    var defaults = {
+    var option = {
       id: id,
       name: 'New Option',
       description: 'New Description'
     };
+    question.options.push(option);
+    this.update(question);
+  },
+
+  updateOption: function(questionId, data) {
+    console.log('uo');
+    console.log(data);
+    var question = PollStore.getQuestion(questionId);
+    var id = data.id;
+    question.options[id-1].name = data.name;
+    this.update(question);
   },
 
   deleteOption: function(optionId) {

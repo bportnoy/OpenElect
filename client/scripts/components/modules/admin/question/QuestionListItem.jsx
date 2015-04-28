@@ -5,6 +5,7 @@ var _ = require('underscore');
 
 var QuestionActions = require('../../../../actions/QuestionActions');
 var QuestionOption = require('./QuestionOption.jsx');
+var PollStore = require('../../../../stores/PollStore');
 
 
 var QuestionListItem = React.createClass({
@@ -41,7 +42,30 @@ var QuestionListItem = React.createClass({
   },
 
   addOption: function(){
+    console.log('addoption');
   	QuestionActions.addOption(this.props.question.id);
+  },
+
+  addAnotherOption: function(e) {
+    e.preventDefault();
+    this.setState({optionCount: this.state.optionCount+1});
+  },
+
+  getInitialState: function(){
+    return {optionCount: 0};
+  },
+
+  componentWillMount: function(){
+    PollStore.addChangeListener(this._onChange);
+  },
+
+  componentWillUnMount: function(){
+    PollStore.addChangeListener(this._onChange);
+  },
+
+  _onChange: function(){
+    console.log('onchange');
+    this.setState(PollStore.getQuestion(this.props.question.id));
   },
 
   buildOptions: function(){
@@ -49,13 +73,21 @@ var QuestionListItem = React.createClass({
   	console.log('build being called', this.props.question.options);
   	_.each(this.props.question.options, function(option){
   		console.log('this is an option:', option);
-  		<QuestionOption key={this.props.question.id + '-' + option.id} option={option}/>
+  		list.push(<QuestionOption key={this.props.question.id + '-' + option.id} option={option} questionId={this.props.question.id}/>);
   	}, this);
+    return list;
   },
 
 	render: function() {
+    console.log('render');
 		var question = this.props.question;
 		var options = this.buildOptions();
+      // var options = [];
+      // for (var i = 1; i <= this.state.optionCount; i++){
+      //   options.push(
+      //     <QuestionOption key={this.props.question.id + '-' + option.id} option={option}/>
+      //     );
+      // } 
 		return (
 			<li>
 				<div className="question-name">
