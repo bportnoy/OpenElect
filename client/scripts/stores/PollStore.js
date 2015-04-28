@@ -64,8 +64,11 @@ function setCurrentProperty(property, value) {
 
 function updatePollQuestion(id, data) {
   var question = {};
+  console.log(data);
+  console.log('inupdate', question[data]);
   question[data.property] = data.value;
   _.extend(_currentPoll.questions[id], question);
+  console.log('update');
   PollStore.emitChange();
 }
 
@@ -83,6 +86,9 @@ function deletePollQuestion(id) {
 PollStore.dispatcherToken = Dispatcher.register(function(action){
 
   var data;
+
+  console.log(action);
+
   switch(action.actionType) {
     
     case Constants.request.polls.GET_POLL || Constants.request.polls.UPDATE_POLL:
@@ -143,6 +149,10 @@ PollStore.dispatcherToken = Dispatcher.register(function(action){
           console.error('unexpected response from server: ', action.response);
         }
       }
+    break;
+
+    case Constants.request.questions.UPDATE_QUESTION:
+      updatePollQuestion(action.queryParams.id, action.queryParams);
     break;
     
     default: // no op
