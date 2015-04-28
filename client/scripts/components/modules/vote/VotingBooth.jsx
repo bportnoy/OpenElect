@@ -62,7 +62,7 @@ var VotingBooth = React.createClass({
     }
 
     return (
-      <div>{display}</div>
+      <div className="container">{display}</div>
     );
   },
 
