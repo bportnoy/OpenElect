@@ -103,7 +103,7 @@ var GroupAdmin = React.createClass({
         );
     } else {
       return (
-        <div>
+        <div className="container">
           <h1 id='grouphead'>{this.state.group.name}</h1><i className="fa fa-pencil" onClick={this.editMode}></i>
           <h3>Created: {Moment(this.state.group.created_at).fromNow()}</h3>
           <h3>Last Updated: {Moment(this.state.group.updated_at).fromNow()}</h3>

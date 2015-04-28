@@ -48,7 +48,7 @@ var CSVPreview = React.createClass({
     });
 
       return (
-          <div>
+          <div className="container">
           <h4>Please review this preview of your uploaded data:</h4>
             <table className='striped bordered responsive-table'>
               <thead>

@@ -39,7 +39,7 @@ var AddGroupName = React.createClass({
   render: function() {
     var spinner = this.state.spinner > 0 ? (<i className="fa fa-circle-o-notch fa-spin spinner"></i>) : undefined;
       return (
-          <div>
+          <div className="container">
             <form className='group-form' onSubmit={this.handleSubmit}>
               <h3>Group Name</h3>
               <input type='text'

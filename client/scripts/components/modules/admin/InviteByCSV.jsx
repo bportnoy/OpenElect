@@ -68,7 +68,7 @@ var InviteByCSV = React.createClass({
     ( <div className='dz'>
         <form ref='dropzone' action='/api/v1/groups/csv' className='dropzone'/>
       </div>);
-    var preview = this.state.preview ? (<CSVPreview response={this.state.preview} 
+    var preview = this.state.preview ? (<CSVPreview response={this.state.preview}
                                                     filePath={this.state.filePath}/>) : undefined;
 
     var controls = this.state.preview ? (<div>

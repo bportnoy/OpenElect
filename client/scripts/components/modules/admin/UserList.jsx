@@ -59,8 +59,8 @@ var UserList = React.createClass({
                               controlText='Remove'
                               controlAction={this.removeUser.bind(this,user)}/>;
   }.bind(this));
-  
-  return <article>
+
+  return <article className="container">
       <table className='striped bordered responsive-table'>
         <thead>
           <tr>
@@ -86,22 +86,22 @@ var UserList = React.createClass({
       <h4>Users per page:</h4><input type='text' value={this.state.perPageInput} onChange={this.repaginate}/>
   </article>;
   },
-  
+
   onSelect: function(page) {
       var pagination = this.state.pagination || {};
-  
+
       pagination.page = page;
-  
+
       this.setState({
           pagination: pagination
       });
   },
-  
+
   onPerPage: function (e) {
       var pagination = this.state.pagination || {};
-  
+
       pagination.perPage = parseInt(event.target.value, 10);
-  
+
       this.setState({
           pagination: pagination
       });
