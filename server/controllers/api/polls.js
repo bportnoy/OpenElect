@@ -69,23 +69,28 @@ var polls = {
 	updateById: function (id, req, res) {
     var data = req.body;
     var poll = new Poll({id: id});
-    poll.fetch()
+    poll.fetch({withRelated: ['election']})
       .then(function(poll){
         if(poll){
-          _(data).forEach(function(value, property){
-            console.log(value,property);
-            // check to make sure we aren't allowing admins to change important stuff
-            if (  property !== 'id'
-                  && property !== 'created_at'
-                  && property !== 'updated_at'
-                  && property !== 'election_id'
-                ) {
-                    poll.set(property, value);
-                }
-          });
-          poll.save().then(function(poll){
-            res.send(poll.toJSON());
-          });
+          console.log(poll.related(['election']));
+          if (!poll.related(['election']).get('accepting_votes') || !poll.related(['election']).get('locked')){
+            _(data).forEach(function(value, property){
+              console.log(value,property);
+              // check to make sure we aren't allowing admins to change important stuff
+              if (  property !== 'id'
+                    && property !== 'created_at'
+                    && property !== 'updated_at'
+                    && property !== 'election_id'
+                  ) {
+                      poll.set(property, value);
+                  }
+            });
+            poll.save().then(function(poll){
+              res.send(poll.toJSON({shallow: true}));
+            });
+          } else{
+            res.status(401).send('You cannot edit a poll once the election has been opened.');
+          }
         } else {
           res.status(404);
           res.end('Poll object not found');
