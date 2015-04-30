@@ -17,7 +17,6 @@ var devConfig = {
     debug: true
   }
 };
-
-console.log('from development.js', devConfig);
+// console.log('from development.js', devConfig);
 
 module.exports = devConfig;

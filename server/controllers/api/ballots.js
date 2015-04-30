@@ -19,9 +19,6 @@ var ballots = {
 
     if (receivedBallot){
       //first, check that the election is still open.
-      console.log(req.body.election_id);
-      console.log('1');
-      console.log(req.body);
       Election.forge({id: req.body.election_id})
         .fetch()
         .then(function(election){

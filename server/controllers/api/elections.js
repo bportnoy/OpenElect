@@ -53,7 +53,6 @@ var elections = {
 
   // create a new election entry ( POST /elections/create )
   create: function(req, res) {
-    console.log(req.user);
     if ( req.body.election ) {
       User.forge({id: req.user.id}).fetch()
       .then(function(user){

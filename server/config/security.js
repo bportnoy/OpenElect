@@ -17,7 +17,6 @@ var securityConfig = function(req, res, next) {
     // Conditional whitelisted URLs.
     if (_.contains(settings.security.whitelists[prop], req.path)) {
       settings.security.config[prop.replace('Whitelist', '')] = false;
-      console.log('"' + req.path + '" is white-listed for: ' + prop.replace('Whitelist', ''));
     }
   }
 

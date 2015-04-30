@@ -39,7 +39,6 @@ var SetParentChild = React.createClass({
   },
 
   _setParent: function(id) {
-    console.log(id);
     this.parent = id;
   },
 
@@ -61,11 +60,10 @@ var SetParentChild = React.createClass({
   },
 
   render: function() {
-    console.log(this.state.group);
     var spinner = this.state.spinner ? (<i className="fa fa-circle-o-notch fa-spin spinner"></i>) : undefined;
     var parentText = 'Each group may have one parent group.\nUsers in this group will receive any polls created for its assigned parent.';
     var childText = 'Each group may have many children.\nAny polls created for this group will be served to any users in its child groups.';
-      return this.state.group.member_count > 0 ? 
+      return this.state.group.member_count > 0 ?
       (
           <div>
             <h4>{this.state.group.member_count} Members</h4>

@@ -25,7 +25,6 @@ var QuestionOption = React.createClass({
 	},
 
 	render: function() {
-		console.log('rendering option', this.props);
 		var option = this.props.option;
 		return (
 			<li>

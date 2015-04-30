@@ -81,7 +81,7 @@ var BallotActions = {
   },
 
   submitBallot: function(router){
-    
+
     setTimeout(function(){ //make sure the user stays on the "encrypting your ballot page" for at least 2 secs
       minTimeElapsed = true;
     }, 2000);
@@ -107,7 +107,6 @@ var BallotActions = {
           });
         } else{
           setTimeout(function(){
-            console.log(response);
             Dispatcher.dispatch({
               actionType: BallotConstants.BALLOT_ACCEPTED,
               receipt: receipt,

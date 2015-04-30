@@ -34,7 +34,6 @@ var PollForm = React.createClass({
     }).then(function(response){
       //todo: kill the spinner
       this.setState({pollId: response.data.id});
-      console.log('poll saved with id: ' + this.state.pollId);
     }.bind(this)).catch(function(response){
       console.error(response);
     });

@@ -60,7 +60,6 @@ var IndexComponent = React.createClass({
   render: function() {
     var elections, groups;
     var userElections = this.state.elections;
-    console.log(this.state.elections);
     if ( _.size(userElections) ) {
       elections = [];
       _.each(userElections, function(election){

@@ -21,7 +21,6 @@ var Results = React.createClass({
     // axios.post('/api/v1/elections/update/' + election_id )
     axios.get('/api/v1/elections/results/' + election_id )
       .then(function(response){
-        console.log(response);
         this.setState({ election: response.data });
       }.bind(this));
   },
@@ -35,7 +34,6 @@ var Results = React.createClass({
         );
 
     // axios return, election is ture
-    console.log(this.state.election.results);
     if(this.state.election.results !== null){
       display = (
         <div>
@@ -43,7 +41,6 @@ var Results = React.createClass({
           <QuestionList data = {this.state.election}></QuestionList>
         </div>
       );
-      console.log(display);
     }
 
     return (

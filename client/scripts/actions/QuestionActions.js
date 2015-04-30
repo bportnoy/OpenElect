@@ -12,7 +12,7 @@ var _ = require('underscore');
 
 
 var QuestionActions = {
-  
+
   create: function(pollId) {
   	var data = {
   		question: {
@@ -32,7 +32,6 @@ var QuestionActions = {
   },
 
   update: function(data) {
-    console.log('update', data);
     api.question.update(data);
   },
 
@@ -61,7 +60,6 @@ var QuestionActions = {
   },
 
   addOption: function(questionId) {
-    console.log('questactions');
     var question=PollStore.getQuestion(questionId);
     var id = PollStore.getQuestion(questionId).options.length + 1;
     var option = {
@@ -74,8 +72,6 @@ var QuestionActions = {
   },
 
   updateOption: function(questionId, data) {
-    console.log('uo');
-    console.log(data);
     var question = PollStore.getQuestion(questionId);
     var id = data.id;
     question.options[id-1].name = data.name;

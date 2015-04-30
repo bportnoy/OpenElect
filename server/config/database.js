@@ -6,11 +6,7 @@
 var settings = require('./env/default');
 var path = require('path');
 var fs = require('fs');
-
-console.log(settings.database);
-
 var knex = require('knex')(settings.database);
-
 var db = require('bookshelf')(knex);
 
 db.plugin('registry'); // registry plugin handles node circular dependency issues

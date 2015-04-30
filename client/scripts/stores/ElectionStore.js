@@ -24,7 +24,7 @@ var _currentElectionOriginal = {};
 
 
 var ElectionStore = assign({}, EventEmitter.prototype, {
-	
+
 	emitChange: function () {
     this.emit(CHANGE_EVENT);
   },
@@ -74,7 +74,7 @@ var ElectionStore = assign({}, EventEmitter.prototype, {
 });
 
 function convertDates(data) {
-  if ( data.start || data.end ) { // convert timestamps to moment objects 
+  if ( data.start || data.end ) { // convert timestamps to moment objects
     if ( typeof data.start === 'string' ) {
       data.start = moment.utc(data.start);
     }
@@ -127,10 +127,10 @@ function addPoll(data) {
 ElectionStore.dispatcherToken = Dispatcher.register(function(action){
 
 	switch(action.actionType) {
-  
+
     case Constants.request.elections.GET_USER_ELECTIONS:
       if (action.response === 'PENDING') {
-        console.log('request sent');
+        // console.log('request sent');
       } else {
         if (action.response.body) {
           action.response.body.forEach(function(election){
@@ -149,7 +149,7 @@ ElectionStore.dispatcherToken = Dispatcher.register(function(action){
 
     case Constants.request.elections.CREATE_ELECTION:
       if (action.response === 'PENDING') {
-        console.log('request sent');
+        // console.log('request sent');
       } else {
         if (action.response.body) {
           setElectionData(action.response.body);
@@ -162,7 +162,7 @@ ElectionStore.dispatcherToken = Dispatcher.register(function(action){
 
     case Constants.request.elections.POST_ELECTION_DATA:
       if (action.response === 'PENDING') {
-        console.log('request sent');
+        // console.log('request sent');
       } else {
         if (action.response.body) {
           setElectionData(action.response.body);
@@ -174,7 +174,7 @@ ElectionStore.dispatcherToken = Dispatcher.register(function(action){
 
     case Constants.request.polls.CREATE_POLL:
       if (action.response === 'PENDING') {
-        console.log('request sent');
+        // console.log('request sent');
       } else {
         if (action.response.body) {
           addPoll(action.response.body);
@@ -186,12 +186,10 @@ ElectionStore.dispatcherToken = Dispatcher.register(function(action){
 
     case Constants.request.elections.GET_ELECTION_POLLS:
       if (action.response === 'PENDING') {
-        console.log(action.actionType);
+        // console.log(action.actionType);
       } else {
         if (action.response.body) {
-          console.log('a wild response appears', action.response);
           _.each(action.response.body, function(poll) {
-            console.log('adding a poll', poll);
             addPoll(poll);
           });
         } else {
@@ -212,9 +210,7 @@ ElectionStore.dispatcherToken = Dispatcher.register(function(action){
     break;
 
     default: // no-op
-
   }
-
 });
 
 module.exports = ElectionStore;
