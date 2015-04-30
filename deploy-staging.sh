@@ -24,8 +24,8 @@ echo "Preparing to upload to Elastic Beanstalk."
 #Initialize eb instance to our app.
 eb init -r us-west-1 OpenElect
 
-#Deploy directory to staging.
+#Deploy directory to production.
 echo "Beginning deployment"
-eb deploy openelect-staging
+eb deploy openelect-production
 
 echo "Deployment complete, have a prickly day!!"
