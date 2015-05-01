@@ -7,7 +7,7 @@
   "latedef": true,
   "newcap": true,
   "noarg": true,
-  "noempty": true,
+  "noempty": false,
   "nonew": false,
   "plusplus": false,
   "regexp": true,
