@@ -95,30 +95,19 @@ var questions = {
 	updateById: function (id, req, res) {
     var data = req.body;
     var question = new Question({id: id});
-    console.log('the current update by id');
-    console.log(data);
     question.fetch()
       .then(function(question){
         if(question){
-          console.log('original question');
-          console.log(question);
           _(data).forEach(function(value, property){
-            console.log('FOREACH!!!!!!!');
-            console.log('value', value);
-            console.log('property', property);
             // check to make sure we aren't allowing admins to change important stuff
             if (  property !== 'id'
                   && property !== 'poll_id'
                   && property !== 'created_at'
                   && property !== 'updated_at'
                 ) {
-                console.log('set');
-                          console.log('value', value);
-            console.log('property', property);
-                    question.set(property, value);
+                  question.set(property, value);
                 }
           });
-          console.log(question);
           question.set('options', JSON.stringify(question.get('options')));
           question.save().then(function(question){
             res.send(question.toJSON());
@@ -129,7 +118,6 @@ var questions = {
         }
       });
 	}
-
 };
 
 module.exports = questions;

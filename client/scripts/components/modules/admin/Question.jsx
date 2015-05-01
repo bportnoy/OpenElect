@@ -31,13 +31,10 @@ var Question = React.createClass({
       }
     }
 
-    console.log(options);
-
     if (this.props.pollId === undefined){
       console.error("Please save your poll before attempting to add options");
     }
     else {
-      console.log(this.props.pollId);
       axios.post('/api/v1/questions/create', {question: {
         name: this.state.questionName,
         // description: this.state.questionDescription,
@@ -45,7 +42,6 @@ var Question = React.createClass({
         options: options
       }}).then(function(response){
         //todo: kill the spinner
-        console.log('question saved with id: ' + response.data.id);
       }.bind(this)).catch(function(response){
         console.error(response);
       });

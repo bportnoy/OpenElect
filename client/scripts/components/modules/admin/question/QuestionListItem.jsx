@@ -42,7 +42,6 @@ var QuestionListItem = React.createClass({
   },
 
   addOption: function(){
-    console.log('addoption');
   	QuestionActions.addOption(this.props.question.id);
   },
 
@@ -64,22 +63,18 @@ var QuestionListItem = React.createClass({
   },
 
   _onChange: function(){
-    console.log('onchange');
     this.setState(PollStore.getQuestion(this.props.question.id));
   },
 
   buildOptions: function(){
   	var list = [];
-  	console.log('build being called', this.props.question.options);
   	_.each(this.props.question.options, function(option){
-  		console.log('this is an option:', option);
   		list.push(<QuestionOption key={this.props.question.id + '-' + option.id} option={option} questionId={this.props.question.id}/>);
   	}, this);
     return list;
   },
 
 	render: function() {
-    console.log('render');
 		var question = this.props.question;
 		var options = this.buildOptions();
       // var options = [];
@@ -87,7 +82,7 @@ var QuestionListItem = React.createClass({
       //   options.push(
       //     <QuestionOption key={this.props.question.id + '-' + option.id} option={option}/>
       //     );
-      // } 
+      // }
 		return (
 			<li>
 				<div className="question-name">

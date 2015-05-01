@@ -66,9 +66,6 @@ var GroupActions = {
         filePath: path
       });
     });
-    // .catch(function(response){
-    //   console.error(response);
-    // });
   },
 
   getGroupList: function(asOwner, transitionCallback){
@@ -130,7 +127,6 @@ var GroupActions = {
       user_id: userId,
       group_id: groupId
     }).then(function(response){
-      console.log(response);
       Dispatcher.dispatch({
         actionType: Constants.GROUP_USER_LIST_UPDATE,
         users: response.data

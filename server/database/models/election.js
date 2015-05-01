@@ -15,15 +15,12 @@ var ballotSum = {};
 // Helper function: Iterate each ballot and update to ballotSum
 function countBallots (ballots, election){
   var User = db.model('User');
-  console.log('----------------------cb');
   return new Promise(function(resolve, reject){
     User.forge({id: election.get('owner_id')}).fetch()
     .then(function(user){
       async.each(ballots, function(ballot, ballotCallback){
         Security.decryptString(ballot.encrypted, user.get('private_key'))
         .then(function(decryptedBallot){
-          console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-          console.log(decryptedBallot);
           decryptedBallot = JSON.parse(decryptedBallot);
           async.each(decryptedBallot.selections, function(question, questionCallback){
             question.selection = question.selection !== null ? question.selection : 'undervote';
@@ -56,7 +53,6 @@ function getQuestionContext(ballotSummary, callback){
   for(var key in ballotSummary){
     updateQuestionName(key);
   }
-  console.log('about to callbackkkkkkkkkkkkkkkkkkkk');
   return callback();
 }
 
@@ -64,8 +60,6 @@ function getQuestionContext(ballotSummary, callback){
 function updateQuestionName(questionID){
   return Question.forge({id: questionID}).fetch().then(function(ques){
     ques = ques.toJSON();
-    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-    console.log(ques);
     // Update ballotSum with name in the input, check line 80 for final ballotSum store back to election results
     ballotSum[questionID].question = ques.name;
     ballotSum[questionID].options = ques.options;
@@ -90,16 +84,12 @@ var Election = db.Model.extend({
 
   tabulate: function() {
     var that = this;
-    console.log('-----------------tab');
     if (this.get('results') === null){
       return Ballot.where({election_id: that.get('id')}).fetchAll()
       .then(function(ballots){
-        console.log('---------------------fetchballots');
         return countBallots(ballots.toJSON(), that).then(function(success){
           if (success){
             return getQuestionContext(ballotSum, function(){
-              console.log('////////////////////////////////////////////');
-              console.log(ballotSum);
               return that.save({results: ballotSum});
             });
           } else return('Error during tabulation.');

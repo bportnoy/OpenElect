@@ -49,17 +49,10 @@ var ListElection = React.createClass({
 			if(confirm('Are you sure you wish to close this election? Results will be tabulated and no further votes accepted.')){
 				request.post('/api/v1/elections/results/' + this.props.id)
 				.end(function(err, response){
-					console.log(response);
+					// console.log(response);
 				});
 			}
 		}
-		// axios.post('api/v1/elections/update/' + this.props.id, {accepting_votes: !this.state.accepting_votes})
-		//   .then(function(response){
-		//   	this.setState({accepting_votes: response.data.accepting_votes});
-		//   }.bind(this))
-		//   .catch(function(response){
-		//     console.log(response);
-		//   }.bind(this));
 	},
 
 	render: function() {

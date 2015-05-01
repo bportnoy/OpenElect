@@ -25,7 +25,7 @@ var PollStore = assign({}, EventEmitter.prototype, {
   removeChangeListener: function(callback) {
     this.removeListener(CHANGE_EVENT, callback);
   },
-    
+
   emitChange: function() {
     this.emit(CHANGE_EVENT);
   },
@@ -64,11 +64,8 @@ function setCurrentProperty(property, value) {
 
 function updatePollQuestion(id, data) {
   var question = {};
-  console.log(data);
-  console.log('inupdate', question[data]);
   question[data.property] = data.value;
   _.extend(_currentPoll.questions[id], question);
-  console.log('update');
   PollStore.emitChange();
 }
 
@@ -84,16 +81,12 @@ function deletePollQuestion(id) {
 
 
 PollStore.dispatcherToken = Dispatcher.register(function(action){
-
   var data;
-
-  console.log(action);
-
   switch(action.actionType) {
-    
+
     case Constants.request.polls.GET_POLL || Constants.request.polls.UPDATE_POLL:
       if (action.response === 'PENDING') {
-        console.log(action.actionType);
+        // console.log(action.actionType);
       } else {
         if (action.response.body) {
           updatePollData(action.response.body);
@@ -109,7 +102,7 @@ PollStore.dispatcherToken = Dispatcher.register(function(action){
 
     case Constants.request.polls.GET_POLL_QUESTIONS:
       if (action.response === 'PENDING') {
-        console.log(action.actionType);
+        // console.log(action.actionType);
       } else {
         if (action.response.body) {
           data = {};
@@ -125,7 +118,7 @@ PollStore.dispatcherToken = Dispatcher.register(function(action){
 
     case Constants.request.questions.CREATE_QUESTION:
       if (action.response === 'PENDING') {
-        console.log(action.actionType);
+        // console.log(action.actionType);
       } else {
         if (action.response.body) {
           updatePollQuestions([action.response.body]);
@@ -141,7 +134,7 @@ PollStore.dispatcherToken = Dispatcher.register(function(action){
 
     case Constants.request.questions.DELETE_QUESTION:
       if (action.response === 'PENDING') {
-        console.log(action.actionType);
+        // console.log(action.actionType);
       } else {
         if (action.response.body) {
           deletePollQuestion(action.response.body.id);
@@ -154,11 +147,9 @@ PollStore.dispatcherToken = Dispatcher.register(function(action){
     case Constants.request.questions.UPDATE_QUESTION:
       updatePollQuestion(action.queryParams.id, action.queryParams);
     break;
-    
+
     default: // no op
   }
-
 });
 
 
-module.exports = PollStore;

@@ -72,10 +72,8 @@ var polls = {
     poll.fetch({withRelated: ['election']})
       .then(function(poll){
         if(poll){
-          console.log(poll.related(['election']));
           if (!poll.related(['election']).get('accepting_votes') || !poll.related(['election']).get('locked')){
             _(data).forEach(function(value, property){
-              console.log(value,property);
               // check to make sure we aren't allowing admins to change important stuff
               if (  property !== 'id'
                     && property !== 'created_at'

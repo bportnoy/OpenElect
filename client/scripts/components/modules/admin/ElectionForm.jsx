@@ -45,7 +45,6 @@ var ElectionForm = React.createClass({
             force_2_auth:           React.findDOMNode(this.refs.force_two_factor_auth).value,
         };
 
-        console.log(electionData);
         axios.post('/api/v1/elections/create', {election: electionData})
              .then(function(response){
                 //todo: kill the spinner
@@ -60,9 +59,7 @@ var ElectionForm = React.createClass({
     },
 
     changeEndDate: function(dateString, moment, isStart) {
-        console.log(dateString);
-        console.log(moment);
-        console.log(isStart);
+        ElectionActions.setElectionData('end_date', dateString);
     },
 
     render: function() {

@@ -36,7 +36,6 @@ var CreateGroup = React.createClass({
 
   _onChange: function() {
     this.setState(GroupStore.getCreateStatus());
-    console.log(GroupStore.getCreateStatus());
   },
 
   _inviteByCSV: function() {
