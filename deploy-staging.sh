@@ -18,7 +18,8 @@ echo "Now in:"
 pwd
 echo "copying newrelic file"
 cp ../newrelic.js .
-ls | grep newrelic
+echo "copying .ebextensions"
+cp -r ../.ebextensions .
 echo "Preparing to upload to Elastic Beanstalk."
 
 #Initialize eb instance to our app.
