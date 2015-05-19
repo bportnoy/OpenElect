@@ -1,6 +1,5 @@
 'use strict';
 
-// var CryptoJS = require('crypto-js'); //may need to NPM uninstall
 var Promise = require('bluebird');
 var PriorityQueue = require('js-priority-queue');
 var _ = require('lodash');
